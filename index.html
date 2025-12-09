@@ -64,7 +64,7 @@ const c1 = document.getElementById("c1");
 const c2 = document.getElementById("c2");
 
 a1.addEventListener("change", proteinChoice1);
-//a2.addEventListener("change", proteinChoice2);
+a2.addEventListener("change", proteinChoice2);
 
 const protein = {
   count: 0,
@@ -87,12 +87,28 @@ function proteinChoice1() {
        alert("Protein count: " + protein.count);  // test
     }
 }
-/*
+
 function proteinChoice2() {
     if (a2.checked == true) {
-        //  select checkbox1
-    }  */
+      selectCheckboxes(a1);  //  select checkbox 1
+      protein.addToCount(2);  //  add 2 to protein
+      alert("Protein count: " + protein.count);  // test
+    } else {
+      deselectCheckboxes(a1)  //  deselect checkbox 1
+      protein.addToCount(-2);  //  add 2 to protein
+      alert("Protein count: " + protein.count);  // test
+    }
+}
 
+function selectCheckboxes(id1, id2, id3, id4, id5, id6) {
+  id1.checked = true;
+}  
+function deselectCheckboxes(id1, id2, id3, id4, id5, id6) {
+  id1.checked = false;
+}
+
+ // a1.checked = true;  //  test
+//    selectCheckboxes(a1);
 
 /*function proteinChoice1() {
     if (A1.checked == true) {
