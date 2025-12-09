@@ -26,53 +26,83 @@
   <div class="row">
   		<!-- - - - - - - - - - - - - - - - - -->
     <div class="col-2">
-      <label for="A1">Chicken</label><br>
+      <label for="a1">Chicken</label><br>
     </div>
     
     <div class="col-10">
-      <input id="A1" type="checkbox">
-      <input id="A2" type="checkbox">
+      <input id="a1" type="checkbox">
+      <input id="a2" type="checkbox">
     </div>
 		<!-- - - - - - - - - - - - - - - - - -->
     <div class="col-2">
-    	<label for="B1">Tofu</label><br>
+    	<label for="b1">Tofu</label><br>
     </div>
     
     <div class="col-10">
-    	<input id="B1" type="checkbox" >
-    	<input id="B2" type="checkbox">
+    	<input id="b1" type="checkbox" >
+    	<input id="b2" type="checkbox">
     </div>
 		<!-- - - - - - - - - - - - - - - - - 
     <div class="col-2">
-    	<label for="C1">Canned Tuna</label><br>
+    	<label for="c1">Canned Tuna</label><br>
     </div>
     
     <div class="col-10">
-    	<input id="C1" type="checkbox" >
-    	<input id="C2" type="checkbox">
+    	<input id="c1" type="checkbox" >
+    	<input id="c2" type="checkbox">
     </div> -->
   </div>
 </div> 
 
 <script>
 "use strict";
-const A1 = document.getElementById("A1");
-const A2 = document.getElementById("A2");
-const B1 = document.getElementById("B1");
-const B2 = document.getElementById("B2");
-const C1 = document.getElementById("C1");
-const C2 = document.getElementById("C2");
+const a1 = document.getElementById("a1");
+const a2 = document.getElementById("a2");
+const b1 = document.getElementById("b1");
+const b2 = document.getElementById("b2");
+const c1 = document.getElementById("c1");
+const c2 = document.getElementById("c2");
 
-A1.addEventListener("change", proteinChoice1);
-A2.addEventListener("change", proteinChoice2);
+a1.addEventListener("change", proteinChoice1);
+//a2.addEventListener("change", proteinChoice2);
+
+const protein = {
+  count: 0,
+  addToCount: function(amount) {
+    return this.count += amount;
+  } 
+}
+
+// let x = 0; x += 3; alert(x);  //  test
+// alert(protein.count += 3);  //  test
+// protein.adjustCounter(5);  //  test
+// alert(protein.counter);  //  test
 
 function proteinChoice1() {
+    if (a1.checked == true) {
+      protein.addToCount(1);
+       alert("Protein count: " + protein.count);  // test
+    } else {
+      protein.addToCount(-1);
+       alert("Protein count: " + protein.count);  // test
+    }
+}
+/*
+function proteinChoice2() {
+    if (a2.checked == true) {
+        //  select checkbox1
+    }  */
+
+
+/*function proteinChoice1() {
     if (A1.checked == true) {
+    	protein.count = 1;
         disableFirstExtras();
       } else {
         undisableFirstExtras();
       }
-}
+} 
+
 function proteinChoice2() {
     if (A2.checked == true) {
     	disableFirstExtras();
@@ -81,23 +111,23 @@ function proteinChoice2() {
       	//undisableFirstExtras();
         undisableSecondExtras();
       }
-}
+}  */
 // -----------------------------------
 function disableFirstExtras() {
-  B2.disabled = true;
+  b2.disabled = true;
   //C2.disabled = true;
 }
 function undisableFirstExtras() {
-  B2.disabled = false;
+  b2.disabled = false;
   //C2.disabled = false;
 }
 // -----------------------------------
 function disableSecondExtras() {
-  B1.disabled = true;
+  b1.disabled = true;
   //C1.disabled = true;
 }
 function undisableSecondExtras() {
-  B1.disabled = false;
+  b1.disabled = false;
   //C1.disabled = false;
 }
 // -----------------------------------
