@@ -1,3 +1,9 @@
+const allCheckboxes = [
+  r1cb1,r1cb2,r1cb3,r1cb4,r1cb5,r1cb6,
+  r2cb1,r2cb2,r2cb3,r2cb4,r2cb5,r2cb6
+  ];
+
+
 // const doubleButtonEl = document.getElementById('doubleButton');
 
 const element = { 
