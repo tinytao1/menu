@@ -6,7 +6,7 @@ function uncheckAll() {
 
 function toggleDoubleSingleButton() {
   let doubleButtonEl = document.getElementById('doubleButton');
-  if (doubleButtonEl.value == '2X order') {doubleButtonEl.value="return to 1X order"}
+  if (doubleButtonEl.value == '2X order') {doubleButtonEl.value = "\u27F2 1X "}
   else {doubleButtonEl.value="2X order"}
 }
 
