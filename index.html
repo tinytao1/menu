@@ -15,6 +15,8 @@
   
 </head>
 <p id="demo0" style="display:none"  >
+//HEAD/////////HEAD//////////////HEAD//////////////////////
+
 //BODY/////////BODY//////////////BODY//////////////////////</p>
 <body x_onload="toggleDoubleOrder();
       " >
@@ -26,16 +28,22 @@
 
 <input value="reload" id="reload" 
        type="button" 
-       class="btn btn-success btn-sm">
+       class="btn btn-success btn-sm"
+       >
+       
+      <script>//console.log(r1cb4);</script>
+      
 <input value="2X order" type="button"
        id="doubleButton"
        class="btn btn-success btn-sm"
-       onclick="toggleDoubleOrder();
-                 toggleDoubleSingleButton();
+       onclick="//toggleDoubleOrderWithArray(r1cb1);
+       //toggleDoubleOrder ();
+              //  toggleDoubleOrderButton ();
       "> 
 <input value="Uncheck" id="uncheck1"
        type="button" 
-       class="btn btn-warning btn-sm"
+       class="btn btn-success btn-sm
+              text-warning"
        onclick="uncheckAll()"
        >
       <br><br>
@@ -61,21 +69,26 @@
 
 <input value="Uncheck" id="uncheck2"
        type="button" 
-       class="btn btn-success btn-sm"
+       class="btn btn-success btn-sm
+              text-warning"
        onclick="uncheckAll()"
        >
 <input value="Get maximum" id="getmaximum"
        type="button" 
-       class="btn btn-success btn-sm">  <br><br> 
+       class="btn btn-dark btn-sm
+              text-white-50">  <br><br> 
 
 </div>
 
 <p id="scriptLine" style="display:none"  >
+//BODY/////////BODY//////////////BODY//////////////////////
+
 //SCRIPT/////////SCRIPT//////////////SCRIPT//////////////////</p>
 <script src="references.js"></script>
 <script src="functions.js"></script>
+<script src="event-listn.js"></script>
 <script>
-document.getElementById('reload').addEventListener('click', myReload); // location.reload); 
+// document.getElementById('doubleButton').addEventListener('click', toggleDoubleOrderButton); // location.reload); 
 
 const r1 = {
   name: "chicken",
@@ -95,21 +108,15 @@ const r1 = {
   clearSelection1XOrder: '',
   clearSelection2XOrder: '',
   printSelected: "func add name and amount to print list",
-}  
-
-
-
-
- 
-
-  
-
-
-
+}
 
 
 </script>
-<!--
+<p id="scriptLine" style="display:none"  >
+//SCRIPT/////////SCRIPT//////////////SCRIPT//////////////////
+
+//COMMENTS//////////COMMENTS////////////COMMENTS//////////////</p> <!--
+
 
 TESTS
 //toggleDoubleOrder();
