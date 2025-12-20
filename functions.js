@@ -1,12 +1,11 @@
 function uncheckAll() {
   for (const id of allCheckboxes) {
   id.checked = false;
-}}
-//  function uncheckAll (checkboxId) { checkboxId.checked = true; }
+}}  //  function uncheckAll (checkboxId) { checkboxId.checked = true; }
 
 function toggleDoubleSingleButton() {
   let doubleButtonEl = document.getElementById('doubleButton');
-  if (doubleButtonEl.value == '2X order') {doubleButtonEl.value = "\u27F2 1X "}
+  if (doubleButtonEl.value == '2X order') {doubleButtonEl.value = `  \u27F2 1X  `} // string literal keeps button approx same size
   else {doubleButtonEl.value="2X order"}
 }
 
