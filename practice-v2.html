@@ -2,25 +2,100 @@
 <html>
 <head id="head">
   <title>practice page</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Add B5
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  -->
+  <style>
+  /* Tip: Always specify the type attribute
+          for a <button> element, to tell browsers
+          what type of button it is.
+     Attribute: 'disabled' tip: You can also add
+          the '"cursor"' property with a value
+          of "not-allowed", which will display a 
+          "no parking sign" when you mouse over the 
+          button:
+      <button class="button button1">example 1</button>
+      <button class="button button2">example 2</button>
+  */
+.hide {
+  display: none;
+  }
+.xbutton {
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+.xbutton1 {background-color: #04AA6D;} /* Green */
+.xbutton2 {background-color: #008CBA;} /* Blue */
+
+.button {
+  
+}
+/* General Syntax */
+selector:focus {
+  /* CSS properties to apply when focused */
+  property: value;
+}
+
+/* Example: Change an input field's background and 
+            border when focused */
+#test-state-text2:focus {       /* orig: input:focus {  */
+  background-color: #f0f8ff;
+  border: 2px solid blue;
+  outline: none; /* Removes the default browser outline */
+}
+
+/* Example: Use :focus-visible for better accessibility */
+button:focus-visible {      /* orig: button:focus-visible {  */
+  outline: 3px solid #3f51b5; /* Custom, highly visible outline 
+                                  for keyboard users */
+}
+
+</style>
 </head>
 <body>
 <h1></h1>
 
-<p>
-<input type='button' value='test button state'> 
 
+<p>
+<input id='test-state-text1' value='test1' type='text'> 
+</p>
+<p>
+<input id='test-state-text2' value='test2' type='text'> 
 </p>
 
-<p>Basic Button States:
-<ol>
-  <li>Enabled (default)</li>
-  <li>Hovered (highlighted)</li>
-  <li>Focused</li>
-  <li>Disabled</li>
-  <li>Active (pressed)</li>
-  <li>Selected (toggle)</li>
-</ol>
+<p>
+<input id='test-state' value='test button state' type='button'> 
+</p>
 
+<p>
+<input id='focused' value='disable button focused' type='button'> 
+</p>
+<script>
+  document.getElementById("focused").focus(); // focus
+  document.getElementById("focused").blur();  // un-focus
+</script>
+
+<p> Button States for Groceries:
+<ol>
+  <li>Enabled - - - - - - - - -(default)</li> 
+    
+  <li>Focus - - - - - - - - - - (Shows keyboard focus, typically a 
+             distinct outline, essential for 
+             keyboard navigation)</li>
+    
+  <li>Disabled - - - - - - - - (Inactive, greyed-out, preventing
+                clicks (using pointer-events: none))</li>
+</ol>
 </p>
 
 <p>
@@ -42,6 +117,7 @@
 
 <script>
 
+// document.getElementById("test-button-state").focus();
 
 
 
@@ -110,6 +186,108 @@ window.document.write("<h3>document.write 2</h3>");
 let birthYear = window.prompt('In what year were you born?');These Work
 window.document.write("<h1>" + birthYear + "</h1>"); 
 window.document.write("<h3>document write 2 test</h3>");
+<!--
+<p>Basic Button States:
+<ol>
+  <li>Enabled (default)</li>
+  <li>Hovered (highlighted)</li>
+  <li>Focused</li>
+  <li>Disabled</li>
+  <li>Active (pressed)</li>
+  <li>Selected (toggle)</li>
+</ol>
+</p> -->
+
+<p>Key Button States in B5:
+<ol>
+  <li>Default/Enabled - - - (default)</li>
+  <li>Hover - - - - - - - - - - (Slight color change or shadow)</li>
+  <li>Focus - - - - - - - - - - (Shows keyboard focus, typically a 
+             distinct outline, essential for 
+             keyboard navigation)</li>
+  <li>Active - - - - - - - - - -(Pressed: momentary state while being 
+              clicked or tapped, often with a
+              darker shade or pressed-in look.)</li>
+  <li>Disabled - - - - - - - - (Inactive, greyed-out, preventing
+                clicks (using pointer-events: none))</li>
+  <li>Loading - - - - - - - - -(action processing, via spinners, 
+                common in complex apps)</li>
+</ol>
+</p>
+<p> Button States for Groceries:
+<ol>
+  <li>Enabled - - - - - - - - -(default)</li> 
+    <p class='hide'>
+      JS can add a (CSS) disabled property (set to true)
+      if the element does not have an HTML disabled attribute: JS:
+      input.disabled = true; and off by 'false'
+      An input element can have simple 'disabled' HTML attribute with
+      no corresponding value, and that will inactivate it:
+      &lt;input disabled type='button'&gt; Use JS:
+      input.removeAttribute("disabled"); will clear it.
+    </p>
+    
+  <li>Focus - - - - - - - - - - (Shows keyboard focus, typically a 
+             distinct outline, essential for 
+             keyboard navigation)</li>
+    <p class='hide'> 
+        The CSS :focus pseudo-class is used to select and style an
+       element that has received user input focus. This typically 
+       happens when a user clicks, taps, or uses the keyboard
+       (usually the Tab key) to navigate to an interactive element
+       like a form field or button. 
+       :focus ::Matches an element when it is focused, regardless 
+                of the input method (mouse or keyboard).
+       :focus-visible ::Matches an element when it is focused and 
+                the browser determines that a focus indicator should
+                be made evident to the user (usually when using
+                keyboard navigation).
+      document.getElementById("focused").focus(); // focus
+      document.getElementById("focused").blur();  // un-focus
+    </p>
+    
+  <li>Disabled - - - - - - - - (Inactive, greyed-out, preventing
+                clicks (using pointer-events: none))</li>
+    <p class='hide'> 
+        See above: Enabled
+    </p>
+</ol>
+</p>
+
+<button id="myButton">Button to be focused</button>
+<button id="focusButton">Click to set focus on "Button to be focused"</button>
+
+<script>
+  document.getElementById("focusButton").addEventListener("click", () => {
+    document.getElementById("myButton").focus();
+  });
+
+  document.getElementById("focused").focus(); // focus
+  document.getElementById("focused").blur();  // un-focus
+
+Persistent "Clicked" State (after releasing)
+To make a style persist after the user has finished clicking, 
+standard CSS pseudo-classes alone are insufficient because the
+browser doesn't have a built-in pseudo-class that means "this
+specific element was the last one clicked, and nothing has happened 
+since". 
+The common solutions for a persistent state are:
+ JavaScript: The recommended and most robust method is to use 
+ JavaScript to add or remove a class (e.g., .clicked or .active)
+ when the click event occurs:
+ 
+ // JavaScript
+document.getElementById("myButton").
+  addEventListener("click", function() {
+  this.classList.toggle("active-state");
+});
+
+ CSS 
+.active-state {
+  background-color: blue; 
+  // Stays blue until the class is toggled off
+}
+
 
 */
 </script>
