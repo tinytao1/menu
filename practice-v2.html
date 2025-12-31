@@ -20,9 +20,12 @@
       <button class="button button1">example 1</button>
       <button class="button button2">example 2</button>
   */
+body { background-color: grey; }
+
 .hide {
   display: none;
   }
+
 .xbutton {
   border: none;
   color: white;
@@ -40,70 +43,45 @@
 .button {
   
 }
-/* General Syntax */
-selector:focus {
-  /* CSS properties to apply when focused */
-  property: value;
-}
 
-/* Example: Change an input field's background and 
-            border when focused */
-#test-state-text2:focus {       /* orig: input:focus {  */
-  background-color: #f0f8ff;
-  border: 2px solid blue;
-  outline: none; /* Removes the default browser outline */
-}
+.test-state1:focus  {  /* Custom, highly visible outline */
+  outline: 2px solid dodgerblue; 
+  background-color: #C0f8ff;
+  border-radius: 4px;   }
 
-/* Example: Use :focus-visible for better accessibility */
-#focused:focus    /* -visible {       orig: button:focus-visible {  */
-  outline: 3px solid #3f51b5; /* Custom, highly visible outline 
-                                  for keyboard users */
-}
+.pressed { /* Stays tomato until the class is toggled off */
+  outline: 2px solid dodgerblue;
+  background-color: #C0f8ff;
+  border-radius: 4px;   }
+ } 
 
 </style>
-</head>
-<body>
+</head /////////////HEAD////////////HEAD////>
+
+<body //////////////BODY////////////BODY////>
 <div class="container-fluid">
+<h1>h1</h1>
 
-<h1></h1>
+<P> <input id="test-state1" value="test1 text" class='test-state1' type="text"> </P>
 
-
-<p>
-<input id='test-state-text1' value='test1' type='text'> 
-</p>
-<p>
-<input id='test-state-text2' value='test2' type='text'> 
+<p> <input id='b1' type='button' value='1' class=' test-state1'> 
+    <input id='b2' type='button' value='2' class='  '> 
+    <input id='b3' type='button' value='3'>
 </p>
 
-<p>
-<input id='test-state' value='test button state' type='button'> 
-</p>
+<p> <input id='test-state' type='button' value='test button state'> </p>
 
-<p>
-<input id='focused' value=' focused test' type='button'> 
-</p>
+<p> <input id='focused' type='button' value=' focused test' > </p>
 
-<p> Button States for Groceries:
-<ol>
-  <li>Enabled - - - - - - - - -(default)</li> 
-    
-  <li>Focus - - - - - - - - - - (Shows keyboard focus, typically a 
-             distinct outline, essential for 
-             keyboard navigation)</li>
-    
-  <li>Disabled - - - - - - - - (Inactive, greyed-out, preventing
-                clicks (using pointer-events: none))</li>
-</ol>
-</p>
+</div ////////DIV////////////DIV///////////>
 
-<p>
-<input type='button' value='1'> 
-<input type='button' value='2'> 
-<input type='button' value='3'>
-</p>
-
-</div>
 <script>
+
+const b3 = document.getElementById("b3");
+
+b3.addEventListener("click", function() {
+  this.classList.toggle("pressed");
+});
 
 /*
 Persistent "Clicked" State (after releasing)
@@ -113,8 +91,8 @@ browser doesn't have a built-in pseudo-class that means "this
 specific element was the last one clicked, and nothing has happened 
 since". 
 The common solutions for a persistent state are:
- JavaScript: The recommended and most robust method is to use 
- JavaScript to add or remove a class (e.g., .clicked or .active)
+ JavaScript: The recommended and most robust method is to
+ add or remove a class (e.g., .pressed, .clicked or .active)
  when the click event occurs:
  
  // JavaScript
@@ -200,9 +178,13 @@ let birthYear = window.prompt('In what year were you born?');
 
 <p id="demo" class='hide'> </p>
 
+// <input id="test-state-text1" value="test1" type="text">
+// <input id="test-state-text2" value="test2" type="text">
 //
 demoElement = document.head.innerHTML;
-console.log(demoElement);
+console.log(demoElement); // Retrieves the entire HTML content
+      within the <head> section of the current web document as
+      a string and assigns it to the variable demoElement. 
 //
 window.document.write("<p>document.write 1</p>");
 window.document.write("<h3>document.write 2</h3>");
@@ -294,5 +276,22 @@ document.getElementById("focused").blur();  // un-focus
 
 */
 </script>
+
+<div class="container-fluid">
+<p> Button States for Groceries:
+<ol>
+  <li>Enabled - - - - - - - - -(default - button is available and active)</li> 
+  <li>Disabled - - - - - - - - (Inactive, unavailable, greyed-out, preventing
+                clicks (using pointer-events: none), button's action
+                is unavailable)</li>
+    
+  <li>Focus - - - - - - - - - - (or keyboard-focus, Shows keyboard focus, 
+              typically a distinct outline, essential for keyboard navigation)</li>
+  <li>Pressed - - - - - - - - (The user pressed the button ) </li>
+  
+</ol>
+</p>
+</div>
+
 </body>
 </html> 
