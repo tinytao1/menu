@@ -44,16 +44,22 @@ body { background-color: grey; }
   
 }
 
-.test-state1:focus  {  /* Custom, highly visible outline */
-  outline: 2px solid dodgerblue; 
-  background-color: #C0f8ff;
-  border-radius: 4px;   }
+.pressed1 {  /* .test-state1:focus  Custom, highly visible outline */
+  outline: 2px solid blue; 
+  background-color: white;
+  /* border: none; border-radius: 4px; */
+  }
 
-.pressed { /* Stays tomato until the class is toggled off */
-  outline: 2px solid dodgerblue;
-  background-color: #C0f8ff;
-  border-radius: 4px;   }
- } 
+.pressed3 { /* Stays tomato until the class is toggled off */
+  border: 1px solid aqua;
+  background-color: white; /* #C0f8ff; */
+  border-radius: 4px;  
+ }
+
+
+.xb3 {
+  border: 1px solid dimgrey;
+ } /* background-color: white;   */
 
 </style>
 </head /////////////HEAD////////////HEAD////>
@@ -64,9 +70,9 @@ body { background-color: grey; }
 
 <P> <input id="test-state1" value="test1 text" class='test-state1' type="text"> </P>
 
-<p> <input id='b1' type='button' value='1' class=' test-state1'> 
-    <input id='b2' type='button' value='2' class='  '> 
-    <input id='b3' type='button' value='3'>
+<p> <input id='b1' type='button' value='1' class='b1 btn btn-success '> 
+    <input id='b2' type='button' value='2' class='b2 btn btn-success '> 
+    <input id='b3' type='button' value='3' class='b3 btn btn-success '>
 </p>
 
 <p> <input id='test-state' type='button' value='test button state'> </p>
@@ -77,35 +83,22 @@ body { background-color: grey; }
 
 <script>
 
+const b1 = document.getElementById("b1");
+const b2 = document.getElementById("b2");
 const b3 = document.getElementById("b3");
 
+b1.addEventListener("click", function() {
+  this.classList.toggle("pressed1");
+});
+// b2.addEventListener("click", function() {
+//  this.classList.toggle("pressed2"); 
+// });
 b3.addEventListener("click", function() {
-  this.classList.toggle("pressed");
+  this.classList.toggle("pressed3");
 });
 
 /*
-Persistent "Clicked" State (after releasing)
-To make a style persist after the user has finished clicking, 
-standard CSS pseudo-classes alone are insufficient because the
-browser doesn't have a built-in pseudo-class that means "this
-specific element was the last one clicked, and nothing has happened 
-since". 
-The common solutions for a persistent state are:
- JavaScript: The recommended and most robust method is to
- add or remove a class (e.g., .pressed, .clicked or .active)
- when the click event occurs:
- 
- // JavaScript
-document.getElementById("myButton").
-  addEventListener("click", function() {
-  this.classList.toggle("active-state");
-});
 
- CSS 
-.active-state {
-  background-color: blue; 
-  // Stays blue until the class is toggled off
-}
 */
 // document.getElementById("test-button-state").focus();
 
@@ -270,6 +263,29 @@ window.document.write("<h3>document write 2 test</h3>");
 
 document.getElementById("focused").focus(); // focus
 document.getElementById("focused").blur();  // un-focus
+
+Persistent "Clicked" State (after releasing)
+To make a style persist after the user has finished clicking, 
+standard CSS pseudo-classes alone are insufficient because the
+browser doesn't have a built-in pseudo-class that means "this
+specific element was the last one clicked, and nothing has happened 
+since". 
+The common solutions for a persistent state are:
+ JavaScript: The recommended and most robust method is to
+ add or remove a class (e.g., .pressed, .clicked or .active)
+ when the click event occurs:
+ 
+ // JavaScript
+document.getElementById("myButton").
+  addEventListener("click", function() {
+  this.classList.toggle("active-state");
+});
+
+ CSS 
+.active-state {
+  background-color: blue; 
+  // Stays blue until the class is toggled off
+}
 
 
 
