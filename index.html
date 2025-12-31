@@ -33,7 +33,7 @@
        
       <script>//console.log(r1cb4);</script>
       
-<input value="2X order" type="button"
+<input value="2X Order" type="button"
        id="doubleButton"
        class="btn btn-success btn-sm"
        onclick="//toggleDoubleOrderWithArray(r1cb1);
@@ -89,6 +89,14 @@
 <script src="event-listn.js"></script>
 <script>
 // document.getElementById('doubleButton').addEventListener('click', toggleDoubleOrderButton); // location.reload); 
+{
+const chbxRow = ["cb1","cb2","cb3","cb4","cb5","cb6"];
+
+const numb = chbxRow.indexOf("cb4") + 1;
+
+console.log( chbxRow[3] + ' id is: cb' + numb); 
+}
+
 
 const r1 = {
   name: "chicken",

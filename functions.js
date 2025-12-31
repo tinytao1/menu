@@ -1,18 +1,25 @@
 // console.log('okay here');
-function toggleDoubleOrderWithArray() {
-  for (let i = 0; i < allDoubleOrderCheckboxes.length; i++) {
-  allDoubleOrderCheckboxes[i].classList.toggle("double-order");
+function toggleDoubleOrderWithArray()
+  { for (let i = 0; i < allDoubleOrderCheckboxes.length; i++) 
+          {allDoubleOrderCheckboxes[i].classList.toggle("double-order");
+          }
   }
+
+function toggleDisplayValueOfDoubleOrderButton() {
+  let doubleButtonEl = document.getElementById('doubleButton');
+  if (doubleButtonEl.value == '2X Order') {doubleButtonEl.value = `  \u27F2 1X  `} // string literal keeps button approx same size
+  else {doubleButtonEl.value="2X Order"}  //  Unicode escape sequence \u27F2 or \u21A9
 }
+
+function doubleOrderClick() {
+  toggleDoubleOrderWithArray();
+  toggleDisplayValueOfDoubleOrderButton();
+}
+
 function uncheckAll() {
   for (const id of allCheckboxes) {
   id.checked = false;
   }
-}
-function toggleDoubleOrderButton() {
-  let doubleButtonEl = document.getElementById('doubleButton');
-  if (doubleButtonEl.value == '2X order') {doubleButtonEl.value = `  \u27F2 1X  `} // string literal keeps button approx same size
-  else {doubleButtonEl.value="2X order"}  //  Unicode escape sequence \u27F2 or \u21A9
 }
 function myReload () { location.reload(); }  // reloads the current page from chache
 
