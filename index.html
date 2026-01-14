@@ -20,14 +20,15 @@
 //BODY/////////BODY//////////////BODY//////////////////////</p>
 <body x_onload="toggleDoubleOrder();" >
   
-<div class="container-fluid mt-3 ">
+<div class="container-fluid mt-2 ">
   <h1>Week4 SF Regular Menu</h1>
 </div>
   
-<div class="container-fluid ">
+<div class="container-fluid  border-bottom border-3 border-dark ">
   <form>
     
-    <button id="newButton" type="button" class="btn btn-primary" aria-label="New order" >
+    <button id="newButton" type="button" class="btn btn-primary" 
+    		aria-label="New order" >
       new 
     </button>
     <span id="date" class="ms-4"> 
@@ -35,14 +36,16 @@
     </span>
     
     <div class="mt-3 mb-1"  >  <!-- mb-3 mt-3"> -->
-      <label for="clientNameInput">Client Name:</label>
+      <label for="clientNameInput" class="form-label">
+      	Client Name:</label>
       
       <input type="text" class="form-control" id="clientNameInputEl" 
       		 placeholder="" name="email"  >
     </div>
     
     <div class="mb-3">
-      <label for="clientNumberInputEl">Client Number:</label>
+      <label for="clientNumberInputEl" class="form-label">
+      	Client Number:</label>
       
       <input type="text" class="form-control" id="clientNumberInputEl"
       		 placeholder="" name="pswd">
