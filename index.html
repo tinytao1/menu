@@ -11,7 +11,7 @@
   <style>
     body { background-color: #ffb699; } /* grey, or "actual paper" #ffa289, or lightened #ffb699  */
     .double-order { visibility: hidden; }
-
+	.client-details-input {  max-width: 400px; 	}
   </style>
   
 </head>
@@ -25,67 +25,72 @@
   <h1>Week4 SF Regular Menu</h1>
 </div>
   
-<div class="container-fluid  " > <!-- border-bottom border-2 border-dark "> -->
-  <form>
+<div id="main-form-wrapper-div" class="container-fluid  " > <!--border-bottom border-2 border-dark-->
+
+  <form id="main-form-tag">   
     
-    <button id="newButton" type="button" class="btn btn-primary" 
+    <button id="newButton" type="button" class="btn btn-sm btn-primary" 
     		aria-label="New order" >
-      new 
+      + date 
     </button>
-    <span id="date" class="ms-4"> 
-      Date:
+    <span id="date-El" class="ms-4"> 
+      
     </span>
     
-    <div class="mt-3 mb-1"  >  <!-- mb-3 mt-3"> -->
+    <div id="client-name-input" class="mt-3 mb-1"  >  <!-- --> 
       <label for="clientNameInput" class="">
       	Client Name:</label>
       
-      <input type="text" class="form-control" id="clientNameInputEl" 
+      <input type="text" class="form-control client-details-input" id="clientNameInputEl" 
       		 placeholder="" name="clientNameInputEl"  >
-    </div>
+    </div> <!-- client-name-input-->
     
-    <div class="mb-3">
+    <div id="client-number-input" class="mb-3">
       <label for="clientNumberInputEl" class="">
       	Client Number:</label>
       
-      <input type="text" class="form-control" id="clientNumberInputEl"
+      <input type="text" class="form-control client-details-input" id="clientNumberInputEl"
       		 placeholder="" name="clientNumberInputEl">
-    </div> 
-</div>
+    </div> <!-- client-number-input--> 
 
+<!-- there was a closing div here, unaccounted for -->
 
-<div id="optionsButtons" 
+<div id="top-button-row-div" 
 	 class="container-fluid mt-1 pb-1 
-     		border-bottom border-3 border-dark" >
+     		border-bottom border-3 border-dark" > 
 
-  <div class=""> <!-- dropdown class -->
+  <div id="language-dropdown-button-div" class="dropdown add-language-button" >
   
     <button type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown">
-      Options
+      + Language
     </button>
     
     <ul class="dropdown-menu">
-      <li><a class="dropdown-item" href="#">2X order</a></li>
-      <li><a class="dropdown-item" href="#">+ language</a></li>
-      <li><a class="dropdown-item" href="#">+ comment</a></li>
+      <li><button class="dropdown-item"  >+ Spanish</button></li>
+      <li><button class="dropdown-item"  >+ Mandarin</button></li>
+      <li><button class="dropdown-item"  >+ Cantonese</button></li>
     </ul>
     
     <span class="ps-3">
-    	<button type="button" class="btn btn-secondary " >
-    	Reset form </button>
+    	<button type="button" class="btn btn-success " >
+    	2X Order </button>
 	</span>
     
-  </div>
-</div>
+    <span class="ps-3">
+    	<button type="reset" class="btn btn-secondary " >
+    	Reset </button>
+	</span>
+        
+  </div> <!-- language-dropdown-button-div -->
+</div> 	<!-- top-button-row-div-->
 
 
 
 
 
   
-</form>
-</div>
-
+</form> <!-- main-form-tag	-->
+</div> <!-- main-form-wrapper-div --> 
   
 <div class="container-fluid bg-secondary text-white">
 <p>test functions <br>
