@@ -28,14 +28,12 @@
 <div id="main-form-wrapper-div" class="container-fluid  " > <!--border-bottom border-2 border-dark-->
 
   <form id="main-form-tag">   
-    
+    <!--
     <button id="newButton" type="button" class="btn btn-sm btn-primary" 
     		aria-label="New order" >
       + date 
-    </button>
-    <span id="date-El" class="ms-4"> 
-      
-    </span>
+    </button> -->
+    <p id="date-el" class="ms-4"> date </p>
     
     <div id="client-name-input" class="mt-3 mb-1"  >  <!-- --> 
       <label for="clientNameInput" class="">
@@ -103,7 +101,7 @@
        class="btn btn-success btn-sm"
        >
        
-      <script>//console.log(r1cb4);</script>
+<script>//console.log(r1cb4);</script>
       
 <input value="2X Order" type="button"
        id="doubleButton"
@@ -160,6 +158,8 @@
 <script src="functions.js"></script>
 <script src="event-listn.js"></script>
 <script>
+document.getElementById("date-el").innerHTML = dateOverTime();
+
 // document.getElementById('doubleButton').addEventListener('click', toggleDoubleOrderButton); // location.reload); 
 {
 const chbxRow = ["cb1","cb2","cb3","cb4","cb5","cb6"];
