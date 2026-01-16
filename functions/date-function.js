@@ -12,7 +12,7 @@ const formattedDate =
 new Intl.DateTimeFormat('en-US', options).format(date);
 // Example output for the time of this response: "December 20, 2025 at 5:42 PM"
 
-const ALSO_THIS;
+const ALSO_THIS = 0;
 
 const date2 = new Date();
 
