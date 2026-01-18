@@ -1,12 +1,14 @@
 // console.log('okay here');
 
 function resetWithConfirmation() {
-  if (confirm("Click OK to erase this form and start over.\nClick Cancel (or press Esc) to cancel this action.")) {
+  const message = "Click OK to erase this form and start over.\nClick Cancel (or press Esc) to cancel this action." ;
+  const groceryFormEl = document.getElementById("grocery-order-form") ;
+  if (confirm(message)) {
     // Proceed with the action, e.g., redirect to a deletion script
-    // myFormEl.reset();
+    groceryFormEl.reset();
   } else {
     // Do nothing or provide feedback that the action was cancelled
-    alert("Action cancelled.");
+    console.log("Reset action cancelled.") ;
   }
 }
 
