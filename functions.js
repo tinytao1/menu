@@ -1,4 +1,16 @@
 // console.log('okay here');
+
+function resetWithConfirmation() {
+  if (confirm("Click OK to erase this form and start over.\nClick Cancel (or press Esc) to cancel this action.")) {
+    // Proceed with the action, e.g., redirect to a deletion script
+    // myFormEl.reset();
+  } else {
+    // Do nothing or provide feedback that the action was cancelled
+    alert("Action cancelled.");
+  }
+}
+
+
 function toggleDoubleOrderWithArray()
   { for (let i = 0; i < allDoubleOrderCheckboxes.length; i++) 
           {allDoubleOrderCheckboxes[i].classList.toggle("double-order");
