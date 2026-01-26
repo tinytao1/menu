@@ -10,6 +10,11 @@ const s1 = {
   item1: {
     name: "Tilapia",
     count: null,
+    selected: false,
+    select: function() {
+      this.selected = true;
+      this.add1();
+    },
     otherItemButtonEls: [document.getElementById('s1-item2'),], 
     // s1.item1.el.   is a button
     buttonEl: document.getElementById('s1-item1'),
