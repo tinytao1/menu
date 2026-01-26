@@ -12,7 +12,6 @@ const s1 = {
     count: null,
     selected: false,
     select: function() {
-      this.selected = true;
       this.add1();
     },
     deselect: function() {
@@ -32,11 +31,12 @@ const s1 = {
                   this.deselect();
                   enableNonselectedItemButtons();
                 } else {
-                ++this.count;
-                ++s1.count;
-                this.showCount();
-                if (s1.count == s1.limit) {
-                  disableNonselectedItemButtons();
+                  this.selected = true;
+                  ++this.count;
+                  ++s1.count;
+                  this.showCount();
+                  if (s1.count == s1.limit) {
+                    disableNonselectedItemButtons();
                   }
                 }
               },
@@ -48,9 +48,9 @@ const s1 = {
     showCount: function() {
                 this.displayCountEl.innerHTML = this.count;
                 this.displayCountEl.style.display='inline';
-              },
-    },
-  };
+               },
+    }, // item1 object close bracket
+  }; // s1 object close bracket
 
 s1.item1.buttonEl.
   addEventListener('click', function() { 
@@ -58,7 +58,7 @@ s1.item1.buttonEl.
                               console.log( s1.item1.name + " count is: " + s1.item1.count ); // alert( s1.item1.count); 
                               console.log( "Section 1 count: " + s1.count);
                               }
-                  );
+                  ); // addEventListener close parameters bracket.
 
 function disableNonselectedItemButtons() {
   // replace this with a loop that disables items 
