@@ -15,6 +15,9 @@ const s1 = {
       this.selected = true;
       this.add1();
     },
+    deselect: function() {
+      this.selected = false;
+    }, 
     otherItemButtonEls: [document.getElementById('s1-item2'),], 
     // s1.item1.el.   is a button
     buttonEl: document.getElementById('s1-item1'),
@@ -26,15 +29,14 @@ const s1 = {
                   s1.count = s1.count - this.count;
                   this.count = 0;
                   this.hideCount();
-                  // enable non-selected items
-                  document.getElementById('s1-item2').disabled=false;
+                  this.deselect();
+                  enableNonselectedItemButtons();
                 } else {
                 ++this.count;
                 ++s1.count;
                 this.showCount();
                 if (s1.count == s1.limit) {
-                  // disable non-selected items
-                  document.getElementById('s1-item2').disabled=true;
+                  disableNonselectedItemButtons();
                   }
                 }
               },
@@ -57,6 +59,20 @@ s1.item1.buttonEl.
                               console.log( "Section 1 count: " + s1.count);
                               }
                   );
+
+function disableNonselectedItemButtons() {
+  // replace this with a loop that disables items 
+  // set to selected = false.
+  document.getElementById('s1-item2').disabled=true;
+}
+
+function enableNonselectedItemButtons() {
+  // replace this with a loop that enables items 
+  // set to selected = false.
+  document.getElementById('s1-item2').disabled=false;
+}
+
+document.getElementById('s1-item2').disabled=false;
 
 document.getElementById('hide').
   addEventListener('click', function() { 
