@@ -6,7 +6,7 @@ const s1 = {
   count: null,
   selectedItems: [],
   // OR include all to start, then remove each as they are selected.
-  nonSelectedItems: [],
+  nonSelectedItemsArray: [],
   
   item1: {
     name: "Tilapia",
