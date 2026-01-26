@@ -55,7 +55,7 @@ const s1 = {
 
 s1.item1.buttonEl.
   addEventListener('click', function() { 
-                              s1.item1.add1(); // hideTheCountDisplay();
+                              s1.item1.select(); // previously add1(). HideTheCountDisplay();
                               console.log( s1.item1.name + " count is: " + s1.item1.count ); // alert( s1.item1.count); 
                               console.log( "Section 1 count: " + s1.count);
                               }
