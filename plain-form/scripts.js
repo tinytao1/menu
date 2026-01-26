@@ -1,6 +1,7 @@
 'use strict'
 
 const s1 = {
+  name: "Proteins",
   limit: 2,
   count: null,
   selectedItems: [],
