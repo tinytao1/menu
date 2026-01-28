@@ -1,9 +1,21 @@
 body { background-color: dimgrey; }
 
-.displayCount { 
-  color: ; 
-  font-weight: bold; 
-  margin-left: 10px;
-  font-size: 22px;
+.itemButton {
+  display:inline-block;
+  width: 150px;
+  margin-bottom: 5px;
+  margin-top: px;
+  }
+
+.displayItemCount { 
+  display:inline-block;
+  text-align: center;
+  width: 18px;
+  visibility: hidden  ; 
+  color: ;
+  font-weight: bold;
+  border-radius: 4px;
+  margin-left: 7px;
+  font-size: 18px;
   background-color: white;
   }

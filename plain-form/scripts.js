@@ -1,23 +1,15 @@
 'use strict'
 
 const s1 = {
-  name: "Proteins",
   limit: 2,
   count: null,
   selectedItems: [],
   // OR include all to start, then remove each as they are selected.
-  nonSelectedItemsArray: [],
+  nonSelectedItems: [],
   
   item1: {
     name: "Tilapia",
     count: null,
-    selected: false,
-    select: function() {
-      this.add1();
-    },
-    deselect: function() {
-      this.selected = false;
-    }, 
     otherItemButtonEls: [document.getElementById('s1-item2'),], 
     // s1.item1.el.   is a button
     buttonEl: document.getElementById('s1-item1'),
@@ -29,51 +21,37 @@ const s1 = {
                   s1.count = s1.count - this.count;
                   this.count = 0;
                   this.hideCount();
-                  this.deselect();
-                  enableNonselectedItemButtons();
+                  // enable non-selected items
+                  document.getElementById('s1-item2').disabled=false;
                 } else {
-                  this.selected = true;
-                  ++this.count;
-                  ++s1.count;
-                  this.showCount();
-                  if (s1.count == s1.limit) {
-                    disableNonselectedItemButtons();
+                ++this.count;
+                ++s1.count;
+                this.showCount();
+                if (s1.count == s1.limit) {
+                  // disable non-selected items
+                  document.getElementById('s1-item2').disabled=true;
                   }
                 }
               },
     // s1.item1.hideCount()
     hideCount: function() {
-                this.displayCountEl.style.display='none';
+                this.displayCountEl.style.visibility='hidden';
               },
     // s1.item1.showCount()          
     showCount: function() {
                 this.displayCountEl.innerHTML = this.count;
-                this.displayCountEl.style.display='inline';
-               },
-    }, // item1 object close bracket
-  }; // s1 object close bracket
+                this.displayCountEl.style.visibility='visible';
+              },
+    },
+  };
 
 s1.item1.buttonEl.
   addEventListener('click', function() { 
-                              s1.item1.select(); // previously add1(). HideTheCountDisplay();
+                              s1.item1.add1(); // hideTheCountDisplay();
                               console.log( s1.item1.name + " count is: " + s1.item1.count ); // alert( s1.item1.count); 
                               console.log( "Section 1 count: " + s1.count);
                               }
-                  ); // addEventListener close parameters bracket.
-
-function disableNonselectedItemButtons() {
-  // replace this with a loop that disables items 
-  // set to selected = false.
-  document.getElementById('s1-item2').disabled=true;
-}
-
-function enableNonselectedItemButtons() {
-  // replace this with a loop that enables items 
-  // set to selected = false.
-  document.getElementById('s1-item2').disabled=false;
-}
-
-document.getElementById('s1-item2').disabled=false;
+                  );
 
 document.getElementById('hide').
   addEventListener('click', function() { 
