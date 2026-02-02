@@ -7,25 +7,51 @@
   text-align: center;
   width:15px;
   }
-.itemBtn {
-  margin-bottom:5px;
-  }
+.itemBtn {margin-bottom:5px;width:125px;}
 </style>
 </head>
 <body>
-<h2>The onclick Attribute</h2>
+<p>The onclick Attribute</p>
 
 <button type='button' id='item1Btn' class='itemBtn'>
 	Item 1</button>
 <span id="countDisplay">&nbsp;</span> <br>
 
-<button type='button' id='item1Btn'>Item 1</button>
-<span id="countDisplay">&nbsp;</span>
+<button type='button' id='item2Btn' class='itemBtn'>
+	Item 2</button>
+<span id="countDisplay">&nbsp;</span> <br>
+
+<button type='button' id='item3Btn' class='itemBtn'>
+	Item 3</button>
+<span id="countDisplay">&nbsp;</span> <br>
+
+<button type='button' id='item4Btn' class='itemBtn'>
+	Item 4</button>
+<span id="countDisplay">&nbsp;</span> <br>
+
+<button type='button' id='item5Btn' class='itemBtn'>
+	Item 5</button>
+<span id="countDisplay">&nbsp;</span> <br>
+
+<button type='button' id='item6Btn' class='itemBtn'>
+	Item 6</button>
+<span id="countDisplay">&nbsp;</span> <br>
+
+<button type='button' id='item7Btn' class='itemBtn'>
+	Item 7</button>
+<span id="countDisplay">&nbsp;</span> <br>
+
+<button type='button' id='item8Btn' class='itemBtn'>
+	Item 8</button>
+<span id="countDisplay">&nbsp;</span> <br>
 
 <script>
 let count = 0;
 let limit = 2;
 const item1BtnEl = document.getElementById('item1Btn');
+const item2BtnEl = document.getElementById('item2Btn');
+//item2BtnEl.disabled=true;
+
 const countDisplayEl = document.getElementById('countDisplay');
 const blankSpace = "&nbsp;";
 
@@ -42,22 +68,38 @@ function select() {
     }
 }
 
+const itemBtns = [document.getElementById('item2Btn'),];
+
+for (let itemBtn of itemBnts) {
+	itemBtn.disabled = true;  }
+
+/*
+,item3BtnEl,item4BtnEl,item5BtnEl,item6BtnEl,item7BtnEl,item8BtnEl
+
+
+const item3BtnEl = document.getElementById('item3Btn');
+const item4BtnEl = document.getElementById('item4Btn');
+const item5BtnEl = document.getElementById('item5Btn');
+const item6BtnEl = document.getElementById('item6Btn');
+const item7BtnEl = document.getElementById('item7Btn');
+const item8BtnEl = document.getElementById('item8Btn');
 
 
 
 
+for (const fruit of fruits) {
+  console.log(fruit);
+}
+ for (variable of iterable) {
+  // code to be executed in each iteration
+}
+const fruits = ['apple', 'banana', 'cherry'];
 
-
-
-
-
-
-
-
-
-
-
-
+// Output:
+// apple
+// banana
+// cherry
+*/
 
 
 </script>
