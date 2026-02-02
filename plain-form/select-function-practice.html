@@ -1,0 +1,66 @@
+<!DOCTYPE html> <html><head>
+<style>
+#countDisplay {
+  background-color:gainsboro;
+  display:inline-block;
+  margin-left: 10px;
+  text-align: center;
+  width:15px;
+  }
+.itemBtn {
+  margin-bottom:5px;
+  }
+</style>
+</head>
+<body>
+<h2>The onclick Attribute</h2>
+
+<button type='button' id='item1Btn' class='itemBtn'>
+	Item 1</button>
+<span id="countDisplay">&nbsp;</span> <br>
+
+<button type='button' id='item1Btn'>Item 1</button>
+<span id="countDisplay">&nbsp;</span>
+
+<script>
+let count = 0;
+let limit = 2;
+const item1BtnEl = document.getElementById('item1Btn');
+const countDisplayEl = document.getElementById('countDisplay');
+const blankSpace = "&nbsp;";
+
+item1Btn.addEventListener('click', select);
+
+function select() {
+  if (count == limit) {
+    count = 0 ;
+    countDisplayEl.innerHTML = blankSpace;
+    }
+  else {
+    count++;
+    countDisplayEl.innerHTML = count;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+</body>
+</html>
