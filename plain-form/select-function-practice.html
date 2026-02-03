@@ -1,11 +1,11 @@
 <!DOCTYPE html> <html><head>
 <style>
-#countDisplay {
+.countDisplay {
   background-color:gainsboro;
   display:inline-block;
   margin-left: 10px;
   text-align: center;
-  width:15px;
+  width:15px; border-radius:3px;
   }
 .itemBtn {margin-bottom:5px;width:125px;}
 </style>
@@ -15,99 +15,37 @@
 
 <button type='button' id='item1Btn' class='itemBtn'>
 	Item 1</button>
-<span id="countDisplay">&nbsp;</span> <br>
+<span id="countDisplay1" class='countDisplay' >&nbsp;</span> <br>
 
 <button type='button' id='item2Btn' class='itemBtn'>
 	Item 2</button>
-<span id="countDisplay">&nbsp;</span> <br>
+<span id="countDisplay2" class='countDisplay' >&nbsp;</span> <br>
 
 <button type='button' id='item3Btn' class='itemBtn'>
 	Item 3</button>
-<span id="countDisplay">&nbsp;</span> <br>
+<span id="countDisplay3" class='countDisplay' >&nbsp;</span> <br>
 
 <button type='button' id='item4Btn' class='itemBtn'>
 	Item 4</button>
-<span id="countDisplay">&nbsp;</span> <br>
+<span id="countDisplay4" class='countDisplay' >&nbsp;</span> <br>
 
 <button type='button' id='item5Btn' class='itemBtn'>
 	Item 5</button>
-<span id="countDisplay">&nbsp;</span> <br>
+<span id="countDisplay5" class='countDisplay' >&nbsp;</span> <br>
 
 <button type='button' id='item6Btn' class='itemBtn'>
 	Item 6</button>
-<span id="countDisplay">&nbsp;</span> <br>
+<span id="countDisplay6" class='countDisplay' >&nbsp;</span> <br>
 
 <button type='button' id='item7Btn' class='itemBtn'>
 	Item 7</button>
-<span id="countDisplay">&nbsp;</span> <br>
+<span id="countDisplay7" class='countDisplay' >&nbsp;</span> <br>
 
 <button type='button' id='item8Btn' class='itemBtn'>
 	Item 8</button>
-<span id="countDisplay">&nbsp;</span> <br>
+<span id="countDisplay8" class='countDisplay' >&nbsp;</span> <br>
 
 <script>
-
-const section1 = {
-  limit: 2,
-  count: 0,
-  
-  
-  item1: {
-    name		: 'Tilapia',
-    isSelected	: false,
-    count		: 0
-  }
-  
-  
-  item2: {
-    name		: 'Chicken Breast',
-    isSelected	: false,
-    count		: 0
-  }
-  
-  
-  item3: {
-    name		: 'Pork Chop',
-    isSelected	: false,
-    count		: 0
-  }
-  
-  
-  item4: {
-    name		: 'Tempeh',
-    isSelected	: false,
-    count		: 0
-  }
-  
-  
-  item5: {
-    name		: 'Tuna',
-    isSelected	: false,
-    count		: 0
-  }
-  
-  
-  item6: {
-    name		: 'Protein Trail Mix',
-    isSelected	: false,
-    count		: 0
-  }
-  
-  
-  item7: {
-    name		: 'Tofu -Firm',
-    isSelected	: false,
-    count		: 0
-  }
-  
-  
-  item8: {
-    name		: 'Tempeh Cauliflower Patty',
-    isSelected	: false,
-    count		: 0,
-    limit		: 1
-  }
-}
 
 
 let count = 0;
@@ -121,16 +59,96 @@ const item6BtnEl = document.getElementById('item6Btn');
 const item7BtnEl = document.getElementById('item7Btn');
 const item8BtnEl = document.getElementById('item8Btn');
 
-// item1BtnEl.innerHTML = section1.item1.isSelected;
-//item2BtnEl.disabled=true;
-
-const countDisplayEl = document.getElementById('countDisplay');
+const countDisplayEl = document.getElementById('countDisplay1');
 const blankSpace = "&nbsp;";
 
 item1Btn.addEventListener('click', select);
 
+// section1.item8.select();
+// item7BtnEl.innerHTML = section1.item8.select;
+// item2BtnEl.disabled=true;
+
+const section1 = {	// Define section1 object
+  limit: 2,
+  count: 0,
+  
+  
+  item1: {
+    name		: 'Tilapia',
+    isSelected	: false,
+    count		: 0
+  },
+  
+  
+  item2: {
+    name		: 'Chicken Breast',
+    isSelected	: false,
+    count		: 0
+  },
+  
+  
+  item3: {
+    name		: 'Pork Chop',
+    isSelected	: false,
+    count		: 0
+  },
+  
+  
+  item4: {
+    name		: 'Tempeh',
+    isSelected	: false,
+    count		: 0
+  },
+  
+  
+  item5: {
+    name		: 'Tuna',
+    isSelected	: false,
+    count		: 0
+  },
+  
+  
+  item6: {
+    name		: 'Protein Trail Mix',
+    isSelected	: false,
+    count		: 0
+  },
+  
+  
+  item7: {
+    name		: 'Tofu -Firm',
+    isSelected	: false,
+    count		: 0
+  },
+  
+  
+  item8: {
+    name		: 'Tempeh Cauliflower Patty',
+    isSelected	: false,
+    count		: 0,
+    limit		: 1,
+    
+    select		: function() {
+      if (this.count == this.limit) { // If this count = this limit then:
+        this.count = 0; // Count returns to zero,
+        // Display blank space for count,
+      } else {
+        this.count++;
+        }
+    }
+  },
+};
+/*
+const item8BtnEl = document.getElementById('item8Btn');
+
+const countDisplayEl = document.getElementById('countDisplay1');
+const blankSpace = "&nbsp;";
+
+item1Btn.addEventListener('click', select);
+*/
+
 function select() {
-  if (count == limit) {  // If count is already at the limit, then:
+  if (count == limit) {  // If count is already at the limit then:
     count = 0 ;			// Count returns to zero,
     // isSelected' property returns to false,
     // Item count is subtracted from section count,
