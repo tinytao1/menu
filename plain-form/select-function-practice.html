@@ -11,7 +11,7 @@
 </style>
 </head>
 <body>
-<p>The onclick Attribute</p>
+<p id='demo'>-- test space --</p>
 
 <button type='button' id='item1Btn' class='itemBtn'>
 	Item 1</button>
@@ -46,10 +46,82 @@
 <span id="countDisplay">&nbsp;</span> <br>
 
 <script>
+
+const section1 = {
+  limit: 2,
+  count: 0,
+  
+  
+  item1: {
+    name		: 'Tilapia',
+    isSelected	: false,
+    count		: 0
+  }
+  
+  
+  item2: {
+    name		: 'Chicken Breast',
+    isSelected	: false,
+    count		: 0
+  }
+  
+  
+  item3: {
+    name		: 'Pork Chop',
+    isSelected	: false,
+    count		: 0
+  }
+  
+  
+  item4: {
+    name		: 'Tempeh',
+    isSelected	: false,
+    count		: 0
+  }
+  
+  
+  item5: {
+    name		: 'Tuna',
+    isSelected	: false,
+    count		: 0
+  }
+  
+  
+  item6: {
+    name		: 'Protein Trail Mix',
+    isSelected	: false,
+    count		: 0
+  }
+  
+  
+  item7: {
+    name		: 'Tofu -Firm',
+    isSelected	: false,
+    count		: 0
+  }
+  
+  
+  item8: {
+    name		: 'Tempeh Cauliflower Patty',
+    isSelected	: false,
+    count		: 0,
+    limit		: 1
+  }
+}
+
+
 let count = 0;
 let limit = 2;
 const item1BtnEl = document.getElementById('item1Btn');
 const item2BtnEl = document.getElementById('item2Btn');
+const item3BtnEl = document.getElementById('item3Btn');
+const item4BtnEl = document.getElementById('item4Btn');
+const item5BtnEl = document.getElementById('item5Btn');
+const item6BtnEl = document.getElementById('item6Btn');
+const item7BtnEl = document.getElementById('item7Btn');
+const item8BtnEl = document.getElementById('item8Btn');
+
+// item1BtnEl.innerHTML = section1.item1.isSelected;
 //item2BtnEl.disabled=true;
 
 const countDisplayEl = document.getElementById('countDisplay');
@@ -58,22 +130,52 @@ const blankSpace = "&nbsp;";
 item1Btn.addEventListener('click', select);
 
 function select() {
-  if (count == limit) {
-    count = 0 ;
+  if (count == limit) {  // If count is already at the limit, then:
+    count = 0 ;			// Count returns to zero,
+    // isSelected' property returns to false,
+    // Item count is subtracted from section count,
+    reactivateButtonsOnUnselectedItems() // reactivate buttons on items that have not been selected.
     countDisplayEl.innerHTML = blankSpace;
     }
   else {
     count++;
     countDisplayEl.innerHTML = count;
     }
+  if (count == limit) { // If count has now reached the limit, then:
+  	deactivateButtonsOnUnselectedItems() // deactivate buttons on items that have not been selected.
+    } 
 }
 
-const itemBtns = [document.getElementById('item2Btn'),];
+
+//for ( let i = 0;  ( i < 1 ) ;	 i++) 
+{
+ // deactivateWhenLimitIsReached()
+}
+const itemBtnElementsArray = [ item7BtnEl ];
+let len = itemBtnElementsArray.length;
+
+// for ( let i = 0;  ( i < len ) ;	 i++) 
+
+
+
+// document.getElementById('demo').innerHTML=
+//	itemBtnElementsArray.length;
+
+function deactivateButtonsOnUnselectedItems() {
+	item8BtnEl.disabled=true;
+    }
+
+function reactivateButtonsOnUnselectedItems() {
+	item8BtnEl.disabled=false;
+    }
+
+/*
 
 for (let itemBtn of itemBnts) {
 	itemBtn.disabled = true;  }
 
-/*
+const itemBtns = [document.getElementById('item2Btn'),];
+
 ,item3BtnEl,item4BtnEl,item5BtnEl,item6BtnEl,item7BtnEl,item8BtnEl
 
 
