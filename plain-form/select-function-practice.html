@@ -134,7 +134,7 @@ const section1 = {	// Define section1 object
   
   
   item7: {
-    name		: 'Tofu -Firm',
+    name		: 'Tofu - Firm',
     isSelected	: false,
     count		: 0
   },
@@ -194,7 +194,16 @@ function select() {
 const itemBtnElementsArray = [ item7BtnEl ];
 let len = itemBtnElementsArray.length;
 
-// for ( let i = 0;  ( i < len ) ;	 i++) 
+for ( let i = 0;  ( i < len ) ;	 i++) {
+  nameButtons()
+  }
+
+
+
+function nameButtons() {
+  item7BtnEl.innerHTML= section1.item7.name;
+
+}
 
 
 
@@ -210,8 +219,6 @@ function reactivateButtonsOnUnselectedItems() {
     }
 
 
-
-item7BtnEl.innerHTML= section1.item7.name;
 
 
 /*
