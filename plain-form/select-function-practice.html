@@ -5,7 +5,7 @@
   display:inline-block;
   margin-left: 10px;
   text-align: center;
-  width:15px; border-radius:3px;
+  min-width:15px; border-radius:3px;
   }
 .itemBtn {margin-bottom:5px;width:125px;}
 </style>
@@ -50,6 +50,7 @@
 
 let count = 0;
 let limit = 2;
+
 const item1BtnEl = document.getElementById('item1Btn');
 const item2BtnEl = document.getElementById('item2Btn');
 const item3BtnEl = document.getElementById('item3Btn');
@@ -59,11 +60,26 @@ const item6BtnEl = document.getElementById('item6Btn');
 const item7BtnEl = document.getElementById('item7Btn');
 const item8BtnEl = document.getElementById('item8Btn');
 
-const countDisplayEl = document.getElementById('countDisplay1');
+const countDisplay1El = document.getElementById('countDisplay1');
+const countDisplay2El = document.getElementById('countDisplay2');
+const countDisplay3El = document.getElementById('countDisplay3');
+const countDisplay4El = document.getElementById('countDisplay4');
+const countDisplay5El = document.getElementById('countDisplay5');
+const countDisplay6El = document.getElementById('countDisplay6');
+const countDisplay7El = document.getElementById('countDisplay7');
+const countDisplay8El = document.getElementById('countDisplay8');
+
 const blankSpace = "&nbsp;";
 
-item1Btn.addEventListener('click', select);
+// countDisplay5El.innerHTML="test"; // Test
 
+item1BtnEl.addEventListener('click', select);
+
+
+/* button.addEventListener('click', () => {
+    myObject.nested.myMethod();
+ });
+*/
 // section1.item8.select();
 // item7BtnEl.innerHTML = section1.item8.select;
 // item2BtnEl.disabled=true;
@@ -125,23 +141,35 @@ const section1 = {	// Define section1 object
   item8: {
     name		: 'Tempeh Cauliflower Patty',
     isSelected	: false,
-    count		: 0,
+    count		: 9,
     limit		: 1,
     
     select		: function() {
-      if (this.count == this.limit) { // If this count = this limit then:
-        this.count = 0; // Count returns to zero,
-        // Display blank space for count,
-      } else {
-        this.count++;
-        }
+      alert(55);
     }
-  },
+  }
 };
+
+item8BtnEl.addEventListener('click', () => {
+	section1.item8.select();
+    } );
 /*
+item8BtnEl.addEventListener('click', select);
+
+
+    
+if (this.count == this.limit) { // If this count = this limit then:
+        this.count = 0; // this count returns to zero,
+        countDisplay8El.innerHTML = blankSpace; // Display blank space for count,
+      } else {
+        this.count++; // Increase count by 1,
+        countDisplay8El.innerHTML = this.count; // Display this count,
+        }
+
+ countDisplay8El.innerHTML = section1.item8.count; 
 const item8BtnEl = document.getElementById('item8Btn');
 
-const countDisplayEl = document.getElementById('countDisplay1');
+const countDisplay1El = document.getElementById('countDisplay1');
 const blankSpace = "&nbsp;";
 
 item1Btn.addEventListener('click', select);
@@ -153,11 +181,11 @@ function select() {
     // isSelected' property returns to false,
     // Item count is subtracted from section count,
     reactivateButtonsOnUnselectedItems() // reactivate buttons on items that have not been selected.
-    countDisplayEl.innerHTML = blankSpace;
+    countDisplay1El.innerHTML = blankSpace;
     }
   else {
     count++;
-    countDisplayEl.innerHTML = count;
+    countDisplay1El.innerHTML = count;
     }
   if (count == limit) { // If count has now reached the limit, then:
   	deactivateButtonsOnUnselectedItems() // deactivate buttons on items that have not been selected.
