@@ -41,6 +41,8 @@
 	Item 7</button>
 <span id="countDisplay7" class='countDisplay' >&nbsp;</span> <br>
 
+<span id='' class=''>Item 8, limit: 1</span> 
+
 <button type='button' id='item8Btn' class='itemBtn'>
 	Item 8</button>
 <span id="countDisplay8" class='countDisplay' >&nbsp;</span> <br>
@@ -141,38 +143,30 @@ const section1 = {	// Define section1 object
   item8: {
     name		: 'Tempeh Cauliflower Patty',
     isSelected	: false,
-    count		: 9,
+    count		: 0,
     limit		: 1,
     
     select		: function() {
-      alert(55);
-    }
+      if (this.count == this.limit) { // If this count = this limit then:
+        this.count = 0; 			// this.count returns to zero,
+        section1.count = section1.count - this.limit;// Subtract this.limit from section1.limit,
+        // console.log(section1.count),
+        countDisplay8El.innerHTML = blankSpace; // Display blankSpace,
+      } else {
+        this.count++;
+        countDisplay8El.innerHTML = this.count;
+        }
+     }
   }
 };
 
 item8BtnEl.addEventListener('click', () => {
 	section1.item8.select();
     } );
+
 /*
-item8BtnEl.addEventListener('click', select);
 
 
-    
-if (this.count == this.limit) { // If this count = this limit then:
-        this.count = 0; // this count returns to zero,
-        countDisplay8El.innerHTML = blankSpace; // Display blank space for count,
-      } else {
-        this.count++; // Increase count by 1,
-        countDisplay8El.innerHTML = this.count; // Display this count,
-        }
-
- countDisplay8El.innerHTML = section1.item8.count; 
-const item8BtnEl = document.getElementById('item8Btn');
-
-const countDisplay1El = document.getElementById('countDisplay1');
-const blankSpace = "&nbsp;";
-
-item1Btn.addEventListener('click', select);
 */
 
 function select() {
@@ -214,6 +208,11 @@ function deactivateButtonsOnUnselectedItems() {
 function reactivateButtonsOnUnselectedItems() {
 	item8BtnEl.disabled=false;
     }
+
+
+
+item7BtnEl.innerHTML= section1.item7.name;
+
 
 /*
 
