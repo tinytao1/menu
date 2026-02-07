@@ -2,7 +2,7 @@
 
 .btn {
 	margin-bottom:5px;
-    width:100px;
+    width:120px;
 }
 
 </style>
@@ -25,13 +25,72 @@
 	click </button> <br>
 
 <script>
+let demo = document.getElementById("demo");
 
 let a1 = document.getElementById("a1");
 let a2 = document.getElementById("a2");
 let a3 = document.getElementById("a3");
 let a4 = document.getElementById("a4");
 
-const all = [a1,a2,a3,a4]
+a1.addEventListener('click', function() { 
+	s1.item1.select();
+    // deactivateLoop();
+});
+
+demo.addEventListener("mouseover", function () {
+  reactivateLoop();
+});
+
+const all = [a1,a2,a3,a4];
+
+const s1 = {
+
+	count : 0,
+    
+    item1: {
+    	name:"Tilapia",
+        selected: false,
+        count: 0,
+        select: function() {
+        	this.count++;//alert(5);
+            a1.innerHTML = s1.item1.name + " " + this.count;
+            }
+        },
+        
+    item2: {
+    	name:"Pork Chop",
+        selected: false,
+        count: 0
+        }
+};
+
+ a1.innerHTML = s1.item1.name;
+ a2.innerHTML = s1.item2.name;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function deactivateLoop() {
 	for (var i = 0;
@@ -41,8 +100,15 @@ function deactivateLoop() {
  	}
 }
 
-deactivateLoop();
+function reactivateLoop() {
+	for (var i = 0;
+    	 i < all.length;
+         i++ ) {
+    all[i].disabled = false;
+ 	}
+}
 
+//deactivateLoop();
 
 document.getElementById("demo").innerHTML = 5 + " para";
 
