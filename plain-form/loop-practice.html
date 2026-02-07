@@ -1,0 +1,71 @@
+<!DOCTYPE html><html><head><style>
+
+.btn {
+	margin-bottom:5px;
+    width:100px;
+}
+
+</style>
+</head>
+<body>
+
+<h2>heading</h2>
+
+<p> click "Run" button to view </p>
+
+<p id="demo"></p>
+
+<button type='button' id='a1' class='btn'>
+	click </button> <br>
+<button type='button' id='a2' class='btn'>
+	click </button> <br>
+<button type='button' id='a3' class='btn'>
+	click </button> <br>
+<button type='button' id='a4' class='btn'>
+	click </button> <br>
+
+<script>
+
+let a1 = document.getElementById("a1");
+let a2 = document.getElementById("a2");
+let a3 = document.getElementById("a3");
+let a4 = document.getElementById("a4");
+
+const all = [a1,a2,a3,a4]
+
+function deactivateLoop() {
+	for (var i = 0;
+    	 i < all.length;
+         i++ ) {
+    a3.disabled = true;
+ 	}
+}
+
+deactivateLoop();
+
+
+document.getElementById("demo").innerHTML = 5 + " para";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+</body>
+</html>
