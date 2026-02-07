@@ -46,16 +46,30 @@ const all = [a1,a2,a3,a4];
 const s1 = {
 
 	count : 0,
+    limit: 2,
     
     item1: {
     	name:"Tilapia",
         selected: false,
         count: 0,
-        select: function() {
-        	this.count++;//alert(5);
-            a1.innerHTML = s1.item1.name + " " + this.count;
+        limit: null,
+        
+        updateButtonName: function() {
+          a1.innerHTML = s1.item1.name + " " + this.count;
+          if (this.count == s1.limit) { 
+            deactivateAllBtns();
+              if () {
+
+              }
             }
         },
+        
+        select: function() {
+        	this.count++;
+            this.selected = true;
+            this.updateButtonName();
+            },
+    },
         
     item2: {
     	name:"Pork Chop",
@@ -91,8 +105,7 @@ const s1 = {
 
 
 
-
-function deactivateLoop() {
+function deactivateAllBtns() {
 	for (var i = 0;
     	 i < all.length;
          i++ ) {
