@@ -55,7 +55,19 @@ const s1 = {
       */
     },
     
+    reactivateAllItemButtons: function() {
+      s1.item1.button.disabled = false;
+      s1.item2.button.disabled = false;
+      //s1.item4.button.disabled = false;
+      //s1.item3.button.disabled = false;
+      
+    },
+    
     displayCount: document.getElementById("s1-count"),
+    
+    displaySectionCount: function() {
+      this.displayCount.innerHTML = "Section count: " + this.count;
+    },
     
     item1: {
     	name:"Tilapia",
@@ -65,21 +77,36 @@ const s1 = {
         button: document.getElementById("a1"), 
         
         updateButtonName: function() {
-          a1.innerHTML = s1.item1.name + " " + this.count;
+          if (this.selected == true) {
+          this.button.innerHTML = s1.item1.name + " " + this.count;
+          } else {this.button.innerHTML = s1.item1.name} // display w/o count
         },
         
         select: function() {
-        	this.count++;
-            s1.count++;
-            this.selected = true;
-            this.updateButtonName();
-            if (s1.count == s1.limit) { 
-            deactivateAllBtns();
-            s1.reactivateSelectedItemButtons();
-            }
-            if (this.count > s1.limit) { 
+        
+        	if (s1.count == s1.limit) {
+              s1.count = s1.count - this.count;
               this.count = 0;
+              this.selected = false;
+              s1.reactivateAllItemButtons();
+              this.updateButtonName();
+              s1.displaySectionCount();
             }
+            else {
+        	  this.count++;
+              s1.count++;
+              this.selected = true;
+              this.updateButtonName();
+              s1.displaySectionCount();
+            }
+            
+            if (s1.count == s1.limit) { 
+              deactivateAllBtns();
+              s1.reactivateSelectedItemButtons();
+              s1.displaySectionCount();
+            }
+            
+            
         }, 
     },
         
@@ -95,7 +122,6 @@ const s1 = {
 
  a1.innerHTML = s1.item1.name;
  a2.innerHTML = s1.item2.name;
-// s1.item1.button.innerHTML = 55;//s1.item1.name;
 
 
 
