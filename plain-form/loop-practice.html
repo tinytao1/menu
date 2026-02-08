@@ -13,7 +13,7 @@
 
 <p> click "Run" button to view </p>
 
-<p id="demo"></p>
+<p id="s1-count"></p>
 
 <button type='button' id='a1' class='btn'>
 	click </button> <br>
@@ -25,21 +25,12 @@
 	click </button> <br>
 
 <script>
-let demo = document.getElementById("demo");
 
 let a1 = document.getElementById("a1");
 let a2 = document.getElementById("a2");
 let a3 = document.getElementById("a3");
 let a4 = document.getElementById("a4");
 
-a1.addEventListener('click', function() { 
-	s1.item1.select();
-    // deactivateLoop();
-});
-
-demo.addEventListener("mouseover", function () {
-  reactivateLoop();
-});
 
 const all = [a1,a2,a3,a4];
 
@@ -47,38 +38,64 @@ const s1 = {
 
 	count : 0,
     limit: 2,
+    reactivateSelectedItemButtons: function() {
+      if (s1.item1.selected == true) {
+        s1.item1.button.disabled = false;
+      }
+      if (s1.item2.selected == true) {
+        s1.item2.button.disabled = false;
+      }
+      /*
+      if (s1.item1.selected == true) {
+        s1.item1.button.disabled = false;
+      }
+      if (s1.item1.selected == true) {
+        s1.item1.button.disabled = false;
+      }
+      */
+    },
+    
+    displayCount: document.getElementById("s1-count"),
     
     item1: {
     	name:"Tilapia",
         selected: false,
         count: 0,
         limit: null,
+        button: document.getElementById("a1"), 
         
         updateButtonName: function() {
           a1.innerHTML = s1.item1.name + " " + this.count;
-          if (this.count == s1.limit) { 
-            deactivateAllBtns();
-             // if () {   }
-            }
         },
         
         select: function() {
         	this.count++;
+            s1.count++;
             this.selected = true;
             this.updateButtonName();
-            },
+            if (s1.count == s1.limit) { 
+            deactivateAllBtns();
+            s1.reactivateSelectedItemButtons();
+            }
+            if (this.count > s1.limit) { 
+              this.count = 0;
+            }
+        }, 
     },
         
     item2: {
     	name:"Pork Chop",
         selected: false,
-        count: 0
+        count: 0,
+        limit: null,
+        button: document.getElementById("a2"), 
+        
         }
 };
 
  a1.innerHTML = s1.item1.name;
  a2.innerHTML = s1.item2.name;
-
+// s1.item1.button.innerHTML = 55;//s1.item1.name;
 
 
 
@@ -121,9 +138,16 @@ function reactivateLoop() {
 
 //deactivateLoop();
 
-document.getElementById("demo").innerHTML = 5 + " para";
+document.getElementById("s1-count").innerHTML = 5 + " para";
 
+a1.addEventListener('click', function() { 
+	s1.item1.select();
+    // deactivateLoop();
+});
 
+s1.displayCount.addEventListener("mouseover", function () {
+  s1.reactivateSelectedItemButtons();
+});
 
 
 
