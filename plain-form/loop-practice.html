@@ -68,38 +68,14 @@ const s1 = {
         count: 0,
         limit: null,
         button: document.getElementById("a1"), 
+        select: selectPrototype,  // method
         
         updateButtonName: function() {
           if (this.selected == true) {
           this.button.innerHTML = s1.item1.name + " " + this.count;
           } else {this.button.innerHTML = s1.item1.name} // display w/o count
-        },
-        
-        select: function() {
-        
-        	if (s1.count == s1.limit) {
-              s1.count = s1.count - this.count;
-              this.count = 0;
-              this.selected = false;
-              s1.reactivateAllItemButtons();
-              this.updateButtonName();
-              s1.displaySectionCount();
-            }
-            else {
-        	  this.count++;
-              s1.count++;
-              this.selected = true;
-              this.updateButtonName();
-              s1.displaySectionCount();
-            }
-            
-            if (s1.count == s1.limit) { 
-              deactivateAllBtns();
-              s1.reactivateSelectedItemButtons();
-              s1.displaySectionCount();
-            }
-        }, 
-    },
+   		 }, //  //  updateButtonName function close
+   },  //  item1 close   
         
     item2: {
     	name:"Pork Chop",
@@ -115,9 +91,7 @@ const s1 = {
           } else {this.button.innerHTML = s1.item2.name} // display w/o count
         },  //  updateButtonName function
     },  //  item2 close
-
-    
-};
+};  // s1 close
 
  a1.innerHTML = s1.item1.name;
  a2.innerHTML = s1.item2.name;
