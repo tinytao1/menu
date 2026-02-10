@@ -107,7 +107,7 @@ const s1 = {
         count: 0,
         limit: null,
         button: document.getElementById("a2"), 
-       // select: selectPrototype,  // method
+        select: selectPrototype,  // method
         
         updateButtonName: function() {
           if (this.selected == true) {
@@ -124,8 +124,8 @@ const s1 = {
 
 
 
-/*
-selectPrototype: function() {
+
+function selectPrototype() {
 
     if (s1.count == s1.limit) {
     s1.count = s1.count - this.count;
@@ -147,8 +147,8 @@ selectPrototype: function() {
     s1.reactivateSelectedItemButtons();
     s1.displaySectionCount();
   }
-},
-*/
+}
+
 
 
 
