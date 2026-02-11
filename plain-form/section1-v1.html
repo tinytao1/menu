@@ -213,17 +213,16 @@ function selectPrototype() {
 
 
 
-function enableAllButtons() {
-  s1.item1.buttonEl.disabled = true;
-  s1.item2.buttonEl.disabled = true;
-  s1.item3.buttonEl.disabled = true;
-  s1.item4.buttonEl.disabled = true;
-  s1.item5.buttonEl.disabled = true;
-  s1.item6.buttonEl.disabled = true;
-  s1.item7.buttonEl.disabled = true;
-  s1.item8.buttonEl.disabled = true;
+function disableAllButtons() {
+  s1.disabled = true;
+  s2.disabled = true;
+  s3.disabled = true;
+  s4.disabled = true;
+  s5.disabled = true;
+  s6.disabled = true;
+  s7.disabled = true;
+  s8.disabled = true;
 }  // enableAllButtons close
-
 
 
 
@@ -248,7 +247,7 @@ s1.item4.buttonEl.innerHTML = s1.item4.name;
 s1.item4.displayEl.innerHTML = s1.item4.count;
 
 //  s1.item1.buttonEl.disabled = true;
-s1.enableAllButtons();
+// s1.enableAllButtons();
 //  INITIAL LOAD COMMANDS END///////////////////////////////
 
 
