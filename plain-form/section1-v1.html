@@ -82,6 +82,44 @@ const s1 = {
   limit : 2,
   displayEl : document.getElementById("s1-count-display"), 
   
+  /*allButtonsArray : [this.item1.buttonEl, this.item2.buttonEl, this.item3.buttonEl, this.item4.buttonEl, this.item5.buttonEl, this.item6.buttonEl, this.item7.buttonEl, this.item8.buttonEl   ], */
+
+
+  enableAllButtons : function() {
+  
+  [this.item1.buttonEl, this.item2.buttonEl, this.item3.buttonEl, this.item4.buttonEl, this.item5.buttonEl, this.item6.buttonEl, this.item7.buttonEl, this.item8.buttonEl ]
+  
+  .forEach(item => disabled = true);
+  
+  },
+
+
+/*
+
+function enableAllButtons() {
+  [s1.item1, s1.item2, s1.item3, s1.item4, s1.item5, s1.item6, s1.item7, s1.item8]
+    .forEach(item => item.buttonEl.disabled = true);
+}
+
+  */
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   item1: {  ///////////////////////////////////
     
     name : "Tilapia",
@@ -145,6 +183,12 @@ const s1 = {
 
 };  // s1 close  ////////////////////////////////////
 
+function displayCount() {
+  s1.displayEl.innerHTML = "Protein count: " + s1.count;
+}
+
+
+
 function selectPrototype() {
 
     if (s1.count == s1.limit) {
@@ -152,26 +196,33 @@ function selectPrototype() {
     this.count = 0;
     this.selected = false;
     // s1.reactivateAllItemButtons();
-    // this.updateButtonName();
-    // s1.displaySectionCount();
+    s1.displayCount();
   }
   else {
     this.count++;
     s1.count++;
     this.selected = true;
-    // this.updateButtonName();
-    // s1.displaySectionCount();
+    s1.displayCount();
   }
   if (s1.count == s1.limit) { 
     // deactivateAllBtns();
     // s1.reactivateSelectedItemButtons();
-    // s1.displaySectionCount();
+    s1.displayCount();
   }
 }
 
 
 
-
+function enableAllButtons() {
+  s1.item1.buttonEl.disabled = true;
+  s1.item2.buttonEl.disabled = true;
+  s1.item3.buttonEl.disabled = true;
+  s1.item4.buttonEl.disabled = true;
+  s1.item5.buttonEl.disabled = true;
+  s1.item6.buttonEl.disabled = true;
+  s1.item7.buttonEl.disabled = true;
+  s1.item8.buttonEl.disabled = true;
+}  // enableAllButtons close
 
 
 
@@ -196,7 +247,8 @@ s1.item3.displayEl.innerHTML = s1.item3.count;
 s1.item4.buttonEl.innerHTML = s1.item4.name;
 s1.item4.displayEl.innerHTML = s1.item4.count;
 
-
+//  s1.item1.buttonEl.disabled = true;
+s1.enableAllButtons();
 //  INITIAL LOAD COMMANDS END///////////////////////////////
 
 
