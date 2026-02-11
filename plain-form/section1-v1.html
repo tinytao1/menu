@@ -1,78 +1,105 @@
-<!DOCTYPE html><html><head><title>My loop</title><style>
 
-.btn {
-	margin-bottom:5px;
-    width:120px;
-}
+Result Size: 269 x 356
 
-</style>
-</head>
-<body>
+    name : "Pork Chop",
 
-<h2>heading</h2>
+    selected : false,
 
-<p> click "Run" button to view </p>
+    count : 0,
 
-<p id="protein-count"></p>
+    
 
-<button type='button' id='b1' class='btn'>
-  click </button>
-<span> 0 </span>
-  <br>
-  
-<button type='button' id='b2' class='btn'>
-  click </button> 
-  <br>
-  
-<button type='button' id='b3' class='btn'>
-  click </button>
-  <br>
-  
-<button type='button' id='b4' class='btn'>
-  click </button>
-  <br>
+    limit : null,
 
-<script>
+    buttonEl : document.getElementById("b3"),
 
+    displayEl : document.getElementById("d3"),
 
+    
 
+    //select: selectPrototype,  // method
 
+    
 
+    
 
+  },  //  item3 close   
 
+​
 
+  item4: {  ///////////////////////////////////
 
+    
 
+    name : "Tempeh",
 
+    selected : false,
 
+    count : 0,
 
-</script>
-</body></html>
+    
 
+    limit : null,
 
+    buttonEl : document.getElementById("b4"),
 
+    displayEl : document.getElementById("d4"),
 
+    
 
+    //select: selectPrototype,  // method
 
+    
 
+    
 
+  },  //  item4 close   
 
+​
 
+​
 
+};  // s1 close  ////////////////////////////////////
 
+​
 
+​
 
+​
 
+​
 
+​
 
+​
 
+​
 
+​
 
+​
 
+​
 
+​
 
+​
 
+​
 
+//  INITIAL LOAD COMMANDS START///////////////////////////////
 
+s1.displayEl.innerHTML = "Protein count: " + s1.count;  // s1 paragraph insert
 
+​
+
+s1.item1.buttonEl.innerHTML = s1.item1.name;
+
+s1.item1.displayEl.innerHTML = s1.item1.count;
+
+​
+
+s1.item2.buttonEl.innerHTML = s1.item2.name;
+
+s1.item2.displayEl.innerHTML = s1.item2.count;
 
