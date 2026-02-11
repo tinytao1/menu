@@ -12,7 +12,7 @@
 </head>
 <body>
 
-<h2>heading</h2>
+<h2>section 1 -v1</h2>
 
 <p> test html paragraph </p>
 
@@ -144,6 +144,30 @@ const s1 = {
 
 
 };  // s1 close  ////////////////////////////////////
+
+function selectPrototype() {
+
+    if (s1.count == s1.limit) {
+    s1.count = s1.count - this.count;
+    this.count = 0;
+    this.selected = false;
+    // s1.reactivateAllItemButtons();
+    // this.updateButtonName();
+    // s1.displaySectionCount();
+  }
+  else {
+    this.count++;
+    s1.count++;
+    this.selected = true;
+    // this.updateButtonName();
+    // s1.displaySectionCount();
+  }
+  if (s1.count == s1.limit) { 
+    // deactivateAllBtns();
+    // s1.reactivateSelectedItemButtons();
+    // s1.displaySectionCount();
+  }
+}
 
 
 
