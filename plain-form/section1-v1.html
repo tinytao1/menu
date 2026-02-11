@@ -1,105 +1,183 @@
+<!DOCTYPE html><html><head><title>My loop</title><style>
 
-Result Size: 269 x 356
+.btn { margin-bottom:5px; min-width:120px;  }
+  
+.display-count {
+  display: inline-block; background: gainsboro; min-width: 10px;
+  text-align: center; border-radius: 3px; padding-left: 3px;
+  padding-right: 3px; padding-top: 2px; padding-bottom: 2px;
+  }
 
-    name : "Pork Chop",
+</style>
+</head>
+<body>
 
+<h2>heading</h2>
+
+<p> test html paragraph </p>
+
+<p id="s1-count-display"> -- s1 count display: no js --</p>
+
+<button type='button' id='b1' class='btn'> 
+  1 click </button>
+  
+<span id='d1' class='display-count'>
+  0 </span>
+  <br>
+  
+<button type='button' id='b2' class='btn'>
+  2 click </button>
+  
+<span id='d2' class='display-count'>
+  00 </span>
+  <br>
+
+<button type='button' id='b3' class='btn'>
+  3 click </button>
+  
+<span id='d3' class='display-count'>
+  000 </span>
+  <br>
+  
+<button type='button' id='b4' class='btn'>
+  4 click </button>
+  
+<span id='d4' class='display-count'>
+  000 0 </span>
+  <br>
+
+<button type='button' id='b5' class='btn'>
+  5 click </button>
+  
+<span id='d5' class='display-count'>
+  000 00 </span>
+  <br>
+
+<button type='button' id='b6' class='btn'>
+  6 click </button>
+  
+<span id='d6' class='display-count'>
+  000 000 </span>
+  <br>
+
+<button type='button' id='b7' class='btn'>
+  7 click </button>
+  
+<span id='d7' class='display-count'>
+  000 000 0 </span>
+  <br>
+
+<button type='button' id='b8' class='btn'>
+  8 click </button>
+  
+<span id='d8' class='display-count'>
+  000 000 00 </span>
+  <br>
+
+<script>
+
+const s1 = {
+
+  count : 0,
+  limit : 2,
+  displayEl : document.getElementById("s1-count-display"), 
+  
+  item1: {  ///////////////////////////////////
+    
+    name : "Tilapia",
     selected : false,
-
     count : 0,
-
     
-
     limit : null,
-
-    buttonEl : document.getElementById("b3"),
-
-    displayEl : document.getElementById("d3"),
-
+    buttonEl : document.getElementById("b1"),
+    displayEl : document.getElementById("d1"),
     
-
     //select: selectPrototype,  // method
-
     
-
     
+  },  //  item1 close   
 
+  item2: {  ///////////////////////////////////
+    
+    name : "Chicken Breast",
+    selected : false,
+    count : 0,
+    
+    limit : null,
+    buttonEl : document.getElementById("b2"),
+    displayEl : document.getElementById("d2"),
+    
+    //select: selectPrototype,  // method
+    
+    
+  },  //  item2 close   
+
+  item3: {  ///////////////////////////////////
+    
+    name : "Pork Chop",
+    selected : false,
+    count : 0,
+    
+    limit : null,
+    buttonEl : document.getElementById("b3"),
+    displayEl : document.getElementById("d3"),
+    
+    //select: selectPrototype,  // method
+    
+    
   },  //  item3 close   
 
-​
-
   item4: {  ///////////////////////////////////
-
     
-
     name : "Tempeh",
-
     selected : false,
-
     count : 0,
-
     
-
     limit : null,
-
     buttonEl : document.getElementById("b4"),
-
     displayEl : document.getElementById("d4"),
-
     
-
     //select: selectPrototype,  // method
-
     
-
     
-
   },  //  item4 close   
 
-​
-
-​
 
 };  // s1 close  ////////////////////////////////////
 
-​
 
-​
 
-​
 
-​
 
-​
 
-​
 
-​
 
-​
 
-​
 
-​
 
-​
 
-​
-
-​
 
 //  INITIAL LOAD COMMANDS START///////////////////////////////
-
 s1.displayEl.innerHTML = "Protein count: " + s1.count;  // s1 paragraph insert
 
-​
-
 s1.item1.buttonEl.innerHTML = s1.item1.name;
-
 s1.item1.displayEl.innerHTML = s1.item1.count;
 
-​
-
 s1.item2.buttonEl.innerHTML = s1.item2.name;
-
 s1.item2.displayEl.innerHTML = s1.item2.count;
 
+s1.item3.buttonEl.innerHTML = s1.item3.name;
+s1.item3.displayEl.innerHTML = s1.item3.count;
+
+s1.item4.buttonEl.innerHTML = s1.item4.name;
+s1.item4.displayEl.innerHTML = s1.item4.count;
+
+
+//  INITIAL LOAD COMMANDS END///////////////////////////////
+
+
+
+
+
+</script>
+</body></html>
