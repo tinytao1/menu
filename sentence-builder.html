@@ -38,13 +38,13 @@
 
 <script>
 
-let wordList = document.querySelector("#word-list");
-let sentence = document.querySelector('#sentence');
+let wordListEl = document.querySelector("#word-list");
+let sentenceEl = document.querySelector('#sentence');
 
-wordList.addEventListener("click", event => {
+wordListEl.addEventListener("click", event => {
     let word = event.target.textContent;
-    sentence.textContent += word;
-    sentence. textContent += " ";
+    sentenceEl.textContent += word;
+    sentenceEl.textContent += " ";
 });
 
 </script>
