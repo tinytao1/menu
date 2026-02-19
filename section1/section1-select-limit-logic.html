@@ -1,0 +1,250 @@
+<!DOCTYPE html><html><head>
+<title>Section1.html</title>
+<style> .itembtn {display:block;margin-bottom:3px;} </style>
+</head><body> 
+<!-- SECTION1 file HTML -->
+
+<button type='button' onclick='location.reload()' >
+  reload</button>
+
+<div id='s1' class='section'>
+<p>Section 1</p>
+
+<button type='button' class='itembtn' id='it1'>
+  item1</button>
+
+<button type='button' class='itembtn' id='it2' >
+  item2</button>
+
+<button type='button' class='itembtn'  id='it3'>
+  item3</button>
+
+</div>
+
+<script>
+'use strict'
+
+
+
+
+const s1 = {
+  name : 'Protein',
+  count: 0,
+  limit: 2,
+
+  item1 : {
+    name : 'Tilapia',
+    count : 0,
+    limit : null,
+    selected : false,
+    button : document.querySelector('#it1'),
+  },
+  
+  item2 : {
+    name : 'Pork Chop',
+    count : 0,
+    limit : null,
+    selected : false,
+    button : document.querySelector('#it2'),
+  },
+  
+  item3 : {
+    name : 'Chk Brst',
+    count : 0,
+    limit : null,
+    selected : false,
+    button : document.querySelector('#it3'),
+  },
+
+};
+
+s1.item1.button.innerHTML = s1.item1.name;
+s1.item2.button.innerHTML = s1.item2.name;
+s1.item3.button.innerHTML = s1.item3.name;
+
+s1.item1.button.
+addEventListener('click', function() {
+
+  select(s1.item1, s1); 
+  
+} );
+
+s1.item2.button.
+addEventListener('click', function() {
+
+  select(s1.item2, s1); 
+  
+} );
+
+s1.item3.button.
+addEventListener('click', function() {
+
+  select(s1.item3, s1); 
+  
+} );
+
+function select(item, section) {
+
+  if (item.count == item.limit) {
+
+    section.count = (section.count - item.count);
+    console.log(section.name + " count: " + section.count);
+    
+    item.selected = false;
+    console.log(item.name + " selected: " + item.selected);
+    //item.button.style.color = "none";
+
+    item.count = 0;
+    console.log(item.name + " count: " + item.count); 
+
+  } else if (section.count == section.limit) {
+  
+      section.count = (section.count - item.count);
+      console.log(section.name + " count: " + section.count);
+      
+      item.selected = false;
+      console.log(item.name + " selected: " + item.selected);
+      //item.button.style.color = "none";
+  
+      item.count = 0;
+      console.log(item.name + " count: " + item.count);
+  
+      enableAllBtns();
+      
+  } else {
+      
+      item.selected = true;
+      console.log(item.name + " selected: " + item.selected);
+      //item.button.style.color = "red";
+      
+      item.count++;
+      console.log(item.name + " count: " + item.count);
+    
+      section.count++;
+      console.log(section.name + " count: " + section.count);
+      
+  } if (section.count == section.limit) {
+
+      disableUnselectedBtns();
+    
+  }
+  
+}
+
+
+
+/*
+document.querySelector('#it1').
+addEventListener('click', function() { 
+
+  if (s1.item1.count == s1.item1.limit) {
+
+    s1.count = (s1.count - s1.item1.count);
+    console.log("S1 count: " + s1.count);
+    
+    s1.item1.selected = false;
+    console.log("Item1 selected: " + s1.item1.selected);
+    document.querySelector('#it1').style.color = "black";
+
+    s1.item1.count = 0;
+    console.log("Item1 count: " + s1.item1.count); 
+
+  } else if (s1.count == s1.limit) {
+
+    s1.count = (s1.count - s1.item1.count);
+    console.log("S1 count: " + s1.count);
+    
+    s1.item1.selected = false;
+    console.log("Item1 selected: " + s1.item1.selected);
+    document.querySelector('#it1').style.color = "black";
+
+    s1.item1.count = 0;
+    console.log("Item1 count: " + s1.item1.count);
+
+    enableAllBtns();
+    
+  } else {
+  
+  s1.item1.selected = true;
+  console.log("Item1 selected: " + s1.item1.selected);
+  document.querySelector('#it1').style.color = "red";
+  
+  s1.item1.count++;
+  console.log("Item1 count: " + s1.item1.count);
+
+  s1.count++;
+  console.log("S1 count: " + s1.count);
+  
+  } if (s1.count == s1.limit) {
+
+      disableUnselectedBtns();
+    
+  }
+  
+} );
+*/
+
+
+
+function disableUnselectedBtns() {
+  
+  if (s1.item1.selected == false) {
+  
+    s1.item1.button.
+    disabled = true;
+  }
+
+  if (s1.item2.selected == false) {
+  
+    s1.item2.button.
+    disabled = true;
+  }
+  
+  if (s1.item3.selected == false) {
+  
+    s1.item3.button.
+    disabled = true;
+  }
+}
+
+function enableAllBtns() {
+
+  s1.item1.button.
+  disabled = false;
+  
+  s1.item2.button.
+  disabled = false;
+  
+  s1.item3.button.
+  disabled = false;
+  
+}
+
+// console.log("Section1 limit: " + s1.limit);
+//console.log("Item1 count: " + s1.item1.count);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>  
+</body>  
+</html>
