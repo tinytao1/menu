@@ -15,9 +15,11 @@
 
 <div id='s1' class='section'>
 <p id='' class='section-header'>
-  <span class='section-title'>Proteins</span> (choose 2)
-  &nbsp; &nbsp; count: <span id='' class='section-count' >
+  <span class='section-title'>Proteins</span>
+  &nbsp; &nbsp; count: <span id='s1d' class='section-count' >
   0 </span>
+  <br>
+   (choose 2)
 </p>
 
 <button type='button' class='itembtn' id='s1it1'>
@@ -32,15 +34,55 @@
   item2</button>
   
   <span id='s1it2d' class='it-display' >
-    0 </span>
+    00 </span>
   
   <br>
 
 <button type='button' class='itembtn'  id='s1it3'>
   item3</button>
   
-  <span id='s1it2d' class='it-display' >
-    0 </span>
+  <span id='s1it3d' class='it-display' >
+    000 </span>
+  
+  <br>
+
+<button type='button' class='itembtn'  id='s1it4'>
+  item4</button>
+  
+  <span id='s1it4d' class='it-display' >
+    000 0 </span>
+  
+  <br>
+
+<button type='button' class='itembtn'  id='s1it5'>
+  item5</button>
+  
+  <span id='s1it5d' class='it-display' >
+    000 00 </span>
+  
+  <br>
+
+<button type='button' class='itembtn'  id='s1it6'>
+  item6</button>
+  
+  <span id='s1it6d' class='it-display' >
+    000 000 </span>
+  
+  <br>
+
+<button type='button' class='itembtn'  id='s1it7'>
+  item7</button>
+  
+  <span id='s1it7d' class='it-display' >
+    000 000 0 </span>
+  
+  <br>
+
+<button type='button' class='itembtn'  id='s1it8'>
+  item8</button>
+  
+  <span id='s1it8d' class='it-display' >
+    000 000 00 </span>
   
   <br>
 
@@ -56,6 +98,7 @@ const s1 = {
   name : 'Protein',
   count: 0,
   limit: 2,
+  displayCount : document.querySelector('#s1d'),
 
   item1 : {
     name : 'Tilapia',
@@ -63,6 +106,7 @@ const s1 = {
     limit : null,
     selected : false,
     button : document.querySelector('#s1it1'),
+    displayCount : document.querySelector('#s1it1d'),
   },
   
   item2 : {
@@ -74,7 +118,7 @@ const s1 = {
   },
   
   item3 : {
-    name : 'Chk Brst',
+    name : 'Chk Breast',
     count : 0,
     limit : null,
     selected : false,
@@ -86,6 +130,17 @@ const s1 = {
 s1.item1.button.innerHTML = s1.item1.name;
 s1.item2.button.innerHTML = s1.item2.name;
 s1.item3.button.innerHTML = s1.item3.name;
+/*
+s1.item4.button.innerHTML = s1.item4.name;
+s1.item5.button.innerHTML = s1.item5.name;
+s1.item6.button.innerHTML = s1.item6.name;
+
+s1.item7.button.innerHTML = s1.item7.name;
+s1.item8.button.innerHTML = s1.item8.name;
+*/
+
+
+s1.item1.displayCount.innerHTML = s1.item1.count;
 
 s1.item1.button.
 addEventListener('click', function() {
@@ -144,9 +199,11 @@ function select(item, section) {
       
       item.count++;
       console.log(item.name + " count: " + item.count);
+      s1.item1.displayCount.innerHTML = s1.item1.count;
     
       section.count++;
       console.log(section.name + " count: " + section.count);
+      s1.displayCount.innerHTML = s1.count;
       
   } if (section.count == section.limit) {
 
@@ -157,7 +214,42 @@ function select(item, section) {
 }
 
 
+function disableUnselectedBtns() {
+  
+  if (s1.item1.selected == false) {
+  
+    s1.item1.button.
+    disabled = true;
+  }
 
+  if (s1.item2.selected == false) {
+  
+    s1.item2.button.
+    disabled = true;
+  }
+  
+  if (s1.item3.selected == false) {
+  
+    s1.item3.button.
+    disabled = true;
+  }
+}
+
+function enableAllBtns() {
+
+  s1.item1.button.
+  disabled = false;
+  
+  s1.item2.button.
+  disabled = false;
+  
+  s1.item3.button.
+  disabled = false;
+  
+}
+
+// console.log("Section1 limit: " + s1.limit);
+//console.log("Item1 count: " + s1.item1.count);
 /*
 document.querySelector('#it1').
 addEventListener('click', function() { 
@@ -208,67 +300,6 @@ addEventListener('click', function() {
   
 } );
 */
-
-
-
-function disableUnselectedBtns() {
-  
-  if (s1.item1.selected == false) {
-  
-    s1.item1.button.
-    disabled = true;
-  }
-
-  if (s1.item2.selected == false) {
-  
-    s1.item2.button.
-    disabled = true;
-  }
-  
-  if (s1.item3.selected == false) {
-  
-    s1.item3.button.
-    disabled = true;
-  }
-}
-
-function enableAllBtns() {
-
-  s1.item1.button.
-  disabled = false;
-  
-  s1.item2.button.
-  disabled = false;
-  
-  s1.item3.button.
-  disabled = false;
-  
-}
-
-// console.log("Section1 limit: " + s1.limit);
-//console.log("Item1 count: " + s1.item1.count);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 </script>  
 </body>  
