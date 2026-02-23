@@ -115,6 +115,7 @@ const s1 = {
     limit : null,
     selected : false,
     button : document.querySelector('#s1it2'),
+    displayCount : document.querySelector('#s1it2d'),
   },
   
   item3 : {
@@ -123,7 +124,8 @@ const s1 = {
     limit : null,
     selected : false,
     button : document.querySelector('#s1it3'),
-  },
+     displayCount : document.querySelector('#s1it3d'),
+ },
 
 };
 
@@ -141,6 +143,16 @@ s1.item8.button.innerHTML = s1.item8.name;
 
 
 s1.item1.displayCount.innerHTML = s1.item1.count;
+s1.item2.displayCount.innerHTML = s1.item2.count;
+s1.item3.displayCount.innerHTML = s1.item3.count;
+/*
+s1.item4.displayCount.innerHTML = s1.item4.count;
+s1.item5.displayCount.innerHTML = s1.item5.count;
+s1.item6.displayCount.innerHTML = s1.item6.count;
+
+s1.item7.displayCount.innerHTML = s1.item7.count;
+s1.item8.displayCount.innerHTML = s1.item8.count;
+*/
 
 s1.item1.button.
 addEventListener('click', function() {
