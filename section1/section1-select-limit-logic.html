@@ -119,12 +119,12 @@ const s1 = {
   },
   
   item3 : {
-    name : 'Chk Breast',
+    name : 'Chicken Breast',
     count : 0,
     limit : null,
     selected : false,
     button : document.querySelector('#s1it3'),
-     displayCount : document.querySelector('#s1it3d'),
+    displayCount : document.querySelector('#s1it3d'),
  },
 
 };
@@ -211,11 +211,11 @@ function select(item, section) {
       
       item.count++;
       console.log(item.name + " count: " + item.count);
-      s1.item1.displayCount.innerHTML = s1.item1.count;
+      item.displayCount.innerHTML = item.count;
     
       section.count++;
       console.log(section.name + " count: " + section.count);
-      s1.displayCount.innerHTML = s1.count;
+      section.displayCount.innerHTML = section.count;
       
   } if (section.count == section.limit) {
 
