@@ -256,7 +256,9 @@ function select(item, section) {
 }
 
 function limitReachedStyling(section) {
-  section.displayCount.style.border = "1px solid red";}
+  section.displayCount.style.border = "1px solid red";
+
+}
 
 function limitReachedStyling(item) {
   item.displayCount.style.border = "1px solid red";}
@@ -271,13 +273,16 @@ function limitDroppedStyling(item) {
   item.displayCount.style.borderBottom = "1px solid black";
 }
 
+
 function disableUnselectedBtns() {
   
   if (s1.item1.selected == false) {
   
     s1.item1.button.
     disabled = true;
-  }
+  } else { //item.displayCount.style.border = "1px solid red";
+
+   }
 
   if (s1.item2.selected == false) {
   
