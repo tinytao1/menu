@@ -91,9 +91,6 @@
 <script>
 'use strict'
 
-
-
-
 const s1 = {
   name : 'Protein',
   count: 0,
@@ -154,6 +151,8 @@ s1.item7.displayCount.innerHTML = s1.item7.count;
 s1.item8.displayCount.innerHTML = s1.item8.count;
 */
 
+
+
 s1.item1.button.
 addEventListener('click', function() {
 
@@ -180,18 +179,25 @@ function select(item, section) {
   if (item.count == item.limit) {
 
     section.count = (section.count - item.count);
+    section.displayCount.innerHTML = section.count;
     console.log(section.name + " count: " + section.count);
+
+    limitDroppedStyling(section);
     
     item.selected = false;
     console.log(item.name + " selected: " + item.selected);
     //item.button.style.color = "none";
 
     item.count = 0;
+    item.displayCount.innerHTML = item.count;
     console.log(item.name + " count: " + item.count); 
 
   } else if (section.count == section.limit) {
   
       section.count = (section.count - item.count);
+      section.displayCount.innerHTML = section.count;
+      limitDroppedStyling(section);
+
       console.log(section.name + " count: " + section.count);
       
       item.selected = false;
@@ -199,6 +205,7 @@ function select(item, section) {
       //item.button.style.color = "none";
   
       item.count = 0;
+      item.displayCount.innerHTML = item.count;
       console.log(item.name + " count: " + item.count);
   
       enableAllBtns();
@@ -210,19 +217,28 @@ function select(item, section) {
       //item.button.style.color = "red";
       
       item.count++;
-      console.log(item.name + " count: " + item.count);
       item.displayCount.innerHTML = item.count;
-    
+      console.log(item.name + " count: " + item.count);
+          
       section.count++;
-      console.log(section.name + " count: " + section.count);
       section.displayCount.innerHTML = section.count;
+      console.log(section.name + " count: " + section.count);
       
   } if (section.count == section.limit) {
 
+      limitReachedStyling(section);
       disableUnselectedBtns();
     
   }
   
+}
+
+function limitReachedStyling(section) {
+  section.displayCount.style.border = "1px solid red";}
+
+function limitDroppedStyling(section) {
+  section.displayCount.style.border = "none";
+  section.displayCount.style.borderBottom = "1px solid black";
 }
 
 
