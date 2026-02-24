@@ -186,10 +186,11 @@ function select(item, section) {
     
     item.selected = false;
     console.log(item.name + " selected: " + item.selected);
-    //item.button.style.color = "none";
 
     item.count = 0;
     item.displayCount.innerHTML = item.count;
+    limitDroppedStyling(item);
+    
     console.log(item.name + " count: " + item.count); 
 
   } else if (section.count == section.limit) {
@@ -201,11 +202,13 @@ function select(item, section) {
       console.log(section.name + " count: " + section.count);
       
       item.selected = false;
+      
       console.log(item.name + " selected: " + item.selected);
-      //item.button.style.color = "none";
   
       item.count = 0;
       item.displayCount.innerHTML = item.count;
+      limitDroppedStyling(item);
+      
       console.log(item.name + " count: " + item.count);
   
       enableAllBtns();
@@ -227,6 +230,7 @@ function select(item, section) {
   } if (section.count == section.limit) {
 
       limitReachedStyling(section);
+      limitReachedStyling(item)
       disableUnselectedBtns();
     
   }
@@ -236,11 +240,18 @@ function select(item, section) {
 function limitReachedStyling(section) {
   section.displayCount.style.border = "1px solid red";}
 
+function limitReachedStyling(item) {
+  item.displayCount.style.border = "1px solid red";}
+
 function limitDroppedStyling(section) {
   section.displayCount.style.border = "none";
   section.displayCount.style.borderBottom = "1px solid black";
 }
 
+function limitDroppedStyling(item) {
+  item.displayCount.style.border = "none";
+  item.displayCount.style.borderBottom = "1px solid black";
+}
 
 function disableUnselectedBtns() {
   
