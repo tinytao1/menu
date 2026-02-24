@@ -126,6 +126,8 @@ const s1 = {
 
 };
 
+
+
 s1.item1.button.innerHTML = s1.item1.name;
 s1.item2.button.innerHTML = s1.item2.name;
 s1.item3.button.innerHTML = s1.item3.name;
@@ -150,6 +152,12 @@ s1.item6.displayCount.innerHTML = s1.item6.count;
 s1.item7.displayCount.innerHTML = s1.item7.count;
 s1.item8.displayCount.innerHTML = s1.item8.count;
 */
+
+s1.displayCount.style.color = "rgb(233, 233, 237)";
+
+s1.item1.displayCount.style.color = "rgb(233, 233, 237)";
+s1.item2.displayCount.style.color = "rgb(233, 233, 237)";
+s1.item3.displayCount.style.color = "rgb(233, 233, 237)";
 
 
 
@@ -190,8 +198,11 @@ function select(item, section) {
     item.count = 0;
     item.displayCount.innerHTML = item.count;
     limitDroppedStyling(item);
-    
+
+    item.displayCount.style.color = "rgb(233, 233, 237)";
     console.log(item.name + " count: " + item.count); 
+
+    if (section.count == 0) { section.displayCount.style.color = "rgb(233, 233, 237)"; }
 
   } else if (section.count == section.limit) {
   
@@ -209,7 +220,10 @@ function select(item, section) {
       item.displayCount.innerHTML = item.count;
       limitDroppedStyling(item);
       
+      item.displayCount.style.color = "rgb(233, 233, 237)";
       console.log(item.name + " count: " + item.count);
+
+      if (section.count == 0) { section.displayCount.style.color = "rgb(233, 233, 237)"; }
   
       enableAllBtns();
       
@@ -217,14 +231,18 @@ function select(item, section) {
       
       item.selected = true;
       console.log(item.name + " selected: " + item.selected);
-      //item.button.style.color = "red";
       
       item.count++;
       item.displayCount.innerHTML = item.count;
+      item.displayCount.style.color = "black";
+
       console.log(item.name + " count: " + item.count);
           
       section.count++;
       section.displayCount.innerHTML = section.count;
+      s1.displayCount.style.color = "black";
+
+
       console.log(section.name + " count: " + section.count);
       
   } if (section.count == section.limit) {
@@ -278,6 +296,7 @@ function enableAllBtns() {
 
   s1.item1.button.
   disabled = false;
+
   
   s1.item2.button.
   disabled = false;
