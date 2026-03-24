@@ -1,7 +1,7 @@
 // console.log('okay here');
 
 function resetWithConfirmation() {
-  const message = "Click OK to erase this form and start over.\nClick Cancel (or press Esc) to cancel this action." ;
+  const message = "Click OK to erase this form and start over." ;
   const groceryFormEl = document.getElementById("grocery-order-form") ;
   if (confirm(message)) {
     // Proceed with the action, e.g., redirect to a deletion script
