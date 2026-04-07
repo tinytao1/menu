@@ -16,10 +16,14 @@
   padding-left: 15px; /* Adds space between text and left edge */
 }
 .item {
-  text-align: left;
-  
+  text-align: left;  
 }
-
+.icounter {
+  border-radius: 3px;
+  width: 25px;           /* Sets the specific width */
+  justify-self: start;   /* Prevents the grid from stretching it */
+  text-align: center;    /* Keeps the "0" centered inside that 15px */
+}
 
   </style>
 </head>
@@ -36,23 +40,23 @@
   <div class="select-container" >
 
     <button type="button" class="btn item btn-light">Chicken</button>
-    <span> 0 </span>
+    <span class="icounter text-bg-light" > 0 &nbsp; </span>
 
     <button type="button" class="btn  item btn-light">Tempeh</button>
-    <span> 0 </span>
+    <span class="icounter text-bg-light" > 0 </span>
 
     <button type="button" class="btn  item btn-light">Pork Chop</button>
-    <span> 0 </span>
+    <span class="icounter text-bg-light" > 0 </span>
 
 
     <button type="button" class="btn  item btn-light">Tilapia</button>
-    <span> 0 </span>
+    <span class="icounter text-bg-light" > 0 </span>
 
     <button type="button" class="btn  item btn-light">Tempeh Cauli-<br>flower Patty</button>
-    <span> 0 </span>
+    <span class="icounter text-bg-light" > 0 </span>
 
     <button type="button" class="btn item  btn-light">Protein Trail<br> Mix</button>
-    <span> 0 </span>
+    <span class="icounter text-bg-light" > 0 </span>
 
   </div>  <!-- div class="select-container -->
 
