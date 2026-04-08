@@ -22,10 +22,17 @@
   gap: 10px;
   align-items: center;
   padding-left: 15px; /* Adds space between text and left edge */
+}.item {
+  text-align: left;
+  padding-left: 15px;
+  transition: padding-left 0.25s ;
 }
-.item {
-  text-align: left;  
+
+.item:hover {
+  /* Adjust this percentage or px value to push it right */
+  padding-left: 20px; 
 }
+
 .icounter {
   border-radius: 3px;
   width: 25px;           /* Sets the specific width */
