@@ -1,22 +1,86 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <title>Single item button</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-  <link rel="stylesheet" href="style.css">
-  <style>
-    
-  </style>
-</head>
-<body>
+  <head>
+    <title>Single item button</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    <style>
+      body {
+        background-color: gray;
+      }
+      .section-container {
+        margin-top: 20px;
+        margin-bottom: 600px;
+      }
+      .section-header {
+        padding-left: 15px;
+        margin-bottom: 20px;
+      }
+      .select-container {
+        display: grid;
+        grid-template-columns: 220px 1fr;
+        gap: 10px;
+        align-items: center;
+        padding-left: 15px; /* Adds space between text and left edge */
+      }
+      .item {
+        text-align: left;
+        padding-left: 15px;
+        /* Option 1: Reduce vertical padding */
+        padding-top: 4px;
+        padding-bottom: 4px;
+        /* Option 1 fix: Ensure the border is always there but transparent */
+        border: 4px solid transparent !important;
+        /* Optional: Keep buttons consistent height */
+        height: 44px;
+        display: flex;
+        align-items: center;
+      }
 
-<!-- <div class="section container mt-3 item-group grid"> -->
+      .item.selected-active {
+        border-color: rgba(13, 110, 253, 0.75) !important;
+        background-color: #f8f9fa !important;
+      }
 
-<div class="section-container" > 
-<!--  
+      /* Remove darkening effect on hover */
+      .item:hover {
+        background-color: #f8f9fa !important;
+        border-color: rgba(13, 110, 253, 0.5) !important;
+        color: #000 !important;
+      }
+
+      /* If the button is selected, keep the blue border even on hover */
+      .item.selected-active:hover {
+        border-color: rgba(13, 110, 253, 0.75) !important;
+      }
+
+      .icounter {
+        border-radius: 3px;
+        width: 20px; /* Sets the specific width */
+        justify-self: start; /* Prevents the grid from stretching it */
+        text-align: center; /* Keeps the "0" centered inside that 15px */
+      }
+      .sreset-div {
+        padding-left: 15px;
+        padding-top: 10px;
+      }
+      .sreset-btn {
+        text-align: left;
+        justify-self: start; /* Prevents the grid from stretching it */
+      }
+    </style>
+  </head>
+  <body>
+    <!-- <div class="section container mt-3 item-group grid"> -->
+
+    <div class="section-container">
+      <!--  
   <div class='section-header'>
     <h2 class="font-serif">
       Proteins 
@@ -25,14 +89,26 @@
       </small>
     </h2>
 
-  </div> --> <!-- div"section-header" --> 
+  </div> -->
+      <!-- div"section-header" -->
 
-  <div class="select-container" >
+      <div class="select-container">
+        <button id="s1-1" type="button" class="btn item btn-light fs-5">
+          Apples
+        </button>
+        <span id="s1-1c" class="icounter text-bg-light fs-4"> 0 </span>
 
-    <button id='s1-1' type="button" class=" btn  item btn-light fs-5">
-      Apples</button>
-    <span id='s1-1c' class="icounter text-bg-light fs-4" > 0 </span>
-<!--
+        <button id="s1-2" type="button" class="btn item btn-light fs-5">
+          Bananas
+        </button>
+        <span id="s1-2c" class="icounter text-bg-light fs-4"> 0 </span>
+
+        <button id="s1-3" type="button" class="btn item btn-light fs-5">
+          Oranges
+        </button>
+        <span id="s1-3c" class="icounter text-bg-light fs-4"> 0 </span>
+
+        <!--
     <button type="button" class=" btn  item btn-light fs-5">
       Chicken Breast</button>
     <span class="icounter text-bg-light fs-4" > 0 </span>
@@ -61,60 +137,78 @@
       Tempeh Cauliflower Patty </button>
     <span class="icounter text-bg-light fs-4" > 0 </span>
 -->
-  </div>  <!-- div class="select-container" -->
-<!--
+      </div>
+      <!-- div class="select-container" -->
+      <!--
   <div class="sreset-div">
   
     <button type="button" class="btn sreset-btn  btn-light fs-5">
       reset</button>
     <span class="  " > </span>
 
-  </div> --> <!-- "sreset" -->
-  
-</div> <!-- div class="section-container -->
-  
-<!-- </div> -->
+  </div> -->
+      <!-- "sreset" -->
+    </div>
+    <!-- div class="section-container -->
 
-<script>
-  const section = {
-    name: false,
-    limit: 2,
-    item_1: {
-      limit: false,
-      id: "s1-1",
-      label: "Apples",
-      counterId: "s1-1c",
-      count: 0
-    },
-    select: function() {
-                this.item_1.count += 1;
-                this.section.count += 1;
-                document.getElementById('s1-1c').innerText = this.item_1.count;
-            },
-;
-document.getElementById('s1-1').addEventListener('click', () => {
-  section.select();
-});
-  // document.getElementById("s1-2").innerHTML = ;
-  //document.getElementById("s1-8").disabled = true;
-  //document.getElementById("s1-8").style.textDecoration = "line-through";
+    <!-- </div> -->
+    <script>
+      const section = {
+        limit: 2,
+        count: 0,
+        items: {
+          // ADD "selected: false" to every item here
+          "s1-1": { id: "s1-1", counterId: "s1-1c", count: 0, selected: false },
+          "s1-2": { id: "s1-2", counterId: "s1-2c", count: 0, selected: false },
+          "s1-3": { id: "s1-3", counterId: "s1-3c", count: 0, selected: false },
+        },
+        select: function (itemId) {
+          const item = this.items[itemId];
+          if (!item) return;
 
-</script>
+          if (this.count >= this.limit) {
+            this.count -= item.count;
+            item.count = 0;
+            item.selected = false;
+          } else {
+            item.count += 1;
+            this.count += 1;
+            item.selected = true;
+          }
 
+          this.updateUI();
+        },
+        updateUI: function () {
+          const isAtLimit = this.count >= this.limit;
 
+          Object.values(this.items).forEach((item) => {
+            const counterEl = document.getElementById(item.counterId);
+            const buttonEl = document.getElementById(item.id);
 
+            counterEl.innerText = item.count === 0 ? "\u00A0" : item.count;
 
+            // Now item.selected is guaranteed to be true or false
+            buttonEl.classList.toggle("selected-active", item.selected);
 
+            const shouldDisable = isAtLimit && !item.selected;
+            buttonEl.disabled = shouldDisable;
+            buttonEl.style.textDecoration = shouldDisable
+              ? "line-through"
+              : "none";
+          });
+        },
+      };
 
+      const container = document.querySelector(".select-container");
+      container.addEventListener("click", (e) => {
+        const btn = e.target.closest("button");
+        if (btn && section.items[btn.id]) {
+          section.select(btn.id);
+        }
+      });
 
-
-
-
-
-
-
-
-
-
-</body>
+      // Use the updateUI function to handle initial state for all items
+      section.updateUI();
+    </script>
+  </body>
 </html>
