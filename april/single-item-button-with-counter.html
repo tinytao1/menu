@@ -86,9 +86,11 @@
       counterId: "s1-1c",
       count: 0
     },
-    select() {
-      
-    },
+    select: function() {
+                this.item_1.count += 1;
+                this.section.count += 1;
+                document.getElementById('s1-1c').innerText = this.item_1.count;
+            },
 ;
 document.getElementById('s1-1').addEventListener('click', () => {
   section.select();
