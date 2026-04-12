@@ -1,0 +1,41 @@
+
+body {background-color: gray;}
+.section-container {
+  margin-top: 20px;
+  margin-bottom: 600px;
+}
+.section-header {
+  padding-left: 15px;
+  margin-bottom: 20px;
+}
+.select-container {
+  display: grid;
+  grid-template-columns: 220px 1fr; 
+  gap: 10px;
+  align-items: center;
+  padding-left: 15px; /* Adds space between text and left edge */
+}.item {
+  text-align: left;
+  padding-left: 15px;
+  /*transition: padding-left 0.25s ; */
+}
+
+.item:hover {
+  /* Adjust this percentage or px value to push it right */
+  padding-left: 16px; 
+}
+
+.icounter {
+  border-radius: 3px;
+  width: 20px;           /* Sets the specific width */
+  justify-self: start;   /* Prevents the grid from stretching it */
+  text-align: center;    /* Keeps the "0" centered inside that 15px */
+}
+.sreset-div {
+  padding-left: 15px;
+  padding-top: 10px;
+}
+.sreset-btn {
+  text-align: left;  
+  justify-self: start;   /* Prevents the grid from stretching it */
+}
