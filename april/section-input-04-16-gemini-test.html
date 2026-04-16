@@ -64,16 +64,52 @@
     /* Style for buttons that are disabled and not selected */
     .btn-disabled-strike {
       text-decoration: line-through;
+      text-decoration-thickness: 2px; /* Increased by 1px from default/initial */
       opacity: 0.6;
       pointer-events: none; /* Disables clicking */
+    }
+
+    /* Styling for the discrete reset button at the bottom */
+    .btn-discrete-reset {
+        border-color: #dee2e6;
+        color: #212529; /* Darker text to match item buttons */
+        background-color: #f8f9fa;
+        font-size: 0.9rem;
+        transition: all 0.2s;
+    }
+    
+    .btn-discrete-reset:hover {
+        background-color: #e2e6ea;
+        color: #000000;
+        border-color: #adb5bd;
     }
   </style>
 </head>
 <body>
 
+<!--
+State of the App Summary
+Grocery Menu section 1 input is roughly complete.
+Next steps: 
+- Receipt view.
+  - language addition option.
+- 2X Order view.
+- Menu title
+- Fruits & Veggies section settings.
+
+The Grocery Menu Selection Tracker is currently a functional front-end prototype 
+built with HTML5, CSS3, and Bootstrap 5. It features a responsive "Proteins" section 
+where users can select up to two items. The app includes a smart "Limit Reached" 
+state that strikes through unselected options while allowing users to deselect 
+active items by clicking them again (resetting individual counts). It employs a 
+custom UI with persistent blue outlines for selections, dynamic badge counters that
+reveal themselves only when active, and a dedicated, discrete "Reset" button that
+remains functional even when the selection limit is met. The logic is handled via 
+a centralized JavaScript state object, making it ready for future expansion into
+additional menu categories or persistent storage.
+-->
 
 <div class="container-fluid mt-4">
-  
   <h2 class="mb-4">Grocery Menu</h2>
 
   <!-- Section 1: Proteins -->
@@ -83,10 +119,12 @@
         <h5 class="mb-0 me-2 text-uppercase letter-spacing-1">Section 1: Proteins</h5> 
         <span id='section-choose-amount'>(choose <span id="section-limit"></span>)</span>
       </div>
-      <button class="btn btn-sm btn-outline-secondary" onclick="resetSection1()">Reset Proteins</button>
+      <!-- Secondary header reset -->
+      <button class="btn btn-sm btn-outline-secondary" onclick="resetSection1()">Reset</button>
     </div>
     
-    <div class="d-grid gap-3 col-md-6 col-lg-4" id="protein-grid">
+    <!-- Item Grid (Buttons in here get disabled on limit reach) -->
+    <div class="d-grid gap-3 col-md-4 col-lg-4 mb-3" id="protein-grid">
       
       <!-- Row 1 -->
       <div class="d-flex gap-2">
@@ -137,6 +175,11 @@
       </div>
 
     </div>
+
+    <!-- Section Discrete Reset Button (Outside the grid to avoid being disabled) -->
+    <div class="col-md-4">
+      <button class="btn btn-discrete-reset px-3 py-2" onclick="resetSection1()">Reset</button>
+    </div>
   </section>
 
   <!-- Placeholder for future sections -->
@@ -146,7 +189,6 @@
 
 </div>
 
-<hr>
 <script>
   // Global state to keep track of item counts across the whole app
   const itemTracker = {
@@ -182,55 +224,72 @@
   };
 
   function incrementCounter(button, itemKey) {
-    // Check if we have reached the limit for this section
-    if (section1.count >= section1.limit) {
-      return; // Do nothing if limit is reached
-    }
-
-    // 1. Update the trackers
-    itemTracker[itemKey]++;
-    section1.items[itemKey]++;
-    section1.count++;
-    
-    // 2. Update the visual counter element
     const counterElement = button.parentElement.querySelector('.counter-badge');
-    counterElement.innerText = itemTracker[itemKey];
-
-    // 3. Update visibility and selected state
-    if (itemTracker[itemKey] > 0) {
-      button.classList.add('selected');
-      counterElement.classList.add('active-text');
-    }
-
-    // 4. Handle Limit Reached logic
-    if (section1.count === section1.limit) {
-      document.getElementById('section-choose-amount').classList.add('limit-reached');
+    
+    // Check if we are at the limit and this button is already selected
+    if (section1.count === section1.limit && button.classList.contains('selected')) {
+      // 1. Subtract this item's contribution from the total count
+      section1.count -= itemTracker[itemKey];
       
-      // Disable all buttons that haven't been selected
+      // 2. Reset the trackers for this item
+      itemTracker[itemKey] = 0;
+      section1.items[itemKey] = 0;
+      
+      // 3. Update UI to unselected state
+      button.classList.remove('selected');
+      counterElement.innerText = '0';
+      counterElement.classList.remove('active-text');
+      
+      // 4. Clean up "Limit Reached" UI
+      document.getElementById('section-choose-amount').classList.remove('limit-reached');
       const proteinGrid = document.getElementById('protein-grid');
       proteinGrid.querySelectorAll('button').forEach(btn => {
-        if (!btn.classList.contains('selected')) {
-          btn.classList.add('btn-disabled-strike');
-        }
+        btn.classList.remove('btn-disabled-strike');
       });
+      
+      console.log("Section 1 Count Reset for item:", itemKey, "Total Count:", section1.count);
+      return;
+    }
+
+    // Standard increment logic (if limit not reached)
+    if (section1.count < section1.limit) {
+      itemTracker[itemKey]++;
+      section1.items[itemKey]++;
+      section1.count++;
+      
+      counterElement.innerText = itemTracker[itemKey];
+
+      if (itemTracker[itemKey] > 0) {
+        button.classList.add('selected');
+        counterElement.classList.add('active-text');
+      }
+
+      // Handle Limit Reached logic
+      if (section1.count === section1.limit) {
+        document.getElementById('section-choose-amount').classList.add('limit-reached');
+        
+        const proteinGrid = document.getElementById('protein-grid');
+        proteinGrid.querySelectorAll('button').forEach(btn => {
+          if (!btn.classList.contains('selected')) {
+            btn.classList.add('btn-disabled-strike');
+          }
+        });
+      }
     }
 
     console.log("Section 1 Count:", section1.count);
   }
 
   function resetSection1() {
-    // Reset data
     section1.count = 0;
     for (let key in section1.items) {
       section1.items[key] = 0;
       itemTracker[key] = 0; 
     }
 
-    // Reset UI
     document.getElementById('section-choose-amount').classList.remove('limit-reached');
     const proteinGrid = document.getElementById('protein-grid');
     
-    // Reset buttons and badges
     proteinGrid.querySelectorAll('button').forEach(btn => {
       btn.classList.remove('selected');
       btn.classList.remove('btn-disabled-strike');
@@ -242,7 +301,6 @@
     });
   }
 </script>
-
 
 </body>
 </html>
