@@ -7,9 +7,16 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <style>
-    /* Custom style to add a 1px outline when the button is clicked/focused */
-    .btn-light:focus, .btn-light:active {
+    /* Custom class for the persistent selected state */
+    .selected {
       outline: 2px solid #0000ff !important;
+      box-shadow: none !important;
+      z-index: 1; /* Ensures the outline isn't cut off by adjacent buttons */
+    }
+
+    /* Keep the visual feedback during the actual click/focus as well */
+    .btn-light:focus {
+      box-shadow: none !important;
     }
   </style>
 </head>
@@ -18,19 +25,23 @@
 
 <div class="container-fluid mt-3">
   
-  <button type="button" class="btn btn-light">Tilapia</button>
-<!--
-  <button type="button" class="btn btn-light">Pork Chop</button>
+  <!-- Vertical layout using Bootstrap d-grid and gap utilities -->
+  <div class="d-grid gap-2 col-3">
+    <button type="button" class="btn btn-light" onclick="toggleSelection(this)">Tilapia</button>
+    <button type="button" class="btn btn-light" onclick="toggleSelection(this)">Pork Chop</button>
+    <button type="button" class="btn btn-light" onclick="toggleSelection(this)">Chicken</button>
+    <button type="button" class="btn btn-light" onclick="toggleSelection(this)">Tempeh</button>
+  </div>
 
-  <button type="button" class="btn btn-light">Chicken</button>
-
-  <button type="button" class="btn btn-light">Tempeh</button>
--->
 </div>
 
 <hr>
 <script>
-
+  function toggleSelection(button) {
+    // Toggle the 'selected' class on the clicked button
+    // This allows each button to be selected/deselected independently
+    button.classList.toggle('selected');
+  }
 </script>
 
 
