@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Menu Selection Tracker</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // Tailwind Configuration for Dark Mode and Custom Colors
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: '#0000ff',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Custom utility for the selected border since it needs !important override logic */
+    .selected-ring {
+      outline: 2px solid #0000ff !important;
+      z-index: 10;
+    }
+    
+    /* Strike-through styling for locked-out items */
+    .btn-disabled-strike {
+      text-decoration: line-through;
+      text-decoration-thickness: 2px;
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+    /* Transition for theme switching */
+    body {
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+  </style>
+</head>
+<body class="bg-white text-gray-900 dark:bg-[#1a1d20] dark:text-gray-100 min-h-screen">
+
+<!-- 
+    LAYOUT NOTES & CONFIGURATION:
+    - Office Desktop view optimized
+    - 1/3 Width layout via w-1/3 (replaces col-4)
+    - Dark mode supported via Tailwind 'dark:' prefix
+    - 2X Toggle state persists across resets
+    - Neutral grey lockout mechanism implemented
+    - Flexible button heights for multi-line text
+-->
+
+<div class="fixed top-4 right-4 flex gap-2">
+  <button id="doubleOrderBtn" onclick="toggleOrderMultiplier()" 
+    class="px-3 py-1 border border-blue-600 text-blue-600 rounded text-sm hover:bg-blue-50 transition-colors duration-200">
+    2X Order
+  </button>
+  <button id="themeSwitcher" onclick="toggleTheme()" 
+    class="px-3 py-1 border border-gray-400 text-gray-600 dark:text-gray-300 dark:border-gray-600 rounded text-sm hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200">
+    Dark Mode
+  </button>
+</div>
+
+<div class="p-8">
+  <h2 class="text-3xl font-bold mb-8">Grocery Menu</h2>
+
+  <!-- Section 1: Proteins -->
+  <section id="section-1" class="mb-12">
+    <div class="flex items-center justify-between mb-4 border-b pb-2 border-gray-200 dark:border-gray-700">
+      <div class="flex items-center">
+        <h5 class="text-lg font-semibold uppercase tracking-wider mr-2">Section 1: Proteins</h5> 
+        <span id="section-choose-amount" class="text-sm text-gray-500 dark:text-gray-400">
+          (choose <span id="section-limit"></span>)
+        </span>
+      </div>
+      <button class="text-sm px-3 py-1 border border-gray-300 dark:border-gray-600 rounded hover:bg-gray-100 dark:hover:bg-gray-800" onclick="resetSection1()">
+        Reset
+      </button>
+    </div>
+    
+    <!-- Item Grid (Width 1/3) -->
+    <div class="grid grid-cols-1 gap-2 w-1/3 mb-4" id="protein-grid">
+      
+      <!-- Item Row Pattern with Flexible Height Support -->
+      <div class="flex gap-2">
+        <button type="button" data-key="tilapia" onclick="incrementCounter(this, 'tilapia')"
+          class="flex-grow text-left px-4 py-2 bg-gray-50 border border-gray-200 dark:bg-[#2b3035] dark:border-gray-700 rounded hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-100 leading-tight">
+          Tilapia
+        </button>
+        <span class="counter-badge w-12 flex-shrink-0 flex items-center justify-center font-bold text-transparent bg-gray-50 dark:bg-[#2b3035] rounded transition-all duration-100">0</span>
+      </div>
+
+      <div class="flex gap-2">
+        <button type="button" data-key="chickenBreast" onclick="incrementCounter(this, 'chickenBreast')"
+          class="flex-grow text-left px-4 py-2 bg-gray-50 border border-gray-200 dark:bg-[#2b3035] dark:border-gray-700 rounded hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-100 leading-tight">
+          Chicken Breast
+        </button>
+        <span class="counter-badge w-12 flex-shrink-0 flex items-center justify-center font-bold text-transparent bg-gray-50 dark:bg-[#2b3035] rounded">0</span>
+      </div>
+
+      <div class="flex gap-2">
+        <button type="button" data-key="porkChop" onclick="incrementCounter(this, 'porkChop')"
+          class="flex-grow text-left px-4 py-2 bg-gray-50 border border-gray-200 dark:bg-[#2b3035] dark:border-gray-700 rounded hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-100 leading-tight">
+          Pork Chop
+        </button>
+        <span class="counter-badge w-12 flex-shrink-0 flex items-center justify-center font-bold text-transparent bg-gray-50 dark:bg-[#2b3035] rounded">0</span>
+      </div>
+
+      <div class="flex gap-2">
+        <button type="button" data-key="tempeh" onclick="incrementCounter(this, 'tempeh')"
+          class="flex-grow text-left px-4 py-2 bg-gray-50 border border-gray-200 dark:bg-[#2b3035] dark:border-gray-700 rounded hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-100 leading-tight">
+          Tempeh
+        </button>
+        <span class="counter-badge w-12 flex-shrink-0 flex items-center justify-center font-bold text-transparent bg-gray-50 dark:bg-[#2b3035] rounded">0</span>
+      </div>
+
+      <div class="flex gap-2">
+        <button type="button" data-key="tuna" onclick="incrementCounter(this, 'tuna')"
+          class="flex-grow text-left px-4 py-2 bg-gray-50 border border-gray-200 dark:bg-[#2b3035] dark:border-gray-700 rounded hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-100 leading-tight">
+          Tuna
+        </button>
+        <span class="counter-badge w-12 flex-shrink-0 flex items-center justify-center font-bold text-transparent bg-gray-50 dark:bg-[#2b3035] rounded">0</span>
+      </div>
+
+      <div class="flex gap-2">
+        <button type="button" data-key="proteinTrailMix" onclick="incrementCounter(this, 'proteinTrailMix')"
+          class="flex-grow text-left px-4 py-2 bg-gray-50 border border-gray-200 dark:bg-[#2b3035] dark:border-gray-700 rounded hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-100 leading-tight">
+          Protein Trail Mix
+        </button>
+        <span class="counter-badge w-12 flex-shrink-0 flex items-center justify-center font-bold text-transparent bg-gray-50 dark:bg-[#2b3035] rounded">0</span>
+      </div>
+
+      <div class="flex gap-2">
+        <button type="button" data-key="firmTofu" onclick="incrementCounter(this, 'firmTofu')"
+          class="flex-grow text-left px-4 py-2 bg-gray-50 border border-gray-200 dark:bg-[#2b3035] dark:border-gray-700 rounded hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-100 leading-tight">
+          Firm Tofu
+        </button>
+        <span class="counter-badge w-12 flex-shrink-0 flex items-center justify-center font-bold text-transparent bg-gray-50 dark:bg-[#2b3035] rounded">0</span>
+      </div>
+
+      <div class="flex gap-2">
+        <button type="button" data-key="tempehCauliflowerPatty" onclick="incrementCounter(this, 'tempehCauliflowerPatty')"
+          class="flex-grow text-left px-4 py-2 bg-gray-50 border border-gray-200 dark:bg-[#2b3035] dark:border-gray-700 rounded hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-100 leading-tight">
+          Tempeh Cauliflower Patty
+        </button>
+        <span class="counter-badge w-12 flex-shrink-0 flex items-center justify-center font-bold text-transparent bg-gray-50 dark:bg-[#2b3035] rounded">0</span>
+      </div>
+    </div>
+
+    <!-- Discrete Bottom Reset -->
+    <div class="w-1/3">
+      <button class="w-full py-2 border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-[#2b3035] text-sm hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors rounded" 
+        onclick="resetSection1()">
+        Reset
+      </button>
+    </div>
+  </section>
+
+  <section id="section-2" class="opacity-50 italic">
+    <p><small>Additional menu sections can be added here...</small></p>
+  </section>
+
+</div>
+
+<script>
+  let isDoubleOrder = false;
+  const BASE_LIMIT_SECTION_1 = 2;
+
+  const itemTracker = {
+    tilapia: 0, chickenBreast: 0, porkChop: 0, tempeh: 0, 
+    tuna: 0, proteinTrailMix: 0, firmTofu: 0, tempehCauliflowerPatty: 0
+  };
+
+  const section1 = {
+    limit: BASE_LIMIT_SECTION_1,
+    count: 0, 
+    items: {
+      tilapia: 0, chickenBreast: 0, porkChop: 0, tempeh: 0, 
+      tuna: 0, proteinTrailMix: 0, firmTofu: 0, tempehCauliflowerPatty: 0
+    }
+  };
+
+  window.onload = function() {
+    updateLimitDisplays();
+  };
+
+  function updateLimitDisplays() {
+    section1.limit = isDoubleOrder ? BASE_LIMIT_SECTION_1 * 2 : BASE_LIMIT_SECTION_1;
+    document.getElementById('section-limit').innerText = section1.limit;
+  }
+
+  function toggleOrderMultiplier() {
+    isDoubleOrder = !isDoubleOrder;
+    const btn = document.getElementById('doubleOrderBtn');
+    btn.innerText = isDoubleOrder ? '1X Order' : '2X Order';
+    
+    if (isDoubleOrder) {
+      btn.classList.replace('text-blue-600', 'text-white');
+      btn.classList.add('bg-blue-600');
+    } else {
+      btn.classList.replace('text-white', 'text-blue-600');
+      btn.classList.remove('bg-blue-600');
+    }
+
+    resetSection1();
+    updateLimitDisplays();
+  }
+
+  function toggleTheme() {
+    const html = document.documentElement;
+    const btn = document.getElementById('themeSwitcher');
+    if (html.classList.contains('dark')) {
+      html.classList.remove('dark');
+      btn.innerText = 'Dark Mode';
+    } else {
+      html.classList.add('dark');
+      btn.innerText = 'Light Mode';
+    }
+  }
+
+  function incrementCounter(button, itemKey) {
+    const counterElement = button.parentElement.querySelector('.counter-badge');
+    const headerAmount = document.getElementById('section-choose-amount');
+    
+    if (section1.count === section1.limit && button.classList.contains('selected-ring')) {
+      section1.count -= itemTracker[itemKey];
+      itemTracker[itemKey] = 0;
+      section1.items[itemKey] = 0;
+      
+      button.classList.remove('selected-ring');
+      counterElement.innerText = '0';
+      counterElement.classList.replace('text-gray-900', 'text-transparent');
+      counterElement.classList.replace('dark:text-gray-100', 'text-transparent');
+      
+      headerAmount.classList.remove('text-red-600', 'font-bold');
+      const proteinGrid = document.getElementById('protein-grid');
+      proteinGrid.querySelectorAll('button').forEach(btn => {
+        btn.classList.remove('btn-disabled-strike', 'bg-gray-300', 'dark:bg-gray-700');
+      });
+      return;
+    }
+
+    if (section1.count < section1.limit) {
+      itemTracker[itemKey]++;
+      section1.items[itemKey]++;
+      section1.count++;
+      
+      counterElement.innerText = itemTracker[itemKey];
+
+      if (itemTracker[itemKey] > 0) {
+        button.classList.add('selected-ring');
+        counterElement.classList.replace('text-transparent', 'text-gray-900');
+        counterElement.classList.add('dark:text-gray-100');
+      }
+
+      if (section1.count === section1.limit) {
+        headerAmount.classList.add('text-red-600', 'font-bold');
+        const proteinGrid = document.getElementById('protein-grid');
+        proteinGrid.querySelectorAll('button').forEach(btn => {
+          if (!btn.classList.contains('selected-ring')) {
+            btn.classList.add('btn-disabled-strike', 'bg-gray-300', 'dark:bg-gray-700');
+          }
+        });
+      }
+    }
+  }
+
+  function resetSection1() {
+    section1.count = 0;
+    for (let key in section1.items) {
+      section1.items[key] = 0;
+      itemTracker[key] = 0; 
+    }
+
+    const headerAmount = document.getElementById('section-choose-amount');
+    headerAmount.classList.remove('text-red-600', 'font-bold');
+    
+    const proteinGrid = document.getElementById('protein-grid');
+    proteinGrid.querySelectorAll('button').forEach(btn => {
+      btn.classList.remove('selected-ring', 'btn-disabled-strike', 'bg-gray-300', 'dark:bg-gray-700');
+    });
+    
+    proteinGrid.querySelectorAll('.counter-badge').forEach(badge => {
+      badge.innerText = '0';
+      badge.classList.replace('text-gray-900', 'text-transparent');
+      badge.classList.remove('dark:text-gray-100');
+    });
+  }
+</script>
+
+</body>
+</html>
