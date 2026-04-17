@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Menu Selection Tracker</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // Tailwind Configuration for Dark Mode and Custom Colors
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: '#0000ff',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Custom utility for the selected border since it needs !important override logic */
+    .selected-ring {
+      outline: 2px solid #0000ff !important;
+      z-index: 10;
+    }
+    
+    /* Strike-through styling for locked-out items */
+    .btn-disabled-strike {
+      text-decoration: line-through;
+      text-decoration-thickness: 2px;
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+    /* Transition for theme switching */
+    body {
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    /* Custom scrollbar for receipt if it gets too long */
+    #receipt-content::-webkit-scrollbar {
+      width: 4px;
+    }
+    #receipt-content::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 10px;
+    }
+
+    /* Restrict item rows to 280px */
+    .item-row-container {
+      max-width: 280px;
+    }
+
+    /* Sticky container adjustment */
+    .sticky-sidebar {
+      position: sticky;
+      top: 100px; /* Offset to stay below top buttons/header */
+      height: fit-content;
+    }
+  </style>
+</head>
+<body class="bg-white text-gray-900 dark:bg-[#1a1d20] dark:text-gray-100 min-h-screen">
+
+<!-- Global Controls -->
+<div class="fixed top-4 right-4 flex gap-2 z-50">
+  <button id="doubleOrderBtn" onclick="toggleOrderMultiplier()" 
+    class="px-3 py-1 border border-blue-600 text-blue-600 bg-white dark:bg-[#1a1d20] rounded text-sm hover:bg-blue-50 transition-colors duration-200">
+    2X Order
+  </button>
+  <button id="themeSwitcher" onclick="toggleTheme()" 
+    class="px-3 py-1 border border-gray-400 text-gray-600 bg-white dark:bg-[#1a1d20] dark:text-gray-300 dark:border-gray-600 rounded text-sm hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200">
+    Dark Mode
+  </button>
+</div>
+
+<div class="p-8 max-w-7xl mx-auto">
+  <h2 class="text-3xl font-bold mb-4">Grocery Menu</h2>
+  <hr class="border-gray-200 dark:border-gray-700 mb-8">
+
+  <!-- Main Layout Grid -->
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+    
+    <!-- Left Column: Item Selector Sections (8 cols) -->
+    <div class="lg:col-span-8 space-y-12">
+      
+      <!-- Section 1: Proteins -->
+      <section id="section-1">
+        <div class="flex items-center justify-between mb-4 border-b pb-2 border-gray-200 dark:border-gray-700 item-row-container">
+          <div class="flex items-center">
+            <h5 class="text-lg font-semibold uppercase tracking-wider mr-2">Proteins</h5> 
+            <span id="section-1-choose-amount" class="text-sm text-gray-500 dark:text-gray-400">
+              (choose <span id="section-1-limit"></span>)
+            </span>
+          </div>
+        </div>
+        
+        <div class="grid grid-cols-1 gap-2 mb-4" id="section-1-grid">
+          <div class="flex gap-2 item-row-container">
+            <button type="button" data-key="tilapia" data-name="Tilapia" onclick="handleItemClick(this, 'section-1', 'tilapia')"
+              class="flex-grow text-left px-4 py-2 bg-gray-50 border border-gray-200 dark:bg-[#2b3035] dark:border-gray-700 rounded hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-100 leading-tight text-sm">
+              Tilapia
+            </button>
+            <span class="counter-badge w-10 flex-shrink-0 flex items-center justify-center font-bold text-transparent bg-gray-50 dark:bg-[#2b3035] rounded transition-all duration-100 text-sm">0</span>
+          </div>
+          <div class="flex gap-2 item-row-container">
+            <button type="button" data-key="chickenBreast" data-name="Chicken Breast" onclick="handleItemClick(this, 'section-1', 'chickenBreast')"
+              class="flex-grow text-left px-4 py-2 bg-gray-50 border border-gray-200 dark:bg-[#2b3035] dark:border-gray-700 rounded hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-100 leading-tight text-sm">
+              Chicken Breast
+            </button>
+            <span class="counter-badge w-10 flex-shrink-0 flex items-center justify-center font-bold text-transparent bg-gray-50 dark:bg-[#2b3035] rounded text-sm">0</span>
+          </div>
+          <div class="flex gap-2 item-row-container">
+            <button type="button" data-key="porkChop" data-name="Pork Chop" onclick="handleItemClick(this, 'section-1', 'porkChop')"
+              class="flex-grow text-left px-4 py-2 bg-gray-50 border border-gray-200 dark:bg-[#2b3035] dark:border-gray-700 rounded hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-100 leading-tight text-sm">
+              Pork Chop
+            </button>
+            <span class="counter-badge w-10 flex-shrink-0 flex items-center justify-center font-bold text-transparent bg-gray-50 dark:bg-[#2b3035] rounded text-sm">0</span>
+          </div>
+          <div class="flex gap-2 item-row-container">
+            <button type="button" data-key="tempeh" data-name="Tempeh" onclick="handleItemClick(this, 'section-1', 'tempeh')"
+              class="flex-grow text-left px-4 py-2 bg-gray-50 border border-gray-200 dark:bg-[#2b3035] dark:border-gray-700 rounded hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-100 leading-tight text-sm">
+              Tempeh
+            </button>
+            <span class="counter-badge w-10 flex-shrink-0 flex items-center justify-center font-bold text-transparent bg-gray-50 dark:bg-[#2b3035] rounded text-sm">0</span>
+          </div>
+        </div>
+        <button class="item-row-container w-full py-2 border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-[#2b3035] text-xs hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors rounded" onclick="resetSection('section-1')">Reset Section 1</button>
+      </section>
+
+      <!-- Section 2: Dairy -->
+      <section id="section-2">
+        <div class="flex items-center justify-between mb-4 border-b pb-2 border-gray-200 dark:border-gray-700 item-row-container">
+          <div class="flex items-center">
+            <h5 class="text-lg font-semibold uppercase tracking-wider mr-2">Dairy</h5> 
+            <span id="section-2-choose-amount" class="text-sm text-gray-500 dark:text-gray-400">
+              (choose <span id="section-2-limit"></span>)
+            </span>
+          </div>
+        </div>
+        
+        <div class="grid grid-cols-1 gap-2 mb-4" id="section-2-grid">
+          <div class="flex gap-2 item-row-container">
+            <button type="button" data-key="wholeMilk" data-name="Whole Milk" onclick="handleItemClick(this, 'section-2', 'wholeMilk')"
+              class="flex-grow text-left px-4 py-2 bg-gray-50 border border-gray-200 dark:bg-[#2b3035] dark:border-gray-700 rounded hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-100 leading-tight text-sm">
+              Whole Milk
+            </button>
+            <span class="counter-badge w-10 flex-shrink-0 flex items-center justify-center font-bold text-transparent bg-gray-50 dark:bg-[#2b3035] rounded text-sm">0</span>
+          </div>
+          <div class="flex gap-2 item-row-container">
+            <button type="button" data-key="twoPercentMilk" data-name="2% Milk" onclick="handleItemClick(this, 'section-2', 'twoPercentMilk')"
+              class="flex-grow text-left px-4 py-2 bg-gray-50 border border-gray-200 dark:bg-[#2b3035] dark:border-gray-700 rounded hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-100 leading-tight text-sm">
+              2% Milk
+            </button>
+            <span class="counter-badge w-10 flex-shrink-0 flex items-center justify-center font-bold text-transparent bg-gray-50 dark:bg-[#2b3035] rounded text-sm">0</span>
+          </div>
+          <div class="flex gap-2 item-row-container">
+            <button type="button" data-key="cottageCheese" data-name="Cottage Cheese" onclick="handleItemClick(this, 'section-2', 'cottageCheese')"
+              class="flex-grow text-left px-4 py-2 bg-gray-50 border border-gray-200 dark:bg-[#2b3035] dark:border-gray-700 rounded hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-100 leading-tight text-sm">
+              Cottage Cheese
+            </button>
+            <span class="counter-badge w-10 flex-shrink-0 flex items-center justify-center font-bold text-transparent bg-gray-50 dark:bg-[#2b3035] rounded text-sm">0</span>
+          </div>
+        </div>
+        <button class="item-row-container w-full py-2 border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-[#2b3035] text-xs hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors rounded" onclick="resetSection('section-2')">Reset Section 2</button>
+      </section>
+
+      <!-- Filler space to test scroll -->
+      <div class="h-screen opacity-10 border-t border-dashed border-gray-400 pt-4">
+        <p class="italic">More content here will scroll past while the receipt stays pinned...</p>
+      </div>
+
+    </div>
+
+    <!-- Right Column: Sticky Receipt (4 cols) -->
+    <div class="lg:col-span-4 relative">
+      <div id="receipt" class="sticky-sidebar p-6 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-[#2b3035] shadow-sm">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="font-bold text-xl uppercase tracking-tighter">Your Receipt</h3>
+          <span class="text-[10px] font-bold bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-200 px-2 py-0.5 rounded tracking-widest">DYNAMIC</span>
+        </div>
+        
+        <div id="receipt-content" class="max-h-[50vh] overflow-y-auto space-y-4">
+          <p class="text-gray-400 italic text-sm">Select items from the menu.</p>
+        </div>
+
+        <div class="mt-6 pt-4 border-t border-gray-300 dark:border-gray-600">
+          <div class="flex justify-between font-bold text-lg">
+            <span>Total Qty:</span>
+            <span id="receipt-total" class="text-blue-600 dark:text-blue-400">0</span>
+          </div>
+        </div>
+        <button class="w-full mt-4 bg-blue-600 text-white py-2 rounded font-bold hover:bg-blue-700 transition-colors">
+          Checkout
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  let isDoubleOrder = false;
+  const BASE_LIMITS = {
+    'section-1': 2,
+    'section-2': 2
+  };
+
+  const state = {
+    'section-1': { count: 0, limit: 2, items: {}, names: {} },
+    'section-2': { count: 0, limit: 2, items: {}, names: {} }
+  };
+
+  window.onload = function() {
+    updateLimitDisplays();
+    updateReceipt();
+  };
+
+  function updateLimitDisplays() {
+    for (let sectionId in state) {
+      state[sectionId].limit = isDoubleOrder ? BASE_LIMITS[sectionId] * 2 : BASE_LIMITS[sectionId];
+      document.getElementById(`${sectionId}-limit`).innerText = state[sectionId].limit;
+    }
+  }
+
+  function toggleOrderMultiplier() {
+    isDoubleOrder = !isDoubleOrder;
+    const btn = document.getElementById('doubleOrderBtn');
+    btn.innerText = isDoubleOrder ? '1X Order' : '2X Order';
+    
+    if (isDoubleOrder) {
+      btn.classList.replace('text-blue-600', 'text-white');
+      btn.classList.add('bg-blue-600');
+    } else {
+      btn.classList.replace('text-white', 'text-blue-600');
+      btn.classList.remove('bg-blue-600');
+    }
+
+    resetSection('section-1');
+    resetSection('section-2');
+    updateLimitDisplays();
+    updateReceipt();
+  }
+
+  function toggleTheme() {
+    const html = document.documentElement;
+    const btn = document.getElementById('themeSwitcher');
+    if (html.classList.contains('dark')) {
+      html.classList.remove('dark');
+      btn.innerText = 'Dark Mode';
+    } else {
+      html.classList.add('dark');
+      btn.innerText = 'Light Mode';
+    }
+  }
+
+  function handleItemClick(button, sectionId, itemKey) {
+    const section = state[sectionId];
+    const itemName = button.getAttribute('data-name');
+    const counterElement = button.parentElement.querySelector('.counter-badge');
+    const headerAmount = document.getElementById(`${sectionId}-choose-amount`);
+    
+    if (section.count === section.limit && button.classList.contains('selected-ring')) {
+      section.count -= (section.items[itemKey] || 0);
+      delete section.items[itemKey];
+      delete section.names[itemKey];
+      
+      button.classList.remove('selected-ring');
+      counterElement.innerText = '0';
+      counterElement.classList.replace('text-gray-900', 'text-transparent');
+      counterElement.classList.replace('dark:text-gray-100', 'text-transparent');
+      
+      headerAmount.classList.remove('text-red-600', 'font-bold');
+      const grid = document.getElementById(`${sectionId}-grid`);
+      grid.querySelectorAll('button').forEach(btn => {
+        btn.classList.remove('btn-disabled-strike', 'bg-gray-300', 'dark:bg-gray-700');
+      });
+      updateReceipt();
+      return;
+    }
+
+    if (section.count < section.limit) {
+      section.items[itemKey] = (section.items[itemKey] || 0) + 1;
+      section.names[itemKey] = itemName;
+      section.count++;
+      
+      counterElement.innerText = section.items[itemKey];
+
+      if (section.items[itemKey] > 0) {
+        button.classList.add('selected-ring');
+        counterElement.classList.replace('text-transparent', 'text-gray-900');
+        counterElement.classList.add('dark:text-gray-100');
+      }
+
+      if (section.count === section.limit) {
+        headerAmount.classList.add('text-red-600', 'font-bold');
+        const grid = document.getElementById(`${sectionId}-grid`);
+        grid.querySelectorAll('button').forEach(btn => {
+          if (!btn.classList.contains('selected-ring')) {
+            btn.classList.add('btn-disabled-strike', 'bg-gray-300', 'dark:bg-gray-700');
+          }
+        });
+      }
+      updateReceipt();
+    }
+  }
+
+  function resetSection(sectionId) {
+    const section = state[sectionId];
+    section.count = 0;
+    section.items = {};
+    section.names = {};
+
+    const headerAmount = document.getElementById(`${sectionId}-choose-amount`);
+    headerAmount.classList.remove('text-red-600', 'font-bold');
+    
+    const grid = document.getElementById(`${sectionId}-grid`);
+    grid.querySelectorAll('button').forEach(btn => {
+      btn.classList.remove('selected-ring', 'btn-disabled-strike', 'bg-gray-300', 'dark:bg-gray-700');
+    });
+    
+    grid.querySelectorAll('.counter-badge').forEach(badge => {
+      badge.innerText = '0';
+      badge.classList.replace('text-gray-900', 'text-transparent');
+      badge.classList.remove('dark:text-gray-100');
+    });
+    updateReceipt();
+  }
+
+  function updateReceipt() {
+    const content = document.getElementById('receipt-content');
+    const totalDisplay = document.getElementById('receipt-total');
+    let html = '';
+    let globalTotal = 0;
+
+    for (let sectionId in state) {
+      const section = state[sectionId];
+      const items = Object.keys(section.items);
+      
+      if (items.length > 0) {
+        const sectionName = sectionId === 'section-1' ? 'Proteins' : 'Dairy';
+        html += `<div class="mb-4">
+          <h4 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2 border-b border-gray-100 dark:border-gray-700 pb-1">${sectionName}</h4>
+          <ul class="text-sm space-y-1">`;
+        
+        items.forEach(key => {
+          const count = section.items[key];
+          const name = section.names[key];
+          globalTotal += count;
+          html += `<li class="flex justify-between items-center group">
+            <span class="text-gray-700 dark:text-gray-300 group-hover:text-blue-500 transition-colors">${name}</span>
+            <span class="font-mono font-bold bg-gray-200 dark:bg-gray-700 px-1.5 rounded">x${count}</span>
+          </li>`;
+        });
+        
+        html += `</ul></div>`;
+      }
+    }
+
+    if (html === '') {
+      content.innerHTML = '<p class="text-gray-400 italic text-sm text-center py-4">No items selected.</p>';
+    } else {
+      content.innerHTML = html;
+    }
+    
+    totalDisplay.innerText = globalTotal;
+  }
+</script>
+
+</body>
+</html>
