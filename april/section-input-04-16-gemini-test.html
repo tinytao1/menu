@@ -41,7 +41,6 @@
       transition: background-color 0.3s ease, color 0.3s ease;
     }
 
-    /* Custom class for the persistent selected state */
     .selected {
       outline: 2px solid #0000ff !important;
       box-shadow: none !important;
@@ -58,13 +57,11 @@
       box-shadow: none !important;
     }
 
-    /* Subtle darkness on hover for item buttons */
     .btn-light:hover {
       background-color: var(--btn-hover) !important;
       border-color: var(--btn-border) !important;
     }
 
-    /* Styling for the counter element */
     .counter-badge {
       min-width: 40px;
       padding-left: 10px;
@@ -81,7 +78,6 @@
       transition: all 0.1s ease;
     }
 
-    /* Make text visible if selected */
     .active-text {
       color: var(--text-color) !important;
     }
@@ -101,7 +97,6 @@
       font-weight: bold;
     }
 
-    /* Style for buttons that are disabled and not selected */
     .btn-disabled-strike {
       text-decoration: line-through;
       text-decoration-thickness: 2px;
@@ -111,7 +106,6 @@
       pointer-events: none;
     }
 
-    /* Styling for the discrete reset button at the bottom */
     .btn-discrete-reset {
         border-color: var(--btn-border);
         color: var(--text-color);
@@ -125,17 +119,30 @@
         border-color: var(--muted-text);
     }
 
-    /* Theme Toggle Position */
-    .theme-toggle {
+    .top-controls {
       position: absolute;
       top: 1rem;
       right: 1rem;
+      display: flex;
+      gap: 10px;
     }
   </style>
 </head>
 <body data-bs-theme="light">
 
-<div class="theme-toggle">
+<!-- 
+    LAYOUT NOTES & CONFIGURATION:
+    - Office Desktop view optimized
+    - 1/3 Width layout via col-4
+    - Dark mode supported via data-bs-theme
+    - 2X Toggle state persists across resets
+    - Neutral grey lockout mechanism implemented
+-->
+
+<div class="top-controls">
+  <button class="btn btn-outline-primary btn-sm" id="doubleOrderBtn" onclick="toggleOrderMultiplier()">
+    2X Order
+  </button>
   <button class="btn btn-outline-secondary btn-sm" id="themeSwitcher" onclick="toggleTheme()">
     Dark Mode
   </button>
@@ -151,53 +158,42 @@
         <h5 class="mb-0 me-2 text-uppercase letter-spacing-1">Section 1: Proteins</h5> 
         <span id='section-choose-amount'>(choose <span id="section-limit"></span>)</span>
       </div>
-      <!-- Secondary header reset -->
       <button class="btn btn-sm btn-outline-secondary" onclick="resetSection1()">Reset</button>
     </div>
     
-    <!-- Item Grid -->
     <div class="d-grid gap-2 col-4 mb-3" id="protein-grid">
-      
       <div class="d-flex gap-2">
         <button type="button" class="btn btn-light flex-grow-1 text-start" data-key="tilapia" onclick="incrementCounter(this, 'tilapia')">Tilapia</button>
         <span class="badge counter-badge align-self-stretch">0</span>
       </div>
-
       <div class="d-flex gap-2">
         <button type="button" class="btn btn-light flex-grow-1 text-start" data-key="chickenBreast" onclick="incrementCounter(this, 'chickenBreast')">Chicken Breast</button>
         <span class="badge counter-badge align-self-stretch">0</span>
       </div>
-
       <div class="d-flex gap-2">
         <button type="button" class="btn btn-light flex-grow-1 text-start" data-key="porkChop" onclick="incrementCounter(this, 'porkChop')">Pork Chop</button>
         <span class="badge counter-badge align-self-stretch">0</span>
       </div>
-
       <div class="d-flex gap-2">
         <button type="button" class="btn btn-light flex-grow-1 text-start" data-key="tempeh" onclick="incrementCounter(this, 'tempeh')">Tempeh</button>
         <span class="badge counter-badge align-self-stretch">0</span>
       </div>
-
       <div class="d-flex gap-2">
         <button type="button" class="btn btn-light flex-grow-1 text-start" data-key="tuna" onclick="incrementCounter(this, 'tuna')">Tuna</button>
         <span class="badge counter-badge align-self-stretch">0</span>
       </div>
-
       <div class="d-flex gap-2">
         <button type="button" class="btn btn-light flex-grow-1 text-start" data-key="proteinTrailMix" onclick="incrementCounter(this, 'proteinTrailMix')">Protein Trail Mix</button>
         <span class="badge counter-badge align-self-stretch">0</span>
       </div>
-
       <div class="d-flex gap-2">
         <button type="button" class="btn btn-light flex-grow-1 text-start" data-key="firmTofu" onclick="incrementCounter(this, 'firmTofu')">Firm Tofu</button>
         <span class="badge counter-badge align-self-stretch">0</span>
       </div>
-
       <div class="d-flex gap-2">
         <button type="button" class="btn btn-light flex-grow-1 text-start" data-key="tempehCauliflowerPatty" onclick="incrementCounter(this, 'tempehCauliflowerPatty')">Tempeh Cauliflower Patty</button>
         <span class="badge counter-badge align-self-stretch">0</span>
       </div>
-
     </div>
 
     <div class="col-4">
@@ -212,35 +208,49 @@
 </div>
 
 <script>
+  // Global multiplier state
+  let isDoubleOrder = false;
+  const BASE_LIMIT_SECTION_1 = 2;
+
   const itemTracker = {
-    tilapia: 0,
-    chickenBreast: 0,
-    porkChop: 0,
-    tempeh: 0,
-    tuna: 0,
-    proteinTrailMix: 0,
-    firmTofu: 0,
-    tempehCauliflowerPatty: 0
+    tilapia: 0, chickenBreast: 0, porkChop: 0, tempeh: 0, 
+    tuna: 0, proteinTrailMix: 0, firmTofu: 0, tempehCauliflowerPatty: 0
   };
 
   const section1 = {
-    limit: 2,
+    limit: BASE_LIMIT_SECTION_1,
     count: 0, 
     items: {
-      tilapia: 0,
-      chickenBreast: 0,
-      porkChop: 0,
-      tempeh: 0,
-      tuna: 0,
-      proteinTrailMix: 0,
-      firmTofu: 0,
-      tempehCauliflowerPatty: 0
+      tilapia: 0, chickenBreast: 0, porkChop: 0, tempeh: 0, 
+      tuna: 0, proteinTrailMix: 0, firmTofu: 0, tempehCauliflowerPatty: 0
     }
   };
 
   window.onload = function() {
-    document.getElementById('section-limit').innerText = section1.limit;
+    updateLimitDisplays();
   };
+
+  function updateLimitDisplays() {
+    section1.limit = isDoubleOrder ? BASE_LIMIT_SECTION_1 * 2 : BASE_LIMIT_SECTION_1;
+    document.getElementById('section-limit').innerText = section1.limit;
+  }
+
+  function toggleOrderMultiplier() {
+    isDoubleOrder = !isDoubleOrder;
+    const btn = document.getElementById('doubleOrderBtn');
+    btn.innerText = isDoubleOrder ? '1X Order' : '2X Order';
+    
+    // Switch styling to indicate active multiplier
+    if (isDoubleOrder) {
+      btn.classList.replace('btn-outline-primary', 'btn-primary');
+    } else {
+      btn.classList.replace('btn-primary', 'btn-outline-primary');
+    }
+
+    // Changing the multiplier resets selections to avoid logical inconsistencies
+    resetSection1();
+    updateLimitDisplays();
+  }
 
   function toggleTheme() {
     const body = document.body;
@@ -257,6 +267,7 @@
   function incrementCounter(button, itemKey) {
     const counterElement = button.parentElement.querySelector('.counter-badge');
     
+    // Toggle off logic
     if (section1.count === section1.limit && button.classList.contains('selected')) {
       section1.count -= itemTracker[itemKey];
       itemTracker[itemKey] = 0;
@@ -274,6 +285,7 @@
       return;
     }
 
+    // Standard increment logic
     if (section1.count < section1.limit) {
       itemTracker[itemKey]++;
       section1.items[itemKey]++;
