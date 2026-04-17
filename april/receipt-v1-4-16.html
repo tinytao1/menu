@@ -62,7 +62,53 @@
   </style>
 </head>
 <body class="bg-white text-gray-900 dark:bg-[#1a1d20] dark:text-gray-100 min-h-screen">
+<!--
+Summary
+hand-code sections, f&veg settings div, and recipt div template.
+Add movable sections within receipt to reflect picking order.
+Make total app features list for presentation summary of benefits.
+ - the order and receipt app can run next to the current paper system
+    -the entire paper system can stay in place during
+    a trial of the app, or for use as a backup. (Grocery Order & Receipt).
+ - "classic" desktop design is comfortable to use with a mouse.
+ - double order option incorporated into single reciept.
+ - Fruits & Vegetables section is an app within an app,
+    serving amounts, and serving limits, per item, are set 
+    incorporating settings for - item names - serving amounts
+    - and serving limits. Once set, the app handles the
+    limiting for the order taker, and the printed receipt displays 
+    the names and totals for the order pickers/(shoppers).
+  - languages to receipt.
+  - improved shopping accuracy via reduced order clutter
+    -customer oversight/check with recipt in hand.
+  - relatively efficient and reliable thermal receipt printer.
+    -copy for customer.
+  - 
+-
+-
+-
+-
+- reset all menu
+- alert 2 seconds when 2X/1X order toggled.
+- customer name, customer number, barcode, order number.
+- date
+- menu header
+  -title Week4
+  -date
+- F&Veg settings
+  -f+v total servings count
+- Receipt
+  -shorten print button.
+  -move receipt to right of select sections instead of on page right margin.
+  -add date
+  -remove x from totals
+    -enlarge font, center and narrow text 
+  - add languages
+  -f+v total servings count
+- 
 
+
+-->
 <!-- Global Controls -->
 <div class="fixed top-4 right-4 flex gap-2 z-50">
   <button id="doubleOrderBtn" onclick="toggleOrderMultiplier()" 
@@ -192,7 +238,7 @@
           </div>
         </div>
         <button class="w-full mt-4 bg-blue-600 text-white py-2 rounded font-bold hover:bg-blue-700 transition-colors">
-          Checkout
+          Print
         </button>
       </div>
     </div>
@@ -215,6 +261,7 @@
   window.onload = function() {
     updateLimitDisplays();
     updateReceipt();
+    toggleTheme();
   };
 
   function updateLimitDisplays() {
