@@ -7,6 +7,40 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <style>
+    :root {
+      --bg-color: #ffffff;
+      --text-color: #212529;
+      --btn-bg: #f8f9fa;
+      --btn-border: #dee2e6;
+      --btn-hover: #f2f2f2;
+      --badge-bg: #f8f9fa;
+      --badge-text-inactive: #f8f9fa;
+      --disabled-bg: #d1d1d1;
+      --disabled-border: #b0b0b0;
+      --header-border: #dee2e6;
+      --muted-text: #6c757d;
+    }
+
+    [data-bs-theme="dark"] {
+      --bg-color: #1a1d20;
+      --text-color: #f8f9fa;
+      --btn-bg: #2b3035;
+      --btn-border: #495057;
+      --btn-hover: #3d4246;
+      --badge-bg: #2b3035;
+      --badge-text-inactive: #2b3035;
+      --disabled-bg: #41464a;
+      --disabled-border: #343a40;
+      --header-border: #495057;
+      --muted-text: #adb5bd;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
     /* Custom class for the persistent selected state */
     .selected {
       outline: 2px solid #0000ff !important;
@@ -14,11 +48,23 @@
       z-index: 1;
     }
 
+    .btn-light {
+      background-color: var(--btn-bg) !important;
+      border-color: var(--btn-border) !important;
+      color: var(--text-color) !important;
+    }
+
     .btn-light:focus {
       box-shadow: none !important;
     }
 
-    /* Styling for the counter element to match button background and height */
+    /* Subtle darkness on hover for item buttons */
+    .btn-light:hover {
+      background-color: var(--btn-hover) !important;
+      border-color: var(--btn-border) !important;
+    }
+
+    /* Styling for the counter element */
     .counter-badge {
       min-width: 40px;
       padding-left: 10px;
@@ -28,31 +74,25 @@
       justify-content: center;
       font-weight: bold;
       font-size: 1rem;
-      background-color: #f8f9fa; 
-      /* Initially match background color to make '0' invisible */
-      color: #f8f9fa; 
-      border: 1px solid #dee2e6;
+      background-color: var(--badge-bg); 
+      color: var(--badge-text-inactive); 
+      border: none; 
       border-radius: var(--bs-border-radius);
       transition: all 0.1s ease;
     }
 
-    /* Make text black if selected to indicate active status */
+    /* Make text visible if selected */
     .active-text {
-      color: #000000 !important;
+      color: var(--text-color) !important;
     }
 
-    .section-header {
-      border-bottom: 2px solid #dee2e6;
-      padding-bottom: 10px;
-      margin-bottom: 20px;
-      color: #495057;
-      text-transform: uppercase;
-      letter-spacing: 1px;
+    .border-bottom {
+      border-color: var(--header-border) !important;
     }
 
     #section-choose-amount {
       font-size: 0.9rem;
-      color: #6c757d;
+      color: var(--muted-text);
       vertical-align: middle;
     }
 
@@ -64,50 +104,42 @@
     /* Style for buttons that are disabled and not selected */
     .btn-disabled-strike {
       text-decoration: line-through;
-      text-decoration-thickness: 2px; /* Increased by 1px from default/initial */
+      text-decoration-thickness: 2px;
       opacity: 0.6;
-      pointer-events: none; /* Disables clicking */
+      background-color: var(--disabled-bg) !important;
+      border-color: var(--disabled-border) !important;
+      pointer-events: none;
     }
 
     /* Styling for the discrete reset button at the bottom */
     .btn-discrete-reset {
-        border-color: #dee2e6;
-        color: #212529; /* Darker text to match item buttons */
-        background-color: #f8f9fa;
+        border-color: var(--btn-border);
+        color: var(--text-color);
+        background-color: var(--btn-bg);
         font-size: 0.9rem;
         transition: all 0.2s;
     }
     
     .btn-discrete-reset:hover {
-        background-color: #e2e6ea;
-        color: #000000;
-        border-color: #adb5bd;
+        background-color: var(--btn-hover);
+        border-color: var(--muted-text);
+    }
+
+    /* Theme Toggle Position */
+    .theme-toggle {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
     }
   </style>
 </head>
-<body>
+<body data-bs-theme="light">
 
-<!--
-State of the App Summary
-Grocery Menu section 1 input is roughly complete.
-Next steps: 
-- Receipt view.
-  - language addition option.
-- 2X Order view.
-- Menu title
-- Fruits & Veggies section settings.
-
-The Grocery Menu Selection Tracker is currently a functional front-end prototype 
-built with HTML5, CSS3, and Bootstrap 5. It features a responsive "Proteins" section 
-where users can select up to two items. The app includes a smart "Limit Reached" 
-state that strikes through unselected options while allowing users to deselect 
-active items by clicking them again (resetting individual counts). It employs a 
-custom UI with persistent blue outlines for selections, dynamic badge counters that
-reveal themselves only when active, and a dedicated, discrete "Reset" button that
-remains functional even when the selection limit is met. The logic is handled via 
-a centralized JavaScript state object, making it ready for future expansion into
-additional menu categories or persistent storage.
--->
+<div class="theme-toggle">
+  <button class="btn btn-outline-secondary btn-sm" id="themeSwitcher" onclick="toggleTheme()">
+    Dark Mode
+  </button>
+</div>
 
 <div class="container-fluid mt-4">
   <h2 class="mb-4">Grocery Menu</h2>
@@ -123,52 +155,44 @@ additional menu categories or persistent storage.
       <button class="btn btn-sm btn-outline-secondary" onclick="resetSection1()">Reset</button>
     </div>
     
-    <!-- Item Grid (Buttons in here get disabled on limit reach) -->
-    <div class="d-grid gap-3 col-md-4 col-lg-4 mb-3" id="protein-grid">
+    <!-- Item Grid -->
+    <div class="d-grid gap-2 col-4 mb-3" id="protein-grid">
       
-      <!-- Row 1 -->
       <div class="d-flex gap-2">
         <button type="button" class="btn btn-light flex-grow-1 text-start" data-key="tilapia" onclick="incrementCounter(this, 'tilapia')">Tilapia</button>
         <span class="badge counter-badge align-self-stretch">0</span>
       </div>
 
-      <!-- Row 2 -->
       <div class="d-flex gap-2">
         <button type="button" class="btn btn-light flex-grow-1 text-start" data-key="chickenBreast" onclick="incrementCounter(this, 'chickenBreast')">Chicken Breast</button>
         <span class="badge counter-badge align-self-stretch">0</span>
       </div>
 
-      <!-- Row 3 -->
       <div class="d-flex gap-2">
         <button type="button" class="btn btn-light flex-grow-1 text-start" data-key="porkChop" onclick="incrementCounter(this, 'porkChop')">Pork Chop</button>
         <span class="badge counter-badge align-self-stretch">0</span>
       </div>
 
-      <!-- Row 4 -->
       <div class="d-flex gap-2">
         <button type="button" class="btn btn-light flex-grow-1 text-start" data-key="tempeh" onclick="incrementCounter(this, 'tempeh')">Tempeh</button>
         <span class="badge counter-badge align-self-stretch">0</span>
       </div>
 
-      <!-- Row 5 -->
       <div class="d-flex gap-2">
         <button type="button" class="btn btn-light flex-grow-1 text-start" data-key="tuna" onclick="incrementCounter(this, 'tuna')">Tuna</button>
         <span class="badge counter-badge align-self-stretch">0</span>
       </div>
 
-      <!-- Row 6 -->
       <div class="d-flex gap-2">
         <button type="button" class="btn btn-light flex-grow-1 text-start" data-key="proteinTrailMix" onclick="incrementCounter(this, 'proteinTrailMix')">Protein Trail Mix</button>
         <span class="badge counter-badge align-self-stretch">0</span>
       </div>
 
-      <!-- Row 7 -->
       <div class="d-flex gap-2">
         <button type="button" class="btn btn-light flex-grow-1 text-start" data-key="firmTofu" onclick="incrementCounter(this, 'firmTofu')">Firm Tofu</button>
         <span class="badge counter-badge align-self-stretch">0</span>
       </div>
 
-      <!-- Row 8 -->
       <div class="d-flex gap-2">
         <button type="button" class="btn btn-light flex-grow-1 text-start" data-key="tempehCauliflowerPatty" onclick="incrementCounter(this, 'tempehCauliflowerPatty')">Tempeh Cauliflower Patty</button>
         <span class="badge counter-badge align-self-stretch">0</span>
@@ -176,13 +200,11 @@ additional menu categories or persistent storage.
 
     </div>
 
-    <!-- Section Discrete Reset Button (Outside the grid to avoid being disabled) -->
-    <div class="col-md-4">
+    <div class="col-4">
       <button class="btn btn-discrete-reset px-3 py-2" onclick="resetSection1()">Reset</button>
     </div>
   </section>
 
-  <!-- Placeholder for future sections -->
   <section id="section-2" class="text-muted">
     <p><small>Additional menu sections can be added here...</small></p>
   </section>
@@ -190,7 +212,6 @@ additional menu categories or persistent storage.
 </div>
 
 <script>
-  // Global state to keep track of item counts across the whole app
   const itemTracker = {
     tilapia: 0,
     chickenBreast: 0,
@@ -202,7 +223,6 @@ additional menu categories or persistent storage.
     tempehCauliflowerPatty: 0
   };
 
-  // Keep track of section item counts
   const section1 = {
     limit: 2,
     count: 0, 
@@ -218,40 +238,42 @@ additional menu categories or persistent storage.
     }
   };
 
-  // Initialize UI with values from JS
   window.onload = function() {
     document.getElementById('section-limit').innerText = section1.limit;
   };
 
+  function toggleTheme() {
+    const body = document.body;
+    const btn = document.getElementById('themeSwitcher');
+    if (body.getAttribute('data-bs-theme') === 'light') {
+      body.setAttribute('data-bs-theme', 'dark');
+      btn.innerText = 'Light Mode';
+    } else {
+      body.setAttribute('data-bs-theme', 'light');
+      btn.innerText = 'Dark Mode';
+    }
+  }
+
   function incrementCounter(button, itemKey) {
     const counterElement = button.parentElement.querySelector('.counter-badge');
     
-    // Check if we are at the limit and this button is already selected
     if (section1.count === section1.limit && button.classList.contains('selected')) {
-      // 1. Subtract this item's contribution from the total count
       section1.count -= itemTracker[itemKey];
-      
-      // 2. Reset the trackers for this item
       itemTracker[itemKey] = 0;
       section1.items[itemKey] = 0;
       
-      // 3. Update UI to unselected state
       button.classList.remove('selected');
       counterElement.innerText = '0';
       counterElement.classList.remove('active-text');
       
-      // 4. Clean up "Limit Reached" UI
       document.getElementById('section-choose-amount').classList.remove('limit-reached');
       const proteinGrid = document.getElementById('protein-grid');
       proteinGrid.querySelectorAll('button').forEach(btn => {
         btn.classList.remove('btn-disabled-strike');
       });
-      
-      console.log("Section 1 Count Reset for item:", itemKey, "Total Count:", section1.count);
       return;
     }
 
-    // Standard increment logic (if limit not reached)
     if (section1.count < section1.limit) {
       itemTracker[itemKey]++;
       section1.items[itemKey]++;
@@ -264,10 +286,8 @@ additional menu categories or persistent storage.
         counterElement.classList.add('active-text');
       }
 
-      // Handle Limit Reached logic
       if (section1.count === section1.limit) {
         document.getElementById('section-choose-amount').classList.add('limit-reached');
-        
         const proteinGrid = document.getElementById('protein-grid');
         proteinGrid.querySelectorAll('button').forEach(btn => {
           if (!btn.classList.contains('selected')) {
@@ -276,8 +296,6 @@ additional menu categories or persistent storage.
         });
       }
     }
-
-    console.log("Section 1 Count:", section1.count);
   }
 
   function resetSection1() {
