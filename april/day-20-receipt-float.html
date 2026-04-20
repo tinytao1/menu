@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+
+body {padding-bottom: 500px;}
+
+.container {
+  width: 275px;
+  display: grid;
+  grid-template-columns: 1fr auto ;
+  background-color: lightblue;
+  padding: 5px;
+  gap: 3px;
+}
+.container div {
+  background-color: #f1f1f1;
+  border: 2px solid grey;
+  padding: 10px;
+  font-size: 30px;
+  text-align: center;
+}
+
+.receipt {
+  background-color: lightpink;
+  padding: 5px;
+  margin: 20px 0;
+  width: 220px;
+  border: 3px dashed dodgerblue;
+  border-radius:4px;
+  float:right;
+
+}
+
+#target-element {
+  background-color: lightpink;
+  padding: 5px;
+  margin: 20px 0;
+  width: 220px;
+  height: 220px;
+  border: 3px solid black;
+  border-radius:4px;
+}
+</style>
+</head>
+<body>
+
+<h1>Grid Layout</h1>
+
+<p>A Grid Layout must have a parent element with the <em>display</em> property set to <em>grid</em> or <em>inline-grid</em>.</p>
+
+<p>Direct child element(s) of the grid container automatically becomes grid items.</p>
+
+<div class="container">
+  <div>1</div>
+  <div>2</div>
+  <div>3</div>  
+  <div>4</div>
+  <div>5</div>
+  <div>1</div>
+  <div>2</div>
+  <div>3</div>  
+  <div>4</div>
+  <div>5</div>
+  <div>1</div>
+  <div>2</div>
+  <div id="target-element2">3</div>  
+  <div>4</div>
+  <div>5</div>
+  <div>5</div>
+</div>
+
+<div class="receipt">
+  <p>This is a summary of information about the webpage and details about the order.
+  </p>
+</div>
+
+<div id="target-element">I'm the element you want to see!</div>
+
+<script>
+  window.onload = () => {
+    document.getElementById('target-element2').scrollIntoView();
+  };
+</script>
+
+
+</body>
+</html>
+
+
