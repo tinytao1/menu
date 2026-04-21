@@ -9,6 +9,10 @@
   
   <style>
     body { background-color: #ffb699; } /* grey, or "actual paper" #ffa289, or lightened #ffb699  */
+    .app-wrap {
+  		max-width: 800px;
+        width: 100%;       /* Ensures it's fluid on smaller screens */
+  		margin-left: 0;    /* Forces it to the left */}
     .double-order { visibility: hidden; }
 	.client-input {max-width: 300px; 	}
     .client-input-number { max-width: 300px; }
@@ -18,13 +22,16 @@
 
 <body>
 
-<div class="header container-fluid mt-4 ps-4 ">
+
+<div class="container-fluid app-wrap " >  <!-- START APP WRAP  -->
+
+<div class="menu-header container-fluid mt-4 ps-4 ">
 
   <h1>Week4 SF Regular Menu</h1>
   
   <hr>
   
-</div>
+</div>  <!-- END MENU HEADER -->
 
 <!-- BEGIN TOP BUTTONS GRID ROW CONTAINER : topbuttonsrowdiv -->
 <div class='container-fluid ps-4 mb-4'
@@ -122,7 +129,9 @@
       <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
     </div>
   </div>
-</div>
+
+
+</div>  <!-- END APP WRAP  -->
 
 </body>
 </html>
