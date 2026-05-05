@@ -9,9 +9,9 @@
 </head>
 <body>
 
-<div class="container mt-3 " style="max-width:260px;">
-  <h2 class="text-center fs-5">April 14, 2026</h2>
-  <p class="text-center fs-5">Saturday, 11:23AM</p> 
+<div id="receipt-div" class="container mt-3 " style="max-width:260px;">
+  <h2 id="calendar-date" class="text-center fs-5">April 14, 2026</h2>
+  <p  id="day-of-week-and-time" class="text-center fs-5">Saturday, 11:23AM</p> 
   
   <table class="table border table-sm fs-6">
   
@@ -26,7 +26,7 @@
     
       <tr>
         <td class="text-start">Name :</td>
-        <td class="text-center
+        <td id="r-name" class="text-center
         		   align-middle
                    fs-5
                    fw-normal
@@ -37,7 +37,7 @@
       
       <tr>
         <td class="text-start">Client No. : </td>
-        <td class="text-center
+        <td id="r-client-number" class="text-center
         		   align-middle
                    fs-5
                    fw-normal
@@ -57,8 +57,8 @@
       </tr> 				  <!-- SPACER ROW END-->
             
       <tr>
-        <td class="text-start"> Tempeh</td>
-        <td class="text-center
+        <td id="r1" class="text-start"> Tempeh</td>
+        <td id="r1b" class="text-center
         		   align-middle
                    fs-5
                    fw-normal">
@@ -67,8 +67,8 @@
       </tr>
          
       <tr>
-        <td class="text-start"> Tempeh Cauliflower Patty</td>
-        <td class="text-center
+        <td id="r2" class="text-start"> Tempeh Cauliflower Patty</td>
+        <td id="r2b" class="text-center
         		   align-middle
                    fs-5
                    fw-normal">
@@ -77,8 +77,8 @@
       </tr>
          
       <tr>
-        <td class="text-start"> Cottage Cheese</td>
-        <td class="text-center
+        <td id="r" class="text-start"> Cottage Cheese</td>
+        <td id="r" class="text-center
         		   align-middle
                    fs-5
                    fw-normal">
@@ -87,8 +87,8 @@
       </tr>
          
       <tr>
-        <td class="text-start"> Pepper Jack Cheese</td>
-        <td class="text-center
+        <td id="r" class="text-start"> Pepper Jack Cheese</td>
+        <td id="r" class="text-center
         		   align-middle
                    fs-5
                    fw-normal">
@@ -110,8 +110,8 @@
       </tr> 				  <!-- SPACER ROW END-->
            
       <tr>
-        <td class="text-start "> Oranges </td>
-        <td class="text-center
+        <td id="rp1" class="text-start "> Oranges </td>
+        <td id="rp1b" class="text-center
         		   align-middle
                    fs-5
                    fw-normal">
@@ -120,8 +120,8 @@
       </tr>
               
       <tr>
-        <td class="text-start"> Broccoli </td>
-        <td class="text-center
+        <td id="rp2" class="text-start"> Broccoli </td>
+        <td id="rp2b" class="text-center
         		   align-middle
                    fs-5
                    fw-normal">
@@ -130,8 +130,8 @@
       </tr>
               
       <tr>
-        <td class="text-start"> Lemons </td>
-        <td class="text-center
+        <td id="rp3" class="text-start"> Lemons </td>
+        <td id="rp3b" class="text-center
         		   align-middle
                    fs-5
                    fw-normal">
@@ -140,8 +140,8 @@
       </tr>
               
       <tr>
-        <td class="text-start"> Celery </td>
-        <td class="text-center
+        <td id="rp4" class="text-start"> Celery </td>
+        <td id="rp4b" class="text-center
         		   align-middle
                    fs-5
                    fw-normal">
@@ -150,8 +150,8 @@
       </tr>
               
       <tr>
-        <td class="text-start"> Beets </td>
-        <td class="text-center
+        <td id="rp5" class="text-start"> Beets </td>
+        <td id="rp5b" class="text-center
         		   align-middle
                    fs-5
                    fw-normal">
@@ -160,8 +160,8 @@
       </tr>
              
       <tr>
-        <td class="text-start"> Potatoes </td>
-        <td class="text-center
+        <td id="rp6" class="text-start"> Potatoes </td>
+        <td id="rp6b" class="text-center
         		   align-middle
                    fs-5
                    fw-normal">
@@ -169,9 +169,49 @@
         </td> 
       </tr>
               
+      <tr>
+        <td id="rp7" class="text-start"> empty </td>
+        <td id="rp7b" class="text-center
+        		   align-middle
+                   fs-5
+                   fw-normal">
+          000
+        </td> 
+      </tr>
+                
+      <tr>
+        <td id="rp8" class="text-start"> empty </td>
+        <td id="rp8b" class="text-center
+        		   align-middle
+                   fs-5
+                   fw-normal">
+          000
+        </td> 
+      </tr>
+                
+      <tr>
+        <td id="rp9" class="text-start"> empty </td>
+        <td id="rp9b" class="text-center
+        		   align-middle
+                   fs-5
+                   fw-normal">
+          000
+        </td> 
+      </tr>
+                
+      <tr>
+        <td id="rp10" class="text-start"> empty </td>
+        <td id="rp10b" class="text-center
+        		   align-middle
+                   fs-5
+                   fw-normal">
+          000
+        </td> 
+      </tr>
+          
       <tr class="border-3">
-        <td class="text-end"> Produce Servings<br>Total </td>
-        <td class="text-center
+        <td id="r" class="text-end"> Produce Servings<br>Total </td>
+        <td id="r" class="text-center
         		   align-middle
                    fs-5
                    fw-normal
@@ -182,19 +222,19 @@
        
       <tr aria-hidden="true" class="" > <!-- SPACER ROW START-->
       
-        <td class="text-start"> &nbsp;</td>
-        <td class="text-center
+        <!-- SPACER ROW END--><td class="text-start"> &nbsp;</td> <!-- SPACER ROW -->
+        <!-- SPACER ROW END--><td class="text-center
         		   align-middle
                    fs-6
                    fw-normal
-                   ">
+                   ">   <!-- SPACER ROW -->
           &nbsp;
-        </td>
-      </tr> 				  <!-- SPACER ROW END-->
+        <!-- SPACER ROW END--></td>       <!-- SPACER ROW -->
+      <!-- SPACER ROW END--></tr> 				  <!-- SPACER ROW END-->
        
       <tr>
-        <td class="text-start"> Black Beans </td>
-        <td class="text-center
+        <td id="r" class="text-start"> Black Beans </td>
+        <td id="r" class="text-center
         		   align-middle
                    fs-5
                    fw-normal">
@@ -203,8 +243,8 @@
       </tr>
            
       <tr>
-        <td class="text-start"> Split Peas </td>
-        <td class="text-center
+        <td id="r" class="text-start"> Split Peas </td>
+        <td id="r" class="text-center
         		   align-middle
                    fs-5
                    fw-normal">
@@ -213,8 +253,8 @@
       </tr>
                 
       <tr>
-        <td class="text-start"> Corn Tortillas </td>
-        <td class="text-center
+        <td id="r" class="text-start"> Corn Tortillas </td>
+        <td id="r" class="text-center
         		   align-middle
                    fs-5
                    fw-normal">
@@ -223,8 +263,8 @@
       </tr>
                 
       <tr>
-        <td class="text-start"> Grits </td>
-        <td class="text-center
+        <td id="r" class="text-start"> Grits </td>
+        <td id="r" class="text-center
         		   align-middle
                    fs-5
                    fw-normal">
