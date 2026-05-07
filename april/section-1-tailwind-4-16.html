@@ -52,7 +52,7 @@
     - Flexible button heights for multi-line text
 -->
 
-<div class="fixed top-4 right-4 flex gap-2">
+<div class="fixed top-4 right-4 flex gap-2 ">
   <button id="doubleOrderBtn" onclick="toggleOrderMultiplier()" 
     class="px-3 py-1 border border-blue-600 text-blue-600 rounded text-sm hover:bg-blue-50 transition-colors duration-200">
     2X Order
@@ -63,12 +63,12 @@
   </button>
 </div>
 
-<div class="p-8">
+<div class="p-8 bg-red-100"> <!-- This is the whole page Background pink-->
   <h2 class="text-3xl font-bold mb-8">Grocery Menu</h2>
 
   <!-- Section 1: Proteins -->
-  <section id="section-1" class="mb-12">
-    <div class="flex items-center justify-between mb-4 border-b pb-2 border-gray-200 dark:border-gray-700">
+  <section id="section-1" class="mb-12 bg-blue-100">  <!-- Section 1 START  Background blue-->
+    <div class="flex items-center justify-between mb-4 border-b pb-2 border-gray-200 dark:border-gray-700 bg-orange-100"> <!-- Section header START orange BG, holding a title and a reset button on right. class soup-->
       <div class="flex items-center">
         <h5 class="text-lg font-semibold uppercase tracking-wider mr-2">Section 1: Proteins</h5> 
         <span id="section-choose-amount" class="text-sm text-gray-500 dark:text-gray-400">
@@ -78,7 +78,7 @@
       <button class="text-sm px-3 py-1 border border-gray-300 dark:border-gray-600 rounded hover:bg-gray-100 dark:hover:bg-gray-800" onclick="resetSection1()">
         Reset
       </button>
-    </div>
+    </div>  <!-- Section header END (title and button) -->
     
     <!-- Item Grid (Width 1/3) -->
     <div class="grid grid-cols-1 gap-2 w-1/3 mb-4" id="protein-grid">
@@ -156,13 +156,13 @@
         Reset
       </button>
     </div>
-  </section>
+  </section>  <!-- Section 1 END-->
 
   <section id="section-2" class="opacity-50 italic">
     <p><small>Additional menu sections can be added here...</small></p>
   </section>
 
-</div>
+</div>  <!--END This is the whole page-->
 
 <script>
   let isDoubleOrder = false;
