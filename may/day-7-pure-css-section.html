@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.section-container {
+  max-width: 22rem;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 
+              0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.section-header {
+  display: block;
+}
+
+.section-title {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #374151;
+  text-transform: capitalize;
+}
+
+.header-instruction {
+  text-transform: none;
+  font-weight: 400;
+}
+
+.item-content {
+  display: grid;
+  grid-template-columns: 1fr 3rem;
+  gap: 0.5rem;
+}
+
+.item-btn-primary, 
+.item-btn-options {
+  background-color: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  line-height: 1.25;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  color: #111827;
+  font-size: 1rem;
+}
+
+.item-btn-primary:hover, 
+.item-btn-options:hover {
+  background-color: #e5e7eb;
+}
+
+.item-btn-primary {
+  text-align: left;
+}
+
+.item-btn-options {
+  text-align: center;
+}
+
+.item-count {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f9fafb;
+  border-radius: 4px;
+  font-weight: bold;
+  color: #111827;
+}
+/* This class will be added/removed via JavaScript */
+.is-selected {
+  outline: 2px solid #3b82f6; /* A clear blue line */
+  outline-offset: -2px;       /* Puts the line just inside the button edge */
+}
+
+</style>
+
+</head>
+
+<!-- BODY  --  BODY -->
+<body>
+
+
+
+<!-- Section 1: Proteins -->
+<div class="section-container" id="item-grid-1">
+  <header class="section-header">
+    <h2 class="section-title">
+      Proteins <span class="header-instruction">(choose )</span>
+    </h2>
+  </header>
+  
+  <section class="item-content">
+    <button class="item-btn-primary">Tilapia</button>
+    <span class="item-count">0</span>
+    <button class="item-btn-primary">Salmon</button>
+    <span class="item-count">0</span>
+    <button class="item-btn-primary">Pork Chop</button>
+    <span class="item-count">0</span>
+    <button class="item-btn-options">options</button>
+  </section>
+</div>
+
+<!-- Section 2: Dairy -->
+<div class="section-container" id="item-grid-2">
+  <header class="section-header">
+    <h2 class="section-title">
+      Dairy <span class="header-instruction">(choose )</span>
+    </h2>
+  </header>
+  
+  <section class="item-content">
+    <button class="item-btn-primary">Whole Milk</button>
+    <span class="item-count">0</span>
+    <button class="item-btn-primary">2% Milk</button>
+    <span class="item-count">0</span>
+    <button class="item-btn-primary">Nonfat Milk</button>
+    <span class="item-count">0</span>
+    <button class="item-btn-options">options</button>
+  </section>
+</div>
+
+
+
+
+<script>
+// 1. Find all the primary item buttons
+const buttons = document.querySelectorAll('.item-btn-primary');
+
+// 2. Loop through each button
+buttons.forEach(button => {
+  // 3. Listen for a 'click'
+  button.addEventListener('click', () => {
+    // 4. Toggle the blue outline class
+    button.classList.toggle('is-selected');
+  });
+});
+</script>
+</body>
+</html>
+
+
