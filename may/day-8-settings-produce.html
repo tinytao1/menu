@@ -108,7 +108,76 @@ button:hover {
   z-index: 1; 
 }
 
+.order-grid {
+  display: grid;
+  /* Col 1: empty, Col 2: spacer, Col 3: name, Col 4: spacer, Cols 5-10: numbers */
+  grid-template-columns: 40px 20px 1fr 20px repeat(6, 40px);
+  
+  max-width: 39.0625rem;
+  margin-top: 40px; /* Adds space between the two tables */
+  align-items: center;
+  font-family: sans-serif;
+}
 
+/* Reusing your spacer logic */
+.order-grid .spacer {
+  min-width: 20px;
+}
+
+.header-cell {
+  font-weight: bold;
+  text-align: center;
+  padding: 8px 0;
+}
+
+/* Left-align the "Name" header specifically */
+.header-cell.name-header {
+  text-align: left;
+}
+
+.row-label {
+  text-align: center;
+  font-weight: bold;
+}
+
+.num-btn {
+  width: 32px;  /* Sized to fit inside the 40px column */
+  height: 32px;
+  padding: 0;
+  margin: auto; /* Centers button in the grid cell */
+}
+
+/* Optional: styling the blank space so you can see it */
+.name-output {
+  border-bottom: 1px solid #eee;
+  min-height: 20px;
+}
+
+/* --- ORDER TABLE ROW STYLES --- */
+.row-label {
+  text-align: center;
+  font-weight: bold;
+}
+
+.num-btn {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  margin: auto;
+  background-color: white;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+/* Reusing the active state for the outline effect */
+.num-btn.active {
+  border: 1px solid #007bff;
+  color: #007bff;
+  box-shadow: inset 0 0 0 1px #007bff;
+  outline: none;
+  background-color: transparent;
+}
 
 </style>
 </head>
@@ -197,43 +266,90 @@ button:hover {
 <button class="go-btn">Go</button>
 <div class="spacer"></div>
 
+</div> <!-- END SETTINGS TABLE -->
 
-</div>
+<div class="order-grid">  <!-- START ORDER TABLE -->  
+  <!-- Col 1: Empty -->
+  <div></div>
+  <!-- Col 2: Gutter -->
+  <div class="spacer"></div>
+  <!-- Col 3: Name -->
+  <div class="header-cell name-header">Name</div>
+  <!-- Col 4: Gutter -->
+  <div class="spacer"></div>
+  
+  <!-- Cols 5 through 10: Numbers 1-6 -->
+  <div class="header-cell">1</div>
+  <div class="header-cell">2</div>
+  <div class="header-cell">3</div>
+  <div class="header-cell">4</div>
+  <div class="header-cell">5</div>
+  <div class="header-cell">6</div>
+  
+  
+  <!-- Col 1: "A" -->
+<div class="row-label">A</div>
+
+<!-- Col 2: Gutter -->
+<div class="spacer"></div>
+
+<!-- Col 3: Blank Name Space -->
+<div class="name-output"></div>
+
+<!-- Col 4: Gutter -->
+<div class="spacer"></div>
+
+<!-- Cols 5 through 10: Buttons 1-6 -->
+<button type="button" class="num-btn">1</button>
+<button type="button" class="num-btn">2</button>
+<button type="button" class="num-btn">3</button>
+<button type="button" class="num-btn">4</button>
+<button type="button" class="num-btn">5</button>
+<button type="button" class="num-btn">6</button>
+
+</div>   <!-- END ORDER TABLE -->  
 
 <script>
 
-const buttonGroups = document.querySelectorAll('.btn-group');
 
-buttonGroups.forEach(group => {
-  const buttons = group.querySelectorAll('button');
-
-  buttons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      // Check if this specific button is already active
-      const isAlreadyActive = btn.classList.contains('active');
-
-      // First, clear ALL buttons in this group (standard behavior)
-      buttons.forEach(b => b.classList.remove('active'));
-
-      // If it WASN'T active before, make it active now.
-      // If it WAS active, we leave it cleared (the "release" effect).
-      if (!isAlreadyActive) {
-        btn.classList.add('active');
-      }
+  function setupToggleButtons(buttonList) {
+    buttonList.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const isAlreadyActive = btn.classList.contains('active');
+        buttonList.forEach(b => b.classList.remove('active'));
+        if (!isAlreadyActive) {
+          btn.classList.add('active');
+        }
+      });
     });
+  }
+
+  // Handle Settings Table
+  document.querySelectorAll('.btn-group').forEach(group => {
+    setupToggleButtons(group.querySelectorAll('button'));
   });
-});
+
+  // Handle Order Table (Individual num-btns in a row)
+  const orderRowButtons = document.querySelectorAll('.num-btn');
+  setupToggleButtons(orderRowButtons);
+
+
+
+
 
 </script>
 
 <!--
 i'm learning to code. Let's work 1 step at a time, please, so that I can try to understand how each change is affecting the project. I want to add 8 columns to the settings table: odd cols will have contenet, even cols will be spacer cols, just in case. Please add these columns: column 1, "name". Col 3, "amount per serving". Col 5, "limit servings". Col. 7, a button labeled "Go". 
--->
+
   
 
+Below the Settings table I need an order table that will be affected by the settings in the settings table.
+The order table uses cols 2 and 4 as gutters.
 
+Header row, col 1, empty. Col 3, "name". Cols 5 through 10, "1" through "6". 
 
-
+-->
 
 
 
