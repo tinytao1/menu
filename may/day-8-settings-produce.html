@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+
+.settings-grid {
+  display: grid;
+  /* Defining 8 columns: Content (auto/1fr) then Spacer (20px) */
+  /* This pattern repeats 4 times to reach 8 total columns */
+  grid-template-columns: 1fr 20px 1fr 20px 1fr 20px auto 20px;
+  
+  align-items: center; /* Keeps everything vertically centered */
+  background-color:bisque;
+
+}
+
+.spacer {
+  /* This ensures the spacer columns stay empty and don't collapse */
+  min-width: 20px;
+  background-color:lightblue;
+}
+
+
+
+</style>
+</head>
+
+
+
+<body>
+
+
+
+<div class="settings-grid">
+
+  <!-- HEADER ROW -->
+
+  <!-- Col 1: Content -->
+  <div class="label">Name</div>
+  <!-- Col 2: Spacer -->
+  <div class="spacer"></div>
+  
+  <!-- Col 3: Content -->
+  <div class="label">Amount per serving</div>
+  <!-- Col 4: Spacer -->
+  <div class="spacer"></div>
+  
+  <!-- Col 5: Content -->
+  <div class="label">Limit servings</div>
+  <!-- Col 6: Spacer -->
+  <div class="spacer"></div>
+  
+  <!-- Col 7: Content -->
+  <button class="go-btn">Go</button>
+  <!-- Col 8: Spacer -->
+  <div class="spacer"></div>
+
+
+  <!-- ROW 2: INPUTS -->
+
+  <!-- Col 1: Name Input -->
+  <input type="text" placeholder="Enter name">
+  
+  <!-- Col 2: Spacer -->
+  <div class="spacer"></div>
+  
+  <!-- Col 3: Amount (3 chars wide) -->
+  <input type="text" style="width: 3ch;" maxlength="3">
+  
+  <!-- Col 4: Spacer -->
+  <div class="spacer"></div>
+  
+  <!-- Col 5: 2-Button Group -->
+  <div class="btn-group">
+    <button>1</button><button>2</button>
+  </div>
+  
+  <!-- Col 6: Spacer -->
+  <div class="spacer"></div>
+  
+  <!-- Col 7: The "Go" Button for this row -->
+  <button class="go-btn">Go</button>
+  
+  <!-- Col 8: Spacer -->
+  <div class="spacer"></div>
+
+</div>
+<!--
+i'm learning to code. Let's work 1 step at a time, please, so that I can try to understand how each change is affecting the project. I want to add 8 columns to the settings table: odd cols will have contenet, even cols will be spacer cols, just in case. Please add these columns: column 1, "name". Col 3, "amount per serving". Col 5, "limit servings". Col. 7, a button labeled "Go". 
+-->
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
+
+
