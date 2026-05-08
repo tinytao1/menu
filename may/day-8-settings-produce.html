@@ -10,7 +10,29 @@
   grid-template-columns: 1fr 20px 1fr 20px 1fr 20px auto 20px;
   
   align-items: center; /* Keeps everything vertically centered */
-  background-color:bisque;
+  
+  /* NEW STYLES */
+  row-gap: 12px;           /* Adds space between the rows */
+  padding: 20px;           /* Space inside the bisque box */
+  border-radius: 8px;      /* Rounds the corners of the table */
+  font-family: sans-serif; /* Modern, clean font */
+  max-width: 800px;        /* Keeps the table from getting too wide */
+  
+    /* TABLE BORDER */
+  border: 1px solid #e0e0e0; /* Light gray outer line */
+  background-color: #ffffff; /* Keep background clean and white */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* Optional: Soft shadow for depth */
+  box-sizing: border-box; /* Includes border/padding in width */
+  
+  max-width: 39.0625rem;    /* Approx 625px */
+  margin: 20px auto;       /* This centers the table on the page */
+  border: 1px solid #e0e0e0;
+  background-color: #ffffff;
+  box-sizing: border-box;
+  
+  max-width: 39.0625rem; 
+  margin-left: 0;       /* Forces the table to stay on the left */
+  margin-right: auto;   /* Pushes all remaining empty space to the right */
 
 }
 
@@ -18,6 +40,72 @@
   /* This ensures the spacer columns stay empty and don't collapse */
   min-width: 20px;
   background-color:lightblue;
+}
+
+/* 1. Style the text inputs */
+input[type="text"] {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  outline: none; /* Removes the thick blue outline on click */
+}
+
+/* 2. Style the buttons */
+button {
+  padding: 8px 16px;
+  background-color: #f0f0f0;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+  cursor: pointer; /* Makes the mouse change to a hand icon */
+  transition: background-color 0.2s; /* Smooth color change when hovering */
+}
+
+/* 3. Hover effect for buttons */
+button:hover {
+  background-color: #e0e0e0;
+}
+
+/* 4. Specific style for the "Go" button to make it stand out */
+.go-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+}
+
+.go-btn:hover {
+  background-color: #0056b3;
+}
+
+.btn-group {
+  display: flex; /* Puts buttons side-by-side with no gap */
+}
+
+.btn-group button {
+  /* Remove the rounded corners from both buttons initially */
+  border-radius: 0;
+}
+
+/* Round only the left side of the first button */
+.btn-group button:first-child {
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-right: none; /* Removes the "double border" in the middle */
+}
+
+/* Round only the right side of the last button */
+.btn-group button:last-child {
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+/* The 'active' class will represent the selected state */
+.btn-group button.active {
+  background-color: transparent; /* Keep background clear */
+  color: #007bff;                /* Make text blue */
+  border: 1px solid #007bff;     /* Blue border */
+  box-shadow: inset 0 0 0 1px #007bff; /* Extra thickness inside */
+  z-index: 1; 
 }
 
 
@@ -72,7 +160,8 @@
   
   <!-- Col 5: 2-Button Group -->
   <div class="btn-group">
-    <button>1</button><button>2</button>
+    <button type="button" >1</button>
+    <button type="button">2</button>
   </div>
   
   <!-- Col 6: Spacer -->
@@ -83,8 +172,60 @@
   
   <!-- Col 8: Spacer -->
   <div class="spacer"></div>
+  
+  <!-- Row 3  -->
+<input type="text" placeholder="Enter name">
+<div class="spacer"></div>
+<input type="text" style="width: 3ch;" maxlength="3">
+<div class="spacer"></div>
+<div class="btn-group">
+  <button type="button">1</button><button type="button">2</button>
+</div>
+<div class="spacer"></div>
+<button class="go-btn">Go</button>
+<div class="spacer"></div>
+
+<!-- Row 4  -->
+<input type="text" placeholder="Enter name">
+<div class="spacer"></div>
+<input type="text" style="width: 3ch;" maxlength="3">
+<div class="spacer"></div>
+<div class="btn-group">
+  <button type="button">1</button><button type="button">2</button>
+</div>
+<div class="spacer"></div>
+<button class="go-btn">Go</button>
+<div class="spacer"></div>
+
 
 </div>
+
+<script>
+
+const buttonGroups = document.querySelectorAll('.btn-group');
+
+buttonGroups.forEach(group => {
+  const buttons = group.querySelectorAll('button');
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      // Check if this specific button is already active
+      const isAlreadyActive = btn.classList.contains('active');
+
+      // First, clear ALL buttons in this group (standard behavior)
+      buttons.forEach(b => b.classList.remove('active'));
+
+      // If it WASN'T active before, make it active now.
+      // If it WAS active, we leave it cleared (the "release" effect).
+      if (!isAlreadyActive) {
+        btn.classList.add('active');
+      }
+    });
+  });
+});
+
+</script>
+
 <!--
 i'm learning to code. Let's work 1 step at a time, please, so that I can try to understand how each change is affecting the project. I want to add 8 columns to the settings table: odd cols will have contenet, even cols will be spacer cols, just in case. Please add these columns: column 1, "name". Col 3, "amount per serving". Col 5, "limit servings". Col. 7, a button labeled "Go". 
 -->
