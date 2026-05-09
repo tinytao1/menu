@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+
+.settings-grid {
+  display: grid;
+  /* Defining 8 columns: Content (auto/1fr) then Spacer (20px) */
+  /* This pattern repeats 4 times to reach 8 total columns */
+  grid-template-columns: 1fr 20px 1fr 20px 1fr 20px auto 20px;
+  
+  align-items: center; /* Keeps everything vertically centered */
+  
+  /* NEW STYLES */
+  row-gap: 12px;           /* Adds space between the rows */
+  padding: 20px;           /* Space inside the bisque box */
+  border-radius: 8px;      /* Rounds the corners of the table */
+  font-family: sans-serif; /* Modern, clean font */
+  max-width: 800px;        /* Keeps the table from getting too wide */
+  
+    /* TABLE BORDER */
+  border: 1px solid #e0e0e0; /* Light gray outer line */
+  background-color: #ffffff; /* Keep background clean and white */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* Optional: Soft shadow for depth */
+  box-sizing: border-box; /* Includes border/padding in width */
+  
+  max-width: 39.0625rem;    /* Approx 625px */
+  margin: 20px auto;       /* This centers the table on the page */
+  border: 1px solid #e0e0e0;
+  background-color: #ffffff;
+  box-sizing: border-box;
+  
+  max-width: 39.0625rem; 
+  margin-left: 0;       /* Forces the table to stay on the left */
+  margin-right: auto;   /* Pushes all remaining empty space to the right */
+
+}
+
+.spacer {
+  /* This ensures the spacer columns stay empty and don't collapse */
+  min-width: 20px;
+  background-color:lightblue;
+}
+
+/* 1. Style the text inputs */
+input[type="text"] {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  outline: none; /* Removes the thick blue outline on click */
+}
+
+/* 2. Style the buttons */
+button {
+  padding: 8px 16px;
+  background-color: #ffffff;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+  cursor: pointer; /* Makes the mouse change to a hand icon */
+  transition: background-color 0.2s; /* Smooth color change when hovering */
+}
+
+/* 3. Hover effect for buttons */
+button:hover {
+  background-color: #e0e0e0;
+}
+
+/* 4. Specific style for the "Go" button to make it stand out */
+.go-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+}
+
+.go-btn:hover {
+  background-color: #0056b3;
+}
+
+.btn-group {
+  display: flex; /* Puts buttons side-by-side with no gap */
+}
+
+.btn-group button {
+  /* Remove the rounded corners from both buttons initially */
+  border-radius: 0;
+}
+
+/* Round only the left side of the first button */
+.btn-group button:first-child {
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-right: none; /* Removes the "double border" in the middle */
+}
+
+/* Round only the right side of the last button */
+.btn-group button:last-child {
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+/* The 'active' class will represent the selected state */
+.btn-group button.active {
+  background-color: transparent; /* Keep background clear */
+  color: #007bff;                /* Make text blue */
+  border: 1px solid #007bff;     /* Blue border */
+  box-shadow: inset 0 0 0 1px #007bff; /* Extra thickness inside */
+  z-index: 1; 
+}
+
+.order-grid {
+  display: grid;
+  /* Col 1: empty, Col 2: spacer, Col 3: name, Col 4: spacer, Cols 5-10: numbers */
+  grid-template-columns: 40px 20px 1fr 20px repeat(6, 40px);
+  
+  max-width: 39.0625rem;
+  margin-top: 40px; /* Adds space between the two tables */
+  align-items: center;
+  font-family: sans-serif;
+}
+
+/* Reusing your spacer logic */
+.order-grid .spacer {
+  min-width: 20px;
+}
+
+.header-cell {
+  font-weight: bold;
+  text-align: center;
+  padding: 8px 0;
+}
+
+/* Left-align the "Name" header specifically */
+.header-cell.name-header {
+  text-align: left;
+}
+
+.row-label {
+  text-align: center;
+  font-weight: bold;
+}
+
+.num-btn {
+  width: 32px;  /* Sized to fit inside the 40px column */
+  height: 32px;
+  padding: 0;
+  margin: auto; /* Centers button in the grid cell */
+}
+
+/* Optional: styling the blank space so you can see it */
+.name-output {
+  border-bottom: 1px solid #eee;
+  min-height: 20px;
+}
+
+/* --- ORDER TABLE ROW STYLES --- */
+.row-label {
+  text-align: center;
+  font-weight: bold;
+}
+
+.num-btn {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  margin: auto;
+  background-color: white;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+/* Reusing the active state for the outline effect */
+.num-btn.active {
+  border: 1px solid #007bff;
+  color: #007bff;
+  box-shadow: inset 0 0 0 1px #007bff;
+  outline: none;
+  background-color: transparent;
+}
+
+</style>
+</head>
+
+
+
+<body>
+
+
+
+<div class="settings-grid">
+
+  <!-- HEADER ROW -->
+
+  <!-- Col 1: Content -->
+  <div class="label">Name</div>
+  <!-- Col 2: Spacer -->
+  <div class="spacer"></div>
+  
+  <!-- Col 3: Content -->
+  <div class="label">Number Per Serving</div>
+  <!-- Col 4: Spacer -->
+  <div class="spacer"></div>
+  
+  <!-- Col 5: Content -->
+  <div class="label">Limit Servings</div>
+  <!-- Col 6: Spacer -->
+  <div class="spacer"></div>
+  
+  <!-- Col 7: Content -->
+  <button class="go-btn">Go</button>
+  <!-- Col 8: Spacer -->
+  <div class="spacer"></div>
+
+
+  <!-- ROW 2: INPUTS -->
+
+  <!-- Col 1: Name Input -->
+  <input type="text" placeholder="Enter name">
+  
+  <!-- Col 2: Spacer -->
+  <div class="spacer"></div>
+  
+  <!-- Col 3: Amount (3 chars wide) -->
+  <input type="text" style="width: 3ch;" maxlength="3">
+  
+  <!-- Col 4: Spacer -->
+  <div class="spacer"></div>
+  
+  <!-- Col 5: 2-Button Group -->
+  <div class="btn-group">
+    <button type="button" >1</button>
+    <button type="button">2</button>
+  </div>
+  
+  <!-- Col 6: Spacer -->
+  <div class="spacer"></div>
+  
+  <!-- Col 7: The "Go" Button for this row -->
+  <button class="go-btn">Go</button>
+  
+  <!-- Col 8: Spacer -->
+  <div class="spacer"></div>
+  
+  <!-- Row 3  -->
+<input type="text" placeholder="Enter name">
+<div class="spacer"></div>
+<input type="text" style="width: 3ch;" maxlength="3">
+<div class="spacer"></div>
+<div class="btn-group">
+  <button type="button">1</button><button type="button">2</button>
+</div>
+<div class="spacer"></div>
+<button class="go-btn">Go</button>
+<div class="spacer"></div>
+
+<!-- Row 4  -->
+<input type="text" placeholder="Enter name">
+<div class="spacer"></div>
+<input type="text" style="width: 3ch;" maxlength="3">
+<div class="spacer"></div>
+<div class="btn-group">
+  <button type="button">1</button><button type="button">2</button>
+</div>
+<div class="spacer"></div>
+<button class="go-btn">Go</button>
+<div class="spacer"></div>
+
+</div> <!-- END SETTINGS TABLE -->
+
+<div class="order-grid">  <!-- START ORDER TABLE -->  
+  <!-- Col 1: Empty -->
+  <div></div>
+  <!-- Col 2: Spacer -->
+  <div class="spacer"></div>
+  <!-- Col 3: Name -->
+  <div class="header-cell name-header">Name</div>
+  <!-- Col 4: Spacer -->
+  <div class="spacer"></div>
+  
+  <!-- Cols 5 through 10: Numbers 1-6 -->
+  <div class="header-cell">1</div>
+  <div class="header-cell">2</div>
+  <div class="header-cell">3</div>
+  <div class="header-cell">4</div>
+  <div class="header-cell">5</div>
+  <div class="header-cell">6</div>
+  
+  
+  <!-- Col 1: "A" -->
+<div class="row-label">A</div>
+
+<!-- Col 2: Spacer -->
+<div class="spacer"></div>
+
+<!-- Col 3: Blank Name Space -->
+<div class="name-output"></div>
+
+<!-- Col 4: Spacer -->
+<div class="spacer"></div>
+
+<!-- Cols 5 through 10: Buttons 1-6 -->
+<button type="button" class="num-btn">1</button>
+<button type="button" class="num-btn">2</button>
+<button type="button" class="num-btn">3</button>
+<button type="button" class="num-btn">4</button>
+<button type="button" class="num-btn">5</button>
+<button type="button" class="num-btn">6</button>
+
+</div>   <!-- END ORDER TABLE -->  
+
+<script>
+
+
+  function setupToggleButtons(buttonList) {
+    buttonList.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const isAlreadyActive = btn.classList.contains('active');
+        buttonList.forEach(b => b.classList.remove('active'));
+        if (!isAlreadyActive) {
+          btn.classList.add('active');
+        }
+      });
+    });
+  }
+
+  // Handle Settings Table
+  document.querySelectorAll('.btn-group').forEach(group => {
+    setupToggleButtons(group.querySelectorAll('button'));
+  });
+
+  // Handle Order Table (Individual num-btns in a row)
+  const orderRowButtons = document.querySelectorAll('.num-btn');
+  setupToggleButtons(orderRowButtons);
+
+
+
+
+
+</script>
+
+<!--
+i'm learning to code. Let's work 1 step at a time, please, so that I can try to understand how each change is affecting the project. I want to add 8 columns to the settings table: odd cols will have contenet, even cols will be spacer cols, just in case. Please add these columns: column 1, "name". Col 3, "amount per serving". Col 5, "limit servings". Col. 7, a button labeled "Go". 
+
+  
+
+Below the Settings table I need an order table that will be affected by the settings in the settings table.
+The order table uses cols 2 and 4 as gutters.
+
+Header row, col 1, empty. Col 3, "name". Cols 5 through 10, "1" through "6". 
+
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
+
+
