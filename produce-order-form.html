@@ -1,0 +1,1115 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Produce Order Form</title>
+    <!-- Linking our external CSS file 
+    <link rel="stylesheet" href="/styles.css"> -->
+    <style>
+      
+body {
+  padding: 20px;
+  background-color: #f8f9fa;
+  margin: 0;
+  font-family: sans-serif;
+}
+
+h1 {
+  margin: 0 0 20px 0;
+  font-size: 24px;
+}
+
+/* Container for buttons above the tables */
+.top-actions {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 10px; /* Reduced to accommodate container margins */
+}
+
+#settings-container {
+  overflow: hidden;
+  transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out, margin 0.3s ease-in-out;
+  max-height: 1200px; /* Large enough for the settings grid */
+  opacity: 1;
+}
+
+#settings-container.collapsed {
+  max-height: 0;
+  opacity: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* The main grid layout for the settings table */
+.settings-grid {
+  display: grid;
+  /* 10 columns: Label(40px), Spacer(20px), Name(200px), Spacer(20px), Fit cols, Go, Spacer */
+  grid-template-columns: 40px 20px 200px 20px max-content 20px max-content 20px auto 20px;
+  align-items: center;
+  row-gap: 12px;
+  padding: 20px;
+  border-radius: 8px;
+  font-family: sans-serif;
+  border: 1px solid #e0e0e0;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  box-sizing: border-box;
+  margin: 10px 0 20px 0;
+  width: fit-content; /* Allows table to shrink to its content width */
+}
+
+/* Light blue spacer columns to help visualize the layout */
+.spacer {
+  min-width: 20px;
+  background-color: transparent;
+  height: 100%;
+}
+
+/* Input styling */
+input[type="text"] {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  outline: none;
+}
+
+input:focus::placeholder {
+  color: transparent;
+}
+
+/* Button basics */
+button {
+  padding: 8px 16px;
+  background-color: #ffffff;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: sans-serif;
+}
+
+button:hover {
+  background-color: #f0f0f0;
+}
+
+button.active {
+  color: #000;
+  border: 1px solid #007bff;
+  box-shadow: inset 0 0 0 1px #007bff;
+}
+
+/* Specific alignments for columns 5 and 7 (Number per serving and Limit) in the settings grid */
+.settings-grid > *:nth-child(10n+5),
+.settings-grid > *:nth-child(10n+7) {
+  justify-self: center; /* Horizontal centering in grid cell */
+  text-align: center;    /* Text centering inside the element */
+}
+
+/* Also center the text inside the amount input specifically */
+.settings-grid input[style*="width: 2ch"] {
+  text-align: center;
+}
+
+/* Reset All button specific padding */
+#reset-all-btn {
+  padding: 4px 8px;
+}
+
+/* Primary action button */
+.go-btn {
+  background-color: transparent;
+  color: #333;
+  border: 1px solid #ccc;
+}
+
+.go-btn:hover {
+  background-color: rgba(0,0,0,0.05);
+}
+
+.settings-btn {
+  background-color: #e8f5e9 !important; /* Subtle green (Green 50) */
+  color: #000;
+  margin-right: 10px;
+}
+
+.settings-btn:hover {
+  background-color: #c8e6c9 !important; /* Slightly darker subtle green (Green 100) */
+}
+
+#toggle-order-btn {
+  background-color: #fffde7 !important; /* Even lighter yellow */
+  color: #000;
+  margin-right: 10px;
+}
+
+#toggle-order-btn:hover {
+  background-color: #fff9c4 !important; /* Slightly darker subtle yellow */
+}
+
+#one-of-each-btn {
+  background-color: #f5f5f5 !important; /* Subtle grey */
+  color: #000;
+  margin-right: 10px;
+}
+
+#one-of-each-btn:hover {
+  background-color: #eeeeee !important;
+}
+
+#get-max-btn {
+  background-color: #f5f5f5 !important; /* Subtle grey */
+  color: #000;
+}
+
+#get-max-btn:hover {
+  background-color: #eeeeee !important;
+}
+
+.x-btn {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+}
+
+.order-grid .x-btn {
+  color: #888;
+}
+
+.x-all-btn {
+  width: auto !important;
+  padding: 0 4px !important;
+  white-space: nowrap;
+}
+
+/* Individual buttons in the limit column, closely aligned */
+.limit-buttons {
+  display: flex;
+  gap: 4px;
+}
+
+.limit-buttons button {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* "Active" state visually highlights the selection */
+.limit-buttons button.active {
+  color: #000;
+  border: 1px solid #007bff;
+  box-shadow: inset 0 0 0 1px #007bff;
+}
+
+/* The secondary table for orders */
+.order-grid {
+  display: grid;
+  /* Col 1: label, Col 2: spacer, Col 3: name, Col 4: spacer, Cols 5-10: numbers 1-6, Col 11: spacer, Col 12: X button */
+  grid-template-columns: 40px 20px 200px 20px repeat(6, 40px) 20px auto;
+  margin-top: 40px;
+  align-items: center;
+  font-family: sans-serif;
+  gap: 4px 0;
+  width: fit-content; /* Allows table to shrink to its content width */
+  
+  /* Matches settings-grid */
+  border: 1px solid #e0e0e0;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  box-sizing: border-box;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.extra-col {
+  display: block;
+}
+
+/* Receipt Styles */
+.receipt-container {
+  margin: 40px 0;
+  width: 240px;
+  background: #fff;
+  padding: 20px;
+  border: 2px dashed #ccc;
+  border-radius: 4px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  color: #333;
+}
+
+.receipt-header {
+  text-align: center;
+  border-bottom: 2px dashed #ccc;
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+.receipt-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 20px;
+}
+
+.receipt-items {
+  min-height: 20px;
+  margin-bottom: 15px;
+}
+
+.receipt-footer {
+  border-top: 2px dashed #ccc;
+  padding-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.print-btn {
+  width: 100%;
+  margin-top: 16px;
+  padding: 8px 0;
+  background-color: #f0f9ff;
+  color: #999;
+  border: 1px solid #e0f2fe;
+  border-radius: 4px;
+  text-align: center;
+  font-family: inherit;
+  font-size: 14px;
+  cursor: not-allowed;
+  transition: opacity 0.2s;
+}
+
+.print-btn:hover {
+  cursor: not-allowed;
+}
+
+
+.header-cell {
+  font-weight: bold;
+  text-align: center;
+  padding: 8px 0;
+}
+
+.header-cell.name-header {
+  text-align: left;
+}
+
+.row-label {
+  text-align: center;
+  font-weight: bold;
+}
+
+.name-output {
+  border-bottom: 2px solid #eee;
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+}
+
+.num-btn {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  margin: auto;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  color: #000;
+}
+
+.num-btn.active {
+  border: 1px solid #007bff;
+  color: #000;
+  box-shadow: inset 0 0 0 1px #007bff;
+}
+
+/* Receipt Card Layout */
+.receipt-grid {
+  display: grid;
+  /* 3 columns: Name (200px), Spacer (20px), Values (auto) */
+  grid-template-columns: 200px 20px auto;
+  margin-top: 40px;
+  align-items: center;
+  font-family: sans-serif;
+  row-gap: 12px;
+  width: fit-content;
+
+  /* Matches settings-grid and order-grid */
+  border: 1px solid #e0e0e0;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  box-sizing: border-box;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.values-output {
+  border-bottom: 2px solid #eee;
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+}
+
+    </style>
+  </head>
+  <body>
+    <h1>Produce Order Form</h1>
+    <div class="top-actions">
+      <button type="button" id="settings-toggle-btn" class="go-btn settings-btn">Settings</button>
+      <button type="button" id="toggle-order-btn" class="go-btn">2X Order</button>
+      <button type="button" id="one-of-each-btn" class="go-btn">Get 1 Serving Of Each</button>
+      <button type="button" id="get-max-btn" class="go-btn">Get Maximum</button>
+    </div>
+
+    <div id="settings-container" class="collapsed">
+      <div class="settings-grid">
+        <!-- HEADER ROW -->
+      <!-- Added Col 1: Empty Header, Col 2: Spacer -->
+      <div></div>
+      <div class="spacer"></div>
+      
+      <!-- Existing Col 3 (was Col 1): Name -->
+      <div class="label">Item Name</div>
+      <div class="spacer"></div>
+      <div class="label">Number Per<br>Serving</div>
+      <div class="spacer"></div>
+      <div class="label">Limit<br>Servings</div>
+      <div class="spacer"></div>
+      <button id="reset-all-btn" class="go-btn">Reset All</button> <!-- It's working now -->
+      <div class="spacer"></div>
+
+      <!-- ROW 2 -->
+      <!-- Added Col 1: Row Label "A", Col 2: Spacer -->
+      <div class="row-label">A</div>
+      <div class="spacer"></div>
+      
+      <!-- Existing Col 3 (was Col 1): Name Input -->
+      <input type="text" id="name-input-A" placeholder="Enter name" value="Pears">
+      <div class="spacer"></div>
+      <input type="text" id="serving-input-A" style="width: 2ch;" maxlength="2" value="4" placeholder="#">
+      <div class="spacer"></div>
+      <div class="limit-buttons" id="limit-group-A">
+        <button type="button">1</button>
+        <button type="button">2</button>
+      </div>
+      <div class="spacer"></div>
+      <button id="reset-row-A" class="go-btn x-btn">X</button>
+      <div class="spacer"></div>
+
+      <!-- ROW 3 -->
+      <div class="row-label">B</div>
+      <div class="spacer"></div>
+      <input type="text" id="name-input-B" placeholder="Enter name" value="Eggplant">
+      <div class="spacer"></div>
+      <input type="text" id="serving-input-B" style="width: 2ch;" maxlength="2" value="1" placeholder="#">
+      <div class="spacer"></div>
+      <div class="limit-buttons" id="limit-group-B">
+        <button type="button">1</button>
+        <button type="button" class="active">2</button>
+      </div>
+      <div class="spacer"></div>
+      <button id="reset-row-B" class="go-btn x-btn">X</button>
+      <div class="spacer"></div>
+
+      <!-- ROW 4 -->
+      <div class="row-label">C</div>
+      <div class="spacer"></div>
+      <input type="text" id="name-input-C" placeholder="Enter name" value="Cabbage">
+      <div class="spacer"></div>
+      <input type="text" id="serving-input-C" style="width: 2ch;" maxlength="2" value="1" placeholder="#">
+      <div class="spacer"></div>
+      <div class="limit-buttons" id="limit-group-C">
+        <button type="button" class="active">1</button>
+        <button type="button">2</button>
+      </div>
+      <div class="spacer"></div>
+      <button id="reset-row-C" class="go-btn x-btn">X</button>
+      <div class="spacer"></div>
+
+      <!-- ROW 5 -->
+      <div class="row-label">D</div>
+      <div class="spacer"></div>
+      <input type="text" id="name-input-D" placeholder="Enter name" value="Bell Pepper">
+      <div class="spacer"></div>
+      <input type="text" id="serving-input-D" style="width: 2ch;" maxlength="2" value="2" placeholder="#">
+      <div class="spacer"></div>
+      <div class="limit-buttons" id="limit-group-D">
+        <button type="button">1</button>
+        <button type="button">2</button>
+      </div>
+      <div class="spacer"></div>
+      <button id="reset-row-D" class="go-btn x-btn">X</button>
+      <div class="spacer"></div>
+
+      <!-- ROW 6 -->
+      <div class="row-label">E</div>
+      <div class="spacer"></div>
+      <input type="text" id="name-input-E" placeholder="Enter name" value="Lettuce">
+      <div class="spacer"></div>
+      <input type="text" id="serving-input-E" style="width: 2ch;" maxlength="2" value="1" placeholder="#">
+      <div class="spacer"></div>
+      <div class="limit-buttons" id="limit-group-E">
+        <button type="button" class="active">1</button>
+        <button type="button">2</button>
+      </div>
+      <div class="spacer"></div>
+      <button id="reset-row-E" class="go-btn x-btn">X</button>
+      <div class="spacer"></div>
+
+      <!-- ROW 7 -->
+      <div class="row-label">F</div>
+      <div class="spacer"></div>
+      <input type="text" id="name-input-F" placeholder="Enter name" value="Cauliflower">
+      <div class="spacer"></div>
+      <input type="text" id="serving-input-F" style="width: 2ch;" maxlength="2" value="1" placeholder="#">
+      <div class="spacer"></div>
+      <div class="limit-buttons" id="limit-group-F">
+        <button type="button" class="active">1</button>
+        <button type="button">2</button>
+      </div>
+      <div class="spacer"></div>
+      <button id="reset-row-F" class="go-btn x-btn">X</button>
+      <div class="spacer"></div>
+
+      <!-- ROW 8 -->
+      <div class="row-label">G</div>
+      <div class="spacer"></div>
+      <input type="text" id="name-input-G" placeholder="Enter name" value="Honeydew Melon">
+      <div class="spacer"></div>
+      <input type="text" id="serving-input-G" style="width: 2ch;" maxlength="2" value="1" placeholder="#">
+      <div class="spacer"></div>
+      <div class="limit-buttons" id="limit-group-G">
+        <button type="button" class="active">1</button>
+        <button type="button">2</button>
+      </div>
+      <div class="spacer"></div>
+      <button id="reset-row-G" class="go-btn x-btn">X</button>
+      <div class="spacer"></div>
+
+      <!-- ROW 9 -->
+      <div class="row-label">H</div>
+      <div class="spacer"></div>
+      <input type="text" id="name-input-H" placeholder="Enter name" value="Potatoes">
+      <div class="spacer"></div>
+      <input type="text" id="serving-input-H" style="width: 2ch;" maxlength="2" value="2" placeholder="#">
+      <div class="spacer"></div>
+      <div class="limit-buttons" id="limit-group-H">
+        <button type="button">1</button>
+        <button type="button" class="active">2</button>
+      </div>
+      <div class="spacer"></div>
+      <button id="reset-row-H" class="go-btn x-btn">X</button>
+      <div class="spacer"></div>
+
+      <!-- ROW 10 -->
+      <div class="row-label">I</div>
+      <div class="spacer"></div>
+      <input type="text" id="name-input-I" placeholder="Enter name" value="Onions">
+      <div class="spacer"></div>
+      <input type="text" id="serving-input-I" style="width: 2ch;" maxlength="2" value="2" placeholder="#">
+      <div class="spacer"></div>
+      <div class="limit-buttons" id="limit-group-I">
+        <button type="button">1</button>
+        <button type="button">2</button>
+      </div>
+      <div class="spacer"></div>
+      <button id="reset-row-I" class="go-btn x-btn">X</button>
+      <div class="spacer"></div>
+
+      <!-- ROW 11 -->
+      <div class="row-label">J</div>
+      <div class="spacer"></div>
+      <input type="text" id="name-input-J" placeholder="Enter name" value="Apples">
+      <div class="spacer"></div>
+      <input type="text" id="serving-input-J" style="width: 2ch;" maxlength="2" value="4" placeholder="#">
+      <div class="spacer"></div>
+      <div class="limit-buttons" id="limit-group-J">
+        <button type="button">1</button>
+        <button type="button">2</button>
+      </div>
+      <div class="spacer"></div>
+      <button id="reset-row-J" class="go-btn x-btn">X</button>
+      <div class="spacer"></div>
+
+      <!-- Footer Row for Hide Settings -->
+      <div style="grid-column: 1 / span 10; padding-top: 12px; border-top: 1px solid #eee; margin-top: 8px;">
+        <button type="button" id="settings-hide-btn" class="go-btn settings-btn" style="width: 100%; margin-right: 0; text-align: center;">Hide Settings</button>
+      </div>
+    </div>
+  </div>
+
+    <div class="order-grid">
+      <!-- Header row -->
+      <div></div>
+      <div class="spacer"></div>
+      <div class="header-cell name-header">Name</div>
+      <div class="spacer"></div>
+      <div class="header-cell order-col-1">1</div>
+      <div class="header-cell order-col-2">2</div>
+      <div class="header-cell order-col-3">3</div>
+      <div class="header-cell extra-col order-col-4">4</div>
+      <div class="header-cell extra-col order-col-5">5</div>
+      <div class="header-cell extra-col order-col-6">6</div>
+      <div class="spacer"></div>
+      <button type="button" id="order-reset-all" class="go-btn x-btn x-all-btn" title="Clear all selections">X All</button>
+      
+      <!-- Data row A -->
+      <div class="row-label">A</div>
+      <div class="spacer"></div>
+      <div id="name-output-A" class="name-output"></div>
+      <div class="spacer"></div>
+      <button type="button" class="num-btn order-col-1" data-row="A">1</button>
+      <button type="button" class="num-btn order-col-2" data-row="A">2</button>
+      <button type="button" class="num-btn order-col-3" data-row="A">3</button>
+      <button type="button" class="num-btn extra-col order-col-4" data-row="A">4</button>
+      <button type="button" class="num-btn extra-col order-col-5" data-row="A">5</button>
+      <button type="button" class="num-btn extra-col order-col-6" data-row="A">6</button>
+      <div class="spacer"></div>
+      <button type="button" id="order-reset-A" class="go-btn x-btn">X</button>
+
+      <!-- Data row B -->
+      <div class="row-label">B</div>
+      <div class="spacer"></div>
+      <div id="name-output-B" class="name-output"></div>
+      <div class="spacer"></div>
+      <button type="button" class="num-btn order-col-1" data-row="B">1</button>
+      <button type="button" class="num-btn order-col-2" data-row="B">2</button>
+      <button type="button" class="num-btn order-col-3" data-row="B">3</button>
+      <button type="button" class="num-btn extra-col order-col-4" data-row="B">4</button>
+      <button type="button" class="num-btn extra-col order-col-5" data-row="B">5</button>
+      <button type="button" class="num-btn extra-col order-col-6" data-row="B">6</button>
+      <div class="spacer"></div>
+      <button type="button" id="order-reset-B" class="go-btn x-btn">X</button>
+
+      <!-- Data row C -->
+      <div class="row-label">C</div>
+      <div class="spacer"></div>
+      <div id="name-output-C" class="name-output"></div>
+      <div class="spacer"></div>
+      <button type="button" class="num-btn order-col-1" data-row="C">1</button>
+      <button type="button" class="num-btn order-col-2" data-row="C">2</button>
+      <button type="button" class="num-btn order-col-3" data-row="C">3</button>
+      <button type="button" class="num-btn extra-col order-col-4" data-row="C">4</button>
+      <button type="button" class="num-btn extra-col order-col-5" data-row="C">5</button>
+      <button type="button" class="num-btn extra-col order-col-6" data-row="C">6</button>
+      <div class="spacer"></div>
+      <button type="button" id="order-reset-C" class="go-btn x-btn">X</button>
+
+      <!-- Data row D -->
+      <div class="row-label">D</div>
+      <div class="spacer"></div>
+      <div id="name-output-D" class="name-output"></div>
+      <div class="spacer"></div>
+      <button type="button" class="num-btn order-col-1" data-row="D">1</button>
+      <button type="button" class="num-btn order-col-2" data-row="D">2</button>
+      <button type="button" class="num-btn order-col-3" data-row="D">3</button>
+      <button type="button" class="num-btn extra-col order-col-4" data-row="D">4</button>
+      <button type="button" class="num-btn extra-col order-col-5" data-row="D">5</button>
+      <button type="button" class="num-btn extra-col order-col-6" data-row="D">6</button>
+      <div class="spacer"></div>
+      <button type="button" id="order-reset-D" class="go-btn x-btn">X</button>
+
+      <!-- Data row E -->
+      <div class="row-label">E</div>
+      <div class="spacer"></div>
+      <div id="name-output-E" class="name-output"></div>
+      <div class="spacer"></div>
+      <button type="button" class="num-btn order-col-1" data-row="E">1</button>
+      <button type="button" class="num-btn order-col-2" data-row="E">2</button>
+      <button type="button" class="num-btn order-col-3" data-row="E">3</button>
+      <button type="button" class="num-btn extra-col order-col-4" data-row="E">4</button>
+      <button type="button" class="num-btn extra-col order-col-5" data-row="E">5</button>
+      <button type="button" class="num-btn extra-col order-col-6" data-row="E">6</button>
+      <div class="spacer"></div>
+      <button type="button" id="order-reset-E" class="go-btn x-btn">X</button>
+
+      <!-- Data row F -->
+      <div class="row-label">F</div>
+      <div class="spacer"></div>
+      <div id="name-output-F" class="name-output"></div>
+      <div class="spacer"></div>
+      <button type="button" class="num-btn order-col-1" data-row="F">1</button>
+      <button type="button" class="num-btn order-col-2" data-row="F">2</button>
+      <button type="button" class="num-btn order-col-3" data-row="F">3</button>
+      <button type="button" class="num-btn extra-col order-col-4" data-row="F">4</button>
+      <button type="button" class="num-btn extra-col order-col-5" data-row="F">5</button>
+      <button type="button" class="num-btn extra-col order-col-6" data-row="F">6</button>
+      <div class="spacer"></div>
+      <button type="button" id="order-reset-F" class="go-btn x-btn">X</button>
+
+      <!-- Data row G -->
+      <div class="row-label">G</div>
+      <div class="spacer"></div>
+      <div id="name-output-G" class="name-output"></div>
+      <div class="spacer"></div>
+      <button type="button" class="num-btn order-col-1" data-row="G">1</button>
+      <button type="button" class="num-btn order-col-2" data-row="G">2</button>
+      <button type="button" class="num-btn order-col-3" data-row="G">3</button>
+      <button type="button" class="num-btn extra-col order-col-4" data-row="G">4</button>
+      <button type="button" class="num-btn extra-col order-col-5" data-row="G">5</button>
+      <button type="button" class="num-btn extra-col order-col-6" data-row="G">6</button>
+      <div class="spacer"></div>
+      <button type="button" id="order-reset-G" class="go-btn x-btn">X</button>
+
+      <!-- Data row H -->
+      <div class="row-label">H</div>
+      <div class="spacer"></div>
+      <div id="name-output-H" class="name-output"></div>
+      <div class="spacer"></div>
+      <button type="button" class="num-btn order-col-1" data-row="H">1</button>
+      <button type="button" class="num-btn order-col-2" data-row="H">2</button>
+      <button type="button" class="num-btn order-col-3" data-row="H">3</button>
+      <button type="button" class="num-btn extra-col order-col-4" data-row="H">4</button>
+      <button type="button" class="num-btn extra-col order-col-5" data-row="H">5</button>
+      <button type="button" class="num-btn extra-col order-col-6" data-row="H">6</button>
+      <div class="spacer"></div>
+      <button type="button" id="order-reset-H" class="go-btn x-btn">X</button>
+
+      <!-- Data row I -->
+      <div class="row-label">I</div>
+      <div class="spacer"></div>
+      <div id="name-output-I" class="name-output"></div>
+      <div class="spacer"></div>
+      <button type="button" class="num-btn order-col-1" data-row="I">1</button>
+      <button type="button" class="num-btn order-col-2" data-row="I">2</button>
+      <button type="button" class="num-btn order-col-3" data-row="I">3</button>
+      <button type="button" class="num-btn extra-col order-col-4" data-row="I">4</button>
+      <button type="button" class="num-btn extra-col order-col-5" data-row="I">5</button>
+      <button type="button" class="num-btn extra-col order-col-6" data-row="I">6</button>
+      <div class="spacer"></div>
+      <button type="button" id="order-reset-I" class="go-btn x-btn">X</button>
+
+      <!-- Data row J -->
+      <div class="row-label">J</div>
+      <div class="spacer"></div>
+      <div id="name-output-J" class="name-output"></div>
+      <div class="spacer"></div>
+      <button type="button" class="num-btn order-col-1" data-row="J">1</button>
+      <button type="button" class="num-btn order-col-2" data-row="J">2</button>
+      <button type="button" class="num-btn order-col-3" data-row="J">3</button>
+      <button type="button" class="num-btn extra-col order-col-4" data-row="J">4</button>
+      <button type="button" class="num-btn extra-col order-col-5" data-row="J">5</button>
+      <button type="button" class="num-btn extra-col order-col-6" data-row="J">6</button>
+      <div class="spacer"></div>
+      <button type="button" id="order-reset-J" class="go-btn x-btn">X</button>
+    </div>
+
+    <!-- Functional Receipt Container -->
+    <div class="receipt-container">
+      <div class="receipt-header">RECEIPT</div>
+      <div id="receipt-items" class="receipt-items"></div>
+      <div class="receipt-footer">
+        <span>Servings Count</span>
+        <span id="receipt-total">0</span>
+      </div>
+      <button type="button" class="print-btn" disabled>Print</button>
+    </div>
+
+    <!-- Linking our external JavaScript file at the end of the body 
+    <script src="/scripts.js"></script> -->
+    <script>
+      
+/**
+ * Function to handle button toggling.
+ * It takes a list of buttons and ensures only one can be "active" at a time.
+ * Optional onToggle callback is called when state changes.
+ */
+function setupToggleButtons(buttonList, onToggle) {
+  buttonList.forEach(btn => {
+    btn.addEventListener('click', () => {
+      // Check if it's already active
+      const isAlreadyActive = btn.classList.contains('active');
+      
+      // Remove 'active' from all buttons in this specific group
+      buttonList.forEach(b => b.classList.remove('active'));
+      
+      // If it wasn't active, make it active now
+      if (!isAlreadyActive) {
+        btn.classList.add('active');
+      }
+
+      if (onToggle) onToggle();
+    });
+  });
+}
+
+const rowIds = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
+
+// 1. Initialize the button groups in the Settings Table
+// Special handling for Limit Servings to update Order Grid visibility
+function updateOrderTableVisibility() {
+  const toggleOrderBtn = document.getElementById('toggle-order-btn');
+  const is2X = toggleOrderBtn && toggleOrderBtn.classList.contains('active-2x');
+
+  const rows = rowIds;
+  let totalMaxVisible = 0;
+  
+  rows.forEach(rowId => {
+    const activeLimitBtn = document.querySelector(`#limit-group-${rowId} button.active`);
+    // Default to 3 if no limit selected for this row
+    const baseLimit = activeLimitBtn ? parseInt(activeLimitBtn.textContent) : 3;
+    const effectiveLimit = is2X ? baseLimit * 2 : baseLimit;
+
+    const servingInput = document.getElementById(`serving-input-${rowId}`);
+    const multiplier = servingInput ? (parseInt(servingInput.value) || 0) : 0;
+
+    for (let i = 1; i <= 6; i++) {
+      const elements = document.querySelectorAll(`.order-col-${i}[data-row="${rowId}"]`);
+      
+      const isWithinLimit = i <= effectiveLimit;
+      const isNotZero = (i * multiplier) !== 0;
+      const shouldBeVisible = isWithinLimit && isNotZero;
+
+      if (shouldBeVisible && i > totalMaxVisible) {
+        totalMaxVisible = i;
+      }
+
+      elements.forEach(el => {
+        el.style.visibility = shouldBeVisible ? 'visible' : 'hidden';
+        if (!shouldBeVisible && el.classList.contains('active')) {
+          el.classList.remove('active');
+          if (receiptItems[rowId]) {
+            delete receiptItems[rowId];
+            renderReceipt();
+          }
+        }
+      });
+    }
+  });
+
+  // Second, handle headers (elements with order-col class but NO data-row attribute)
+  for (let i = 1; i <= 6; i++) {
+    const headers = document.querySelectorAll(`.order-col-${i}:not([data-row])`);
+    // Ensure headings 1, 2, 3 are always visible. 
+    // Higher headings (4, 5, 6) follow totalMaxVisible.
+    const shouldHeaderBeVisible = i <= 3 || i <= totalMaxVisible;
+    headers.forEach(h => {
+      h.style.visibility = shouldHeaderBeVisible ? 'visible' : 'hidden';
+    });
+  }
+}
+
+document.querySelectorAll('.limit-buttons').forEach(group => {
+  const buttonsInGroup = group.querySelectorAll('button');
+  setupToggleButtons(buttonsInGroup, updateOrderTableVisibility);
+});
+
+// 2. Initialize the numbered buttons in the Order Table
+// State to track receipt data
+let receiptItems = {}; // { rowId: { name: string, value: number, colIndex: number } }
+
+function renderReceipt() {
+  const container = document.getElementById('receipt-items');
+  const totalEl = document.getElementById('receipt-total');
+  if (!container || !totalEl) return;
+
+  container.innerHTML = '';
+  let totalColIndex = 0;
+
+  // Sort keys alphabetically A, B, ...
+  Object.keys(receiptItems).sort().forEach(rowId => {
+    const item = receiptItems[rowId];
+    if (item.value > 0) {
+      const row = document.createElement('div');
+      row.className = 'receipt-item';
+      row.innerHTML = `<span>${item.name}</span><span>${item.value}</span>`;
+      container.appendChild(row);
+      totalColIndex += item.colIndex;
+    }
+  });
+
+  totalEl.textContent = totalColIndex;
+}
+
+const orderRowButtons = document.querySelectorAll('.num-btn');
+
+orderRowButtons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const rowId = btn.getAttribute('data-row'); 
+    const nameInput = document.getElementById(`name-input-${rowId}`);
+    const nameValue = nameInput ? nameInput.value.trim() : '';
+
+    if (!nameValue) {
+      btn.classList.remove('active');
+      return;
+    }
+
+    const isAlreadyActive = btn.classList.contains('active');
+    
+    // Toggle logic for THIS row's buttons only
+    const siblingButtons = document.querySelectorAll(`.num-btn[data-row="${rowId}"]`);
+    siblingButtons.forEach(b => b.classList.remove('active'));
+    
+    if (!isAlreadyActive) {
+      btn.classList.add('active');
+      // Extract column index from class (e.g., order-col-3 -> 3)
+      let colIndex = 0;
+      const colClass = Array.from(btn.classList).find(c => c.startsWith('order-col-'));
+      if (colClass) {
+        colIndex = parseInt(colClass.replace('order-col-', ''));
+      }
+      receiptItems[rowId] = { name: nameValue, value: parseInt(btn.textContent), colIndex: colIndex };
+    } else {
+      delete receiptItems[rowId];
+    }
+
+    renderReceipt();
+  });
+});
+
+// 3. Name and Serving synchronization
+rowIds.forEach(rowId => {
+  const nameInput = document.getElementById(`name-input-${rowId}`);
+  const nameOutput = document.getElementById(`name-output-${rowId}`);
+  const servingInput = document.getElementById(`serving-input-${rowId}`);
+
+  // Name sync
+  if (nameInput && nameOutput) {
+    // Initial sync
+    nameOutput.textContent = nameInput.value;
+
+    nameInput.addEventListener('input', () => {
+      const newVal = nameInput.value;
+      nameOutput.textContent = newVal;
+      
+      if (receiptItems[rowId]) {
+        if (newVal.trim() === '') {
+          delete receiptItems[rowId];
+          const rowButtons = document.querySelectorAll(`.num-btn[data-row="${rowId}"]`);
+          rowButtons.forEach(b => b.classList.remove('active'));
+        } else {
+          receiptItems[rowId].name = newVal;
+        }
+        renderReceipt();
+      }
+    });
+  }
+
+  // Serving sync (multiplier)
+  function updateRowSelectorLabels() {
+    if (!servingInput) return;
+    const rawValue = servingInput.value.trim();
+    // Use 1 as fallback only if rawValue is completely empty or not a number
+    const parsed = parseInt(rawValue);
+    const multiplier = isNaN(parsed) ? 0 : parsed;
+    
+    for (let i = 1; i <= 6; i++) {
+      const elements = document.querySelectorAll(`.order-col-${i}[data-row="${rowId}"]`);
+      elements.forEach(el => {
+        const newVal = i * multiplier;
+        el.textContent = newVal;
+        
+        if (el.classList.contains('active')) {
+          if (receiptItems[rowId]) {
+            receiptItems[rowId].value = newVal;
+          }
+        }
+      });
+    }
+    // Update visibility based on potential zero values
+    updateOrderTableVisibility();
+    renderReceipt();
+  }
+
+  if (servingInput) {
+    servingInput.addEventListener('input', updateRowSelectorLabels);
+  }
+
+  // 4. Reset Row functionality (Settings table)
+  const resetBtn = document.getElementById(`reset-row-${rowId}`);
+  const limitGroup = document.getElementById(`limit-group-${rowId}`);
+
+  if (resetBtn) {
+    resetBtn.addEventListener('click', () => {
+      if (nameInput) {
+        nameInput.value = '';
+        if (nameOutput) nameOutput.textContent = '';
+      }
+      
+      delete receiptItems[rowId];
+      renderReceipt();
+
+      if (servingInput) {
+        servingInput.value = '';
+        updateRowSelectorLabels();
+      }
+      
+      if (limitGroup) {
+        const buttons = limitGroup.querySelectorAll('button');
+        buttons.forEach(btn => btn.classList.remove('active'));
+      }
+
+      // Explicitly clear active buttons in the order grid for this row
+      const rowButtons = document.querySelectorAll(`.num-btn[data-row="${rowId}"]`);
+      rowButtons.forEach(btn => btn.classList.remove('active'));
+
+      updateOrderTableVisibility();
+      resetBtn.blur();
+    });
+  }
+
+  // 5. Order Table Reset Row functionality
+  const orderResetBtn = document.getElementById(`order-reset-${rowId}`);
+  if (orderResetBtn) {
+    orderResetBtn.addEventListener('click', () => {
+      const rowButtons = document.querySelectorAll(`.num-btn[data-row="${rowId}"]`);
+      rowButtons.forEach(btn => btn.classList.remove('active'));
+      
+      delete receiptItems[rowId];
+      renderReceipt();
+      
+      orderResetBtn.blur();
+    });
+  }
+
+  // Initialize labels for this row
+  updateRowSelectorLabels();
+});
+
+// 6. Reset All functionality
+const resetAllBtn = document.getElementById('reset-all-btn');
+if (resetAllBtn) {
+  resetAllBtn.addEventListener('click', () => {
+    if (!confirm("This will clear all entries.")) return;
+    
+    // 1. Trigger each row's individual reset button
+    rowIds.forEach(rowId => {
+      const resetBtn = document.getElementById(`reset-row-${rowId}`);
+      if (resetBtn) {
+        resetBtn.click();
+      }
+    });
+
+    // 2. Final global updates
+    resetAllBtn.blur();
+  });
+}
+
+// 7. Toggle Settings logic
+const settingsToggleBtn = document.getElementById('settings-toggle-btn');
+const settingsHideBtn = document.getElementById('settings-hide-btn');
+const settingsContainer = document.getElementById('settings-container');
+
+if (settingsToggleBtn && settingsContainer) {
+  settingsToggleBtn.addEventListener('click', () => {
+    settingsContainer.classList.toggle('collapsed');
+    settingsToggleBtn.blur();
+  });
+}
+
+if (settingsHideBtn && settingsContainer) {
+  settingsHideBtn.addEventListener('click', () => {
+    settingsContainer.classList.add('collapsed');
+  });
+}
+
+// 8. Toggle Order button logic
+const toggleOrderBtn = document.getElementById('toggle-order-btn');
+
+function resetFullOrder() {
+  const orderButtons = document.querySelectorAll('.num-btn');
+  orderButtons.forEach(btn => btn.classList.remove('active'));
+  receiptItems = {};
+  renderReceipt();
+}
+
+if (toggleOrderBtn) {
+  toggleOrderBtn.addEventListener('click', () => {
+    const isCurrently2X = toggleOrderBtn.classList.contains('active-2x');
+    
+    if (isCurrently2X) {
+      // Transition from 2X back to 1X
+      toggleOrderBtn.textContent = '2X Order';
+      toggleOrderBtn.classList.remove('active-2x');
+      resetFullOrder(); // Erase and reset order when reverting to 1X
+      updateOrderTableVisibility();
+    } else {
+      // Transition from 1X to 2X
+      toggleOrderBtn.textContent = '1X Order';
+      toggleOrderBtn.classList.add('active-2x');
+      updateOrderTableVisibility();
+    }
+    
+    toggleOrderBtn.blur();
+  });
+}
+
+// 9. One of Each logic
+const oneOfEachBtn = document.getElementById('one-of-each-btn');
+if (oneOfEachBtn) {
+  oneOfEachBtn.addEventListener('click', () => {
+    rowIds.forEach(rowId => {
+      const firstBtn = document.querySelector(`.num-btn.order-col-1[data-row="${rowId}"]`);
+      if (firstBtn && firstBtn.style.visibility !== 'hidden') {
+        const nameInput = document.getElementById(`name-input-${rowId}`);
+        const nameValue = nameInput ? nameInput.value.trim() : '';
+        
+        // Only click if it has a name and is not already active
+        if (nameValue && !firstBtn.classList.contains('active')) {
+          firstBtn.click();
+        }
+      }
+    });
+    oneOfEachBtn.blur();
+  });
+}
+
+// 10. Get Maximum logic
+const getMaxBtn = document.getElementById('get-max-btn');
+if (getMaxBtn) {
+  getMaxBtn.addEventListener('click', () => {
+    rowIds.forEach(rowId => {
+      const btns = Array.from(document.querySelectorAll(`.num-btn[data-row="${rowId}"]`))
+        .filter(btn => btn instanceof HTMLElement && btn.style.visibility !== 'hidden');
+      
+      if (btns.length > 0) {
+        // Find the one with the highest numeric value in textContent
+        const maxBtn = btns.reduce((prev, current) => {
+          const prevVal = parseInt(prev.textContent || '0');
+          const currVal = parseInt(current.textContent || '0');
+          return prevVal > currVal ? prev : current;
+        });
+
+        const nameInput = document.getElementById(`name-input-${rowId}`);
+        const nameValue = nameInput ? nameInput.value.trim() : '';
+        
+        if (nameValue && !maxBtn.classList.contains('active')) {
+          maxBtn.click();
+        }
+      }
+    });
+    getMaxBtn.blur();
+  });
+}
+
+// 11. Order Table reset all
+const orderResetAllBtn = document.getElementById('order-reset-all');
+if (orderResetAllBtn) {
+  orderResetAllBtn.addEventListener('click', () => {
+    resetFullOrder();
+    orderResetAllBtn.blur();
+  });
+}
+
+// Initial call to set visibility on load
+updateOrderTableVisibility();
+
+console.log("Scripts loaded and ready!");
+
+    </script>
+  </body>
+</html>
+
