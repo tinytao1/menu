@@ -983,7 +983,7 @@ rowIds.forEach(rowId => {
 const resetAllBtn = document.getElementById('reset-all-btn');
 if (resetAllBtn) {
   resetAllBtn.addEventListener('click', () => {
-    if (!confirm("This will clear all entries.")) return;
+    if (!confirm("This will erase all entries, and cannot be undone.")) return;
     
     // 1. Trigger each row's individual reset button
     rowIds.forEach(rowId => {
