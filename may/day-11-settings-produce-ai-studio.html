@@ -12,6 +12,12 @@ body {
   padding: 20px;
   background-color: #f8f9fa;
   margin: 0;
+  font-family: sans-serif;
+}
+
+h1 {
+  margin: 0 0 20px 0;
+  font-size: 24px;
 }
 
 /* Container for buttons above the tables */
@@ -231,7 +237,7 @@ button.active {
 /* Receipt Styles */
 .receipt-container {
   margin: 40px 0;
-  width: 300px;
+  width: 240px;
   background: #fff;
   padding: 20px;
   border: 2px dashed #ccc;
@@ -255,6 +261,7 @@ button.active {
   display: flex;
   justify-content: space-between;
   margin-bottom: 8px;
+  font-size: 20px;
 }
 
 .receipt-items {
@@ -268,6 +275,26 @@ button.active {
   display: flex;
   justify-content: space-between;
   font-weight: bold;
+  font-size: 16px;
+}
+
+.print-btn {
+  width: 100%;
+  margin-top: 16px;
+  padding: 8px 0;
+  background-color: #f0f9ff;
+  color: #999;
+  border: 1px solid #e0f2fe;
+  border-radius: 4px;
+  text-align: center;
+  font-family: inherit;
+  font-size: 14px;
+  cursor: not-allowed;
+  transition: opacity 0.2s;
+}
+
+.print-btn:hover {
+  cursor: not-allowed;
 }
 
 
@@ -339,11 +366,7 @@ button.active {
     </style>
   </head>
   <body>
-    
-    <div>
-      <h1 style="font-family: sans-serif;">Produce Order Form</h1>
-    </div>
-
+    <h1>Produce Order Form</h1>
     <div class="top-actions">
       <button type="button" id="settings-toggle-btn" class="go-btn settings-btn">Settings</button>
       <button type="button" id="toggle-order-btn" class="go-btn">2X Order</button>
@@ -692,6 +715,7 @@ button.active {
         <span>Servings Count</span>
         <span id="receipt-total">0</span>
       </div>
+      <button type="button" class="print-btn" disabled>Print</button>
     </div>
 
     <!-- Linking our external JavaScript file at the end of the body 
