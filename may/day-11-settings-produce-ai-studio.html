@@ -7,7 +7,7 @@
     <!-- Linking our external CSS file 
     <link rel="stylesheet" href="/styles.css"> -->
     <style>
-
+      
 body {
   padding: 20px;
   background-color: #f8f9fa;
@@ -18,7 +18,21 @@ body {
 .top-actions {
   display: flex;
   justify-content: flex-start;
-  margin-bottom: 20px;
+  margin-bottom: 10px; /* Reduced to accommodate container margins */
+}
+
+#settings-container {
+  overflow: hidden;
+  transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out, margin 0.3s ease-in-out;
+  max-height: 1200px; /* Large enough for the settings grid */
+  opacity: 1;
+}
+
+#settings-container.collapsed {
+  max-height: 0;
+  opacity: 0;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 /* The main grid layout for the settings table */
@@ -35,7 +49,7 @@ body {
   background-color: #ffffff;
   box-shadow: 0 2px 4px rgba(0,0,0,0.05);
   box-sizing: border-box;
-  margin: 20px 0;
+  margin: 10px 0 20px 0;
   width: fit-content; /* Allows table to shrink to its content width */
 }
 
@@ -99,13 +113,52 @@ button.active {
 
 /* Primary action button */
 .go-btn {
-  background-color: #f0f0f0;
+  background-color: transparent;
   color: #333;
   border: 1px solid #ccc;
 }
 
 .go-btn:hover {
-  background-color: #e0e0e0;
+  background-color: rgba(0,0,0,0.05);
+}
+
+.settings-btn {
+  background-color: #e8f5e9 !important; /* Subtle green (Green 50) */
+  color: #000;
+  margin-right: 10px;
+}
+
+.settings-btn:hover {
+  background-color: #c8e6c9 !important; /* Slightly darker subtle green (Green 100) */
+}
+
+#toggle-order-btn {
+  background-color: #fffde7 !important; /* Even lighter yellow */
+  color: #000;
+  margin-right: 10px;
+}
+
+#toggle-order-btn:hover {
+  background-color: #fff9c4 !important; /* Slightly darker subtle yellow */
+}
+
+#one-of-each-btn {
+  background-color: #f5f5f5 !important; /* Subtle grey */
+  color: #000;
+  margin-right: 10px;
+}
+
+#one-of-each-btn:hover {
+  background-color: #eeeeee !important;
+}
+
+#get-max-btn {
+  background-color: #f5f5f5 !important; /* Subtle grey */
+  color: #000;
+}
+
+#get-max-btn:hover {
+  background-color: #eeeeee !important;
 }
 
 .x-btn {
@@ -116,6 +169,16 @@ button.active {
   align-items: center;
   justify-content: center;
   margin: auto;
+}
+
+.order-grid .x-btn {
+  color: #888;
+}
+
+.x-all-btn {
+  width: auto !important;
+  padding: 0 4px !important;
+  white-space: nowrap;
 }
 
 /* Individual buttons in the limit column, closely aligned */
@@ -167,11 +230,12 @@ button.active {
 
 /* Receipt Styles */
 .receipt-container {
-  margin: 40px auto;
+  margin: 40px 0;
   width: 300px;
   background: #fff;
   padding: 20px;
-  border: 1px solid #eee;
+  border: 2px dashed #ccc;
+  border-radius: 4px;
   box-shadow: 0 4px 6px rgba(0,0,0,0.05);
   font-family: 'JetBrains Mono', monospace;
   font-size: 14px;
@@ -180,7 +244,7 @@ button.active {
 
 .receipt-header {
   text-align: center;
-  border-bottom: 2px dashed #eee;
+  border-bottom: 2px dashed #ccc;
   padding-bottom: 10px;
   margin-bottom: 15px;
   font-weight: bold;
@@ -199,7 +263,7 @@ button.active {
 }
 
 .receipt-footer {
-  border-top: 2px dashed #eee;
+  border-top: 2px dashed #ccc;
   padding-top: 10px;
   display: flex;
   justify-content: space-between;
@@ -276,11 +340,15 @@ button.active {
   </head>
   <body>
     <div class="top-actions">
+      <button type="button" id="settings-toggle-btn" class="go-btn settings-btn">Settings</button>
       <button type="button" id="toggle-order-btn" class="go-btn">2X Order</button>
+      <button type="button" id="one-of-each-btn" class="go-btn">Get 1 Serving Of Each</button>
+      <button type="button" id="get-max-btn" class="go-btn">Get Maximum</button>
     </div>
 
-    <div class="settings-grid">
-      <!-- HEADER ROW -->
+    <div id="settings-container" class="collapsed">
+      <div class="settings-grid">
+        <!-- HEADER ROW -->
       <!-- Added Col 1: Empty Header, Col 2: Spacer -->
       <div></div>
       <div class="spacer"></div>
@@ -292,7 +360,7 @@ button.active {
       <div class="spacer"></div>
       <div class="label">Limit<br>Servings</div>
       <div class="spacer"></div>
-      <button id="reset-all-btn" class="go-btn">Reset All</button> <!--not responding -->
+      <button id="reset-all-btn" class="go-btn">Reset All</button> <!-- It's working now -->
       <div class="spacer"></div>
 
       <!-- ROW 2 -->
@@ -318,11 +386,11 @@ button.active {
       <div class="spacer"></div>
       <input type="text" id="name-input-B" placeholder="Enter name" value="Eggplant">
       <div class="spacer"></div>
-      <input type="text" id="serving-input-B" style="width: 2ch;" maxlength="2" value="2" placeholder="#">
+      <input type="text" id="serving-input-B" style="width: 2ch;" maxlength="2" value="1" placeholder="#">
       <div class="spacer"></div>
       <div class="limit-buttons" id="limit-group-B">
         <button type="button">1</button>
-        <button type="button">2</button>
+        <button type="button" class="active">2</button>
       </div>
       <div class="spacer"></div>
       <button id="reset-row-B" class="go-btn x-btn">X</button>
@@ -336,7 +404,7 @@ button.active {
       <input type="text" id="serving-input-C" style="width: 2ch;" maxlength="2" value="1" placeholder="#">
       <div class="spacer"></div>
       <div class="limit-buttons" id="limit-group-C">
-        <button type="button">1</button>
+        <button type="button" class="active">1</button>
         <button type="button">2</button>
       </div>
       <div class="spacer"></div>
@@ -366,7 +434,7 @@ button.active {
       <input type="text" id="serving-input-E" style="width: 2ch;" maxlength="2" value="1" placeholder="#">
       <div class="spacer"></div>
       <div class="limit-buttons" id="limit-group-E">
-        <button type="button">1</button>
+        <button type="button" class="active">1</button>
         <button type="button">2</button>
       </div>
       <div class="spacer"></div>
@@ -376,12 +444,12 @@ button.active {
       <!-- ROW 7 -->
       <div class="row-label">F</div>
       <div class="spacer"></div>
-      <input type="text" id="name-input-F" placeholder="Enter name">
+      <input type="text" id="name-input-F" placeholder="Enter name" value="Cauliflower">
       <div class="spacer"></div>
-      <input type="text" id="serving-input-F" style="width: 2ch;" maxlength="2" value="" placeholder="#">
+      <input type="text" id="serving-input-F" style="width: 2ch;" maxlength="2" value="1" placeholder="#">
       <div class="spacer"></div>
       <div class="limit-buttons" id="limit-group-F">
-        <button type="button">1</button>
+        <button type="button" class="active">1</button>
         <button type="button">2</button>
       </div>
       <div class="spacer"></div>
@@ -391,12 +459,12 @@ button.active {
       <!-- ROW 8 -->
       <div class="row-label">G</div>
       <div class="spacer"></div>
-      <input type="text" id="name-input-G" placeholder="Enter name">
+      <input type="text" id="name-input-G" placeholder="Enter name" value="Honeydew Melon">
       <div class="spacer"></div>
-      <input type="text" id="serving-input-G" style="width: 2ch;" maxlength="2" value="" placeholder="#">
+      <input type="text" id="serving-input-G" style="width: 2ch;" maxlength="2" value="1" placeholder="#">
       <div class="spacer"></div>
       <div class="limit-buttons" id="limit-group-G">
-        <button type="button">1</button>
+        <button type="button" class="active">1</button>
         <button type="button">2</button>
       </div>
       <div class="spacer"></div>
@@ -406,13 +474,13 @@ button.active {
       <!-- ROW 9 -->
       <div class="row-label">H</div>
       <div class="spacer"></div>
-      <input type="text" id="name-input-H" placeholder="Enter name">
+      <input type="text" id="name-input-H" placeholder="Enter name" value="Potatoes">
       <div class="spacer"></div>
-      <input type="text" id="serving-input-H" style="width: 2ch;" maxlength="2" value="" placeholder="#">
+      <input type="text" id="serving-input-H" style="width: 2ch;" maxlength="2" value="2" placeholder="#">
       <div class="spacer"></div>
       <div class="limit-buttons" id="limit-group-H">
         <button type="button">1</button>
-        <button type="button">2</button>
+        <button type="button" class="active">2</button>
       </div>
       <div class="spacer"></div>
       <button id="reset-row-H" class="go-btn x-btn">X</button>
@@ -421,9 +489,9 @@ button.active {
       <!-- ROW 10 -->
       <div class="row-label">I</div>
       <div class="spacer"></div>
-      <input type="text" id="name-input-I" placeholder="Enter name">
+      <input type="text" id="name-input-I" placeholder="Enter name" value="Onions">
       <div class="spacer"></div>
-      <input type="text" id="serving-input-I" style="width: 2ch;" maxlength="2" value="" placeholder="#">
+      <input type="text" id="serving-input-I" style="width: 2ch;" maxlength="2" value="2" placeholder="#">
       <div class="spacer"></div>
       <div class="limit-buttons" id="limit-group-I">
         <button type="button">1</button>
@@ -436,9 +504,9 @@ button.active {
       <!-- ROW 11 -->
       <div class="row-label">J</div>
       <div class="spacer"></div>
-      <input type="text" id="name-input-J" placeholder="Enter name">
+      <input type="text" id="name-input-J" placeholder="Enter name" value="Apples">
       <div class="spacer"></div>
-      <input type="text" id="serving-input-J" style="width: 2ch;" maxlength="2" value="" placeholder="#">
+      <input type="text" id="serving-input-J" style="width: 2ch;" maxlength="2" value="4" placeholder="#">
       <div class="spacer"></div>
       <div class="limit-buttons" id="limit-group-J">
         <button type="button">1</button>
@@ -447,7 +515,13 @@ button.active {
       <div class="spacer"></div>
       <button id="reset-row-J" class="go-btn x-btn">X</button>
       <div class="spacer"></div>
+
+      <!-- Footer Row for Hide Settings -->
+      <div style="grid-column: 1 / span 10; padding-top: 12px; border-top: 1px solid #eee; margin-top: 8px;">
+        <button type="button" id="settings-hide-btn" class="go-btn settings-btn" style="width: 100%; margin-right: 0; text-align: center;">Hide Settings</button>
+      </div>
     </div>
+  </div>
 
     <div class="order-grid">
       <!-- Header row -->
@@ -462,7 +536,7 @@ button.active {
       <div class="header-cell extra-col order-col-5">5</div>
       <div class="header-cell extra-col order-col-6">6</div>
       <div class="spacer"></div>
-      <div></div> <!-- Header placeholder for the row-action column -->
+      <button type="button" id="order-reset-all" class="go-btn x-btn x-all-btn" title="Clear all selections">X All</button>
       
       <!-- Data row A -->
       <div class="row-label">A</div>
@@ -615,7 +689,10 @@ button.active {
       </div>
     </div>
 
-<script>
+    <!-- Linking our external JavaScript file at the end of the body 
+    <script src="/scripts.js"></script> -->
+    <script>
+      
 /**
  * Function to handle button toggling.
  * It takes a list of buttons and ensures only one can be "active" at a time.
@@ -892,7 +969,25 @@ if (resetAllBtn) {
   });
 }
 
-// 7. Toggle Order button logic
+// 7. Toggle Settings logic
+const settingsToggleBtn = document.getElementById('settings-toggle-btn');
+const settingsHideBtn = document.getElementById('settings-hide-btn');
+const settingsContainer = document.getElementById('settings-container');
+
+if (settingsToggleBtn && settingsContainer) {
+  settingsToggleBtn.addEventListener('click', () => {
+    settingsContainer.classList.toggle('collapsed');
+    settingsToggleBtn.blur();
+  });
+}
+
+if (settingsHideBtn && settingsContainer) {
+  settingsHideBtn.addEventListener('click', () => {
+    settingsContainer.classList.add('collapsed');
+  });
+}
+
+// 8. Toggle Order button logic
 const toggleOrderBtn = document.getElementById('toggle-order-btn');
 
 function resetFullOrder() {
@@ -923,14 +1018,69 @@ if (toggleOrderBtn) {
   });
 }
 
+// 9. One of Each logic
+const oneOfEachBtn = document.getElementById('one-of-each-btn');
+if (oneOfEachBtn) {
+  oneOfEachBtn.addEventListener('click', () => {
+    rowIds.forEach(rowId => {
+      const firstBtn = document.querySelector(`.num-btn.order-col-1[data-row="${rowId}"]`);
+      if (firstBtn && firstBtn.style.visibility !== 'hidden') {
+        const nameInput = document.getElementById(`name-input-${rowId}`);
+        const nameValue = nameInput ? nameInput.value.trim() : '';
+        
+        // Only click if it has a name and is not already active
+        if (nameValue && !firstBtn.classList.contains('active')) {
+          firstBtn.click();
+        }
+      }
+    });
+    oneOfEachBtn.blur();
+  });
+}
+
+// 10. Get Maximum logic
+const getMaxBtn = document.getElementById('get-max-btn');
+if (getMaxBtn) {
+  getMaxBtn.addEventListener('click', () => {
+    rowIds.forEach(rowId => {
+      const btns = Array.from(document.querySelectorAll(`.num-btn[data-row="${rowId}"]`))
+        .filter(btn => btn instanceof HTMLElement && btn.style.visibility !== 'hidden');
+      
+      if (btns.length > 0) {
+        // Find the one with the highest numeric value in textContent
+        const maxBtn = btns.reduce((prev, current) => {
+          const prevVal = parseInt(prev.textContent || '0');
+          const currVal = parseInt(current.textContent || '0');
+          return prevVal > currVal ? prev : current;
+        });
+
+        const nameInput = document.getElementById(`name-input-${rowId}`);
+        const nameValue = nameInput ? nameInput.value.trim() : '';
+        
+        if (nameValue && !maxBtn.classList.contains('active')) {
+          maxBtn.click();
+        }
+      }
+    });
+    getMaxBtn.blur();
+  });
+}
+
+// 11. Order Table reset all
+const orderResetAllBtn = document.getElementById('order-reset-all');
+if (orderResetAllBtn) {
+  orderResetAllBtn.addEventListener('click', () => {
+    resetFullOrder();
+    orderResetAllBtn.blur();
+  });
+}
+
 // Initial call to set visibility on load
 updateOrderTableVisibility();
 
 console.log("Scripts loaded and ready!");
 
-</script>
-    <!-- Linking our external JavaScript file at the end of the body 
-    <script src="/scripts.js"></script> -->
+    </script>
   </body>
 </html>
 
