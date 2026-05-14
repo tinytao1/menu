@@ -96,8 +96,8 @@ h1 {
 
 .settings-grid {
   display: grid;
-  /* 10 columns: Label(40px), Spacer(20px), Name(200px), Spacer(20px), Fit cols, Go, Spacer */
-  grid-template-columns: 2.5rem 1.25rem 12.5rem 1.25rem max-content 1.25rem max-content 1.25rem auto 1.25rem;
+  /* 9 columns: Label(40px), Spacer(20px), Name(280px), Spacer(20px), Fit cols, Go, Spacer */
+  grid-template-columns: 2.5rem 1.25rem 17.5rem 1.25rem max-content 1.25rem max-content 1.25rem auto;
   align-items: center;
   row-gap: 0.75rem;
   font-family: sans-serif;
@@ -148,8 +148,8 @@ button.active {
 }
 
 /* Specific alignments for columns 5 and 7 (Number per serving and Limit) in the settings grid */
-.settings-grid > *:nth-child(10n+5),
-.settings-grid > *:nth-child(10n+7) {
+.settings-grid > *:nth-child(9n+5),
+.settings-grid > *:nth-child(9n+7) {
   justify-self: center; /* Horizontal centering in grid cell */
   text-align: center;    /* Text centering inside the element */
 }
