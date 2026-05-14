@@ -1,0 +1,450 @@
+
+body {
+  padding: 1.25rem;
+  background-color: #f8f9fa;
+  margin: 0;
+  font-family: sans-serif;
+}
+
+h1 {
+  margin: 0 0 1.25rem 0;
+  font-size: 1.5rem;
+}
+
+/* Container for buttons above the tables */
+.top-actions {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 20px;
+}
+
+#settings-container {
+  overflow: hidden;
+  transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out, margin 0.3s ease-in-out;
+  max-height: 1200px; /* Large enough for the settings grid */
+  opacity: 1;
+}
+
+#settings-container.collapsed {
+  max-height: 0;
+  opacity: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* The main grid layout for the settings table */
+.settings-card {
+  margin-top: 0;
+  margin-bottom: 1.25rem;
+  width: 38.5rem;
+  border: 1px solid #e0e0e0;
+  background-color: #ffffff;
+  box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.05);
+  box-sizing: border-box;
+  padding: 1.25rem;
+  border-radius: 0.5rem;
+}
+
+.settings-card-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.625rem;
+  margin-bottom: 1.25rem;
+  padding: 0.625rem 0.9375rem;
+  background-color: #e8f5e9;
+  border-radius: 0.375rem;
+  border: 1px solid #c8e6c9;
+}
+
+.card-title {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Dropdown/Select styling to match buttons */
+.sample-data-select {
+  padding: 0.5rem 2rem 0.5rem 0.75rem;
+  background-color: #f5f5f5 !important;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-family: sans-serif;
+  font-size: 0.875rem;
+  outline: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 0.5rem center;
+  background-size: 1rem;
+}
+
+.sample-data-select:hover {
+  background-color: #eeeeee !important;
+}
+
+.settings-grid {
+  display: grid;
+  /* 9 columns: Label(40px), Spacer(20px), Name(280px), Spacer(20px), Fit cols, Go, Spacer */
+  grid-template-columns: 2.5rem 1.25rem 17.5rem 1.25rem max-content 1.25rem max-content 1.25rem auto;
+  align-items: center;
+  row-gap: 0.75rem;
+  font-family: sans-serif;
+  min-width: max-content;
+}
+
+/* Light blue spacer columns to help visualize the layout */
+.spacer {
+  min-width: 20px;
+  background-color: transparent;
+  height: 100%;
+}
+
+/* Input styling */
+input[type="text"] {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+  outline: none;
+}
+
+input:focus::placeholder {
+  color: transparent;
+}
+
+/* Button basics */
+button {
+  padding: 0.5rem 1rem;
+  background-color: #ffffff;
+  border: 1px solid #bbb;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: sans-serif;
+  font-size: 0.875rem;
+  white-space: nowrap;
+}
+
+button:hover {
+  background-color: #f0f0f0;
+}
+
+button.active {
+  color: #000;
+  border: 1px solid #007bff;
+  box-shadow: inset 0 0 0 1px #007bff;
+}
+
+/* Specific alignments for columns 5 and 7 (Number per serving and Limit) in the settings grid */
+.settings-grid > *:nth-child(9n+5),
+.settings-grid > *:nth-child(9n+7) {
+  justify-self: center; /* Horizontal centering in grid cell */
+  text-align: center;    /* Text centering inside the element */
+}
+
+/* Also center the text inside the amount input specifically */
+.settings-grid input[style*="width: 2ch"] {
+  text-align: center;
+}
+
+/* Reset All button specific padding */
+#reset-all-btn,
+#order-reset-all {
+  padding: 4px 8px;
+  background-color: #ffebee !important; /* Subtle red (Red 50) */
+  color: #000;
+}
+
+#reset-all-btn:hover,
+#order-reset-all:hover {
+  background-color: #ffcdd2 !important; /* Slightly darker subtle red (Red 100) */
+}
+
+/* Primary action button */
+.go-btn {
+  background-color: transparent;
+  color: #333;
+  border: 1px solid #ccc;
+}
+
+.go-btn:hover {
+  background-color: rgba(0,0,0,0.05);
+}
+
+.settings-btn {
+  background-color: #e8f5e9 !important; /* Subtle green (Green 50) */
+  color: #000;
+  margin-right: 0.625rem;
+  font-size: 1.125rem;
+  font-weight: bold;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.settings-btn:hover {
+  background-color: #c8e6c9 !important; /* Slightly darker subtle green (Green 100) */
+}
+
+#toggle-order-btn {
+  background-color: #fffde7 !important; /* Even lighter yellow */
+  color: #000;
+}
+
+#toggle-order-btn:hover {
+  background-color: #fff9c4 !important; /* Slightly darker subtle yellow */
+}
+
+#one-of-each-btn {
+  background-color: #e3f2fd !important; /* Subtle blue (Blue 50) */
+  color: #000;
+}
+
+#one-of-each-btn:hover {
+  background-color: #bbdefb !important; /* Slightly darker subtle blue (Blue 100) */
+}
+
+#get-max-btn {
+  background-color: #e3f2fd !important; /* Subtle blue (Blue 50) */
+  color: #000;
+}
+
+#get-max-btn:hover {
+  background-color: #bbdefb !important; /* Slightly darker subtle blue (Blue 100) */
+}
+
+.x-btn {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  background-color: transparent;
+  color: #000;
+}
+
+.x-btn:hover {
+  background-color: rgba(0,0,0,0.05);
+}
+
+.order-grid .x-btn {
+  color: #888;
+}
+
+.x-all-btn {
+  width: auto !important;
+  padding: 0 4px !important;
+  white-space: nowrap;
+}
+
+/* Individual buttons in the limit column, closely aligned */
+.limit-buttons {
+  display: flex;
+  gap: 4px;
+}
+
+.limit-buttons button {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* "Active" state visually highlights the selection */
+.limit-buttons button.active {
+  color: #000;
+  border: 1px solid #007bff;
+  box-shadow: inset 0 0 0 1px #007bff;
+}
+
+/* Layout for side-by-side Order Card and Receipt */
+.app-layout {
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+}
+
+.sidebar {
+  position: sticky;
+  top: 1.25rem;
+  flex: 0 0 auto;
+}
+
+/* The secondary table for orders */
+.order-card {
+  margin-top: 0;
+  margin-bottom: 1.25rem;
+  flex: 0 0 auto;
+  width: 38.5rem;
+  border: 1px solid #e0e0e0;
+  background-color: #ffffff;
+  box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.05);
+  box-sizing: border-box;
+  padding: 1.25rem;
+  border-radius: 0.5rem;
+}
+
+.order-card-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.625rem;
+  margin-bottom: 0.9375rem;
+  padding-bottom: 0.9375rem;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.order-grid {
+  display: grid;
+  /* Col 1: label, Col 2: spacer, Col 3: name, Col 4: spacer, Cols 5-10: numbers 1-6, Col 11: spacer, Col 12: X button */
+  grid-template-columns: 2.5rem 1.25rem 12.5rem 1.25rem repeat(6, 2.5rem) 1.25rem auto;
+  align-items: center;
+  font-family: sans-serif;
+  row-gap: 0.75rem;
+  min-width: max-content;
+}
+
+.extra-col {
+  display: block;
+}
+
+/* Receipt Styles */
+.receipt-container {
+  margin: 0;
+  width: 15rem;
+  background: #fff;
+  padding: 1.25rem;
+  border: 0.125rem dashed #ccc;
+  border-radius: 0.25rem;
+  box-shadow: 0 0.25rem 0.375rem rgba(0,0,0,0.05);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.875rem;
+  color: #333;
+}
+
+.receipt-header {
+  text-align: center;
+  border-bottom: 0.125rem dashed #ccc;
+  padding-bottom: 0.625rem;
+  margin-bottom: 0.9375rem;
+  font-weight: bold;
+  letter-spacing: 0.125rem;
+}
+
+.receipt-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  font-size: 1.25rem;
+}
+
+.receipt-items {
+  min-height: 1.25rem;
+  margin-bottom: 0.9375rem;
+}
+
+.receipt-footer {
+  border-top: 0.125rem dashed #ccc;
+  padding-top: 0.625rem;
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.print-btn {
+  width: 100%;
+  margin-top: 1rem;
+  padding: 0.5rem 0;
+  background-color: #f0f9ff;
+  color: #999;
+  border: 1px solid #e0f2fe;
+  border-radius: 0.25rem;
+  text-align: center;
+  font-family: inherit;
+  font-size: 0.875rem;
+  cursor: not-allowed;
+  transition: opacity 0.2s;
+}
+
+.print-btn:hover {
+  cursor: not-allowed;
+}
+
+
+.label {
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.header-cell {
+  font-weight: bold;
+  text-align: center;
+  padding: 0.5rem 0;
+}
+
+.header-cell.name-header {
+  text-align: left;
+}
+
+.row-label {
+  text-align: center;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.name-output {
+  border-bottom: 0.125rem solid #eee;
+  min-height: 2rem;
+  display: flex;
+  align-items: center;
+}
+
+.num-btn {
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  margin: 0 auto;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  color: #000;
+}
+
+.num-btn.active {
+  border: 1px solid #007bff;
+  color: #000;
+  box-shadow: inset 0 0 0 1px #007bff;
+}
+
+/* Receipt Card Layout */
+.receipt-grid {
+  display: grid;
+  /* 3 columns: Name (200px), Spacer (20px), Values (auto) */
+  grid-template-columns: 12.5rem 1.25rem auto;
+  margin-top: 2.5rem;
+  align-items: center;
+  font-family: sans-serif;
+  row-gap: 0.75rem;
+  width: 38.5rem;
+
+  /* Matches settings-grid and order-grid */
+  border: 1px solid #e0e0e0;
+  background-color: #ffffff;
+  box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.05);
+  box-sizing: border-box;
+  padding: 1.25rem;
+  border-radius: 0.5rem;
+}
+
+.values-output {
+  border-bottom: 0.125rem solid #eee;
+  min-height: 2rem;
+  display: flex;
+  align-items: center;
+}
