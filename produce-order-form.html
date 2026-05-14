@@ -483,7 +483,6 @@ button.active {
       <div class="label">Limit<br>Servings</div>
       <div class="spacer"></div>
       <div></div>
-      <div class="spacer"></div>
 
       <!-- ROW 2 -->
       <!-- Added Col 1: Row Label "A", Col 2: Spacer -->
@@ -502,7 +501,6 @@ button.active {
       </div>
       <div class="spacer"></div>
       <button id="reset-row-A" class="go-btn x-btn">X</button>
-      <div class="spacer"></div>
 
       <!-- ROW 3 -->
       <div class="row-label">B</div>
@@ -518,7 +516,6 @@ button.active {
       </div>
       <div class="spacer"></div>
       <button id="reset-row-B" class="go-btn x-btn">X</button>
-      <div class="spacer"></div>
 
       <!-- ROW 4 -->
       <div class="row-label">C</div>
@@ -534,7 +531,6 @@ button.active {
       </div>
       <div class="spacer"></div>
       <button id="reset-row-C" class="go-btn x-btn">X</button>
-      <div class="spacer"></div>
 
       <!-- ROW 5 -->
       <div class="row-label">D</div>
@@ -550,7 +546,6 @@ button.active {
       </div>
       <div class="spacer"></div>
       <button id="reset-row-D" class="go-btn x-btn">X</button>
-      <div class="spacer"></div>
 
       <!-- ROW 6 -->
       <div class="row-label">E</div>
@@ -566,7 +561,6 @@ button.active {
       </div>
       <div class="spacer"></div>
       <button id="reset-row-E" class="go-btn x-btn">X</button>
-      <div class="spacer"></div>
 
       <!-- ROW 7 -->
       <div class="row-label">F</div>
@@ -582,7 +576,6 @@ button.active {
       </div>
       <div class="spacer"></div>
       <button id="reset-row-F" class="go-btn x-btn">X</button>
-      <div class="spacer"></div>
 
       <!-- ROW 8 -->
       <div class="row-label">G</div>
@@ -598,7 +591,6 @@ button.active {
       </div>
       <div class="spacer"></div>
       <button id="reset-row-G" class="go-btn x-btn">X</button>
-      <div class="spacer"></div>
 
       <!-- ROW 9 -->
       <div class="row-label">H</div>
@@ -614,7 +606,6 @@ button.active {
       </div>
       <div class="spacer"></div>
       <button id="reset-row-H" class="go-btn x-btn">X</button>
-      <div class="spacer"></div>
 
       <!-- ROW 10 -->
       <div class="row-label">I</div>
@@ -630,7 +621,6 @@ button.active {
       </div>
       <div class="spacer"></div>
       <button id="reset-row-I" class="go-btn x-btn">X</button>
-      <div class="spacer"></div>
 
       <!-- ROW 11 -->
       <div class="row-label">J</div>
@@ -646,10 +636,9 @@ button.active {
       </div>
       <div class="spacer"></div>
       <button id="reset-row-J" class="go-btn x-btn">X</button>
-      <div class="spacer"></div>
 
       <!-- Footer Row for Hide Settings -->
-      <div style="grid-column: 1 / span 10; padding-top: 12px; border-top: 1px solid #eee; margin-top: 8px;">
+      <div style="grid-column: 1 / span 9; padding-top: 12px; border-top: 1px solid #eee; margin-top: 8px;">
         <button type="button" id="settings-hide-btn" class="go-btn settings-btn" style="width: 100%; margin-right: 0; text-align: center;">Hide Settings</button>
       </div>
       </div>
@@ -842,6 +831,7 @@ button.active {
  * It takes a list of buttons and ensures only one can be "active" at a time.
  * Optional onToggle callback is called when state changes.
  */
+      
 function setupToggleButtons(buttonList, onToggle) {
   buttonList.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -1172,7 +1162,7 @@ if (toggleOrderBtn) {
       updateOrderTableVisibility();
     } else {
       // Transition from 1X to 2X
-      toggleOrderBtn.textContent = 'Back To 1X Order';
+      toggleOrderBtn.textContent = 'Back to 1X Order';
       toggleOrderBtn.classList.add('active-2x');
       updateOrderTableVisibility();
     }
