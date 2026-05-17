@@ -9,382 +9,444 @@
   </head>
   <body>
 
-    <h1>(Prototype) Produce Order Form </h1>
-    <div class="top-actions">
-      <button type="button" id="settings-toggle-btn" class="go-btn settings-btn">Settings</button>
+    <h1>Prototype Meals & Produce Order</h1>
+
+    <div class="client-info-card">
+      <div class="client-info-row">
+        <span id="date-el" class="date-display"></span>
+      </div>
+      <div class="client-info-row">
+        <div class="input-group">
+          <label for="clientNameInputEl">Client Name:</label>
+          <input type="text" id="clientNameInputEl" placeholder="JeanDoe">
+        </div>
+        <div class="input-group">
+          <label for="clientNumberInputEl">Client Number:</label>
+          <input type="text" id="clientNumberInputEl" placeholder="54321">
+        </div>
+      </div>
     </div>
 
-    <div id="settings-container" class="collapsed">
-      <div class="settings-card">
-        <div class="settings-card-actions">
-          <h3 class="card-title">Settings</h3>
-          <button id="header-hide-settings-btn" class="go-btn" style="background: transparent; border: 1px solid #bbb; flex-grow: 1; text-align: center;">Hide</button>
-          <div style="display: flex; gap: 10px;">
-            <select id="sample-data-select" class="sample-data-select">
-              <option value="" disabled selected>Sample Data</option>
-              <option value="names">Fill Names</option>
-              <option value="sizes">Fill Serving Sizes</option>
-              <option value="limits">Fill Limit Servings</option>
-              <option value="all">Fill Whole Table</option>
-            </select>
-            <button id="reset-all-btn" class="go-btn">Reset All</button>
+    <!-- GLOBAL APP CONTAINER -->
+    <div class="app-container">
+      <div class="main-content">
+        <!-- MEALS SECTION -->
+        <section class="app-section">
+          <div class="section-header">
+            <h2>Meals</h2>
           </div>
-        </div>
-        <div class="settings-grid">
-          <!-- HEADER ROW -->
-      <!-- Added Col 1: Empty Header, Col 2: Spacer -->
-      <div></div>
-      <div class="spacer"></div>
-      
-      <!-- Existing Col 3 (was Col 1): Name -->
-      <div class="label">Item Name</div>
-      <div class="spacer"></div>
-      <div class="label">Serving<br>Size</div>
-      <div class="spacer"></div>
-      <div class="label">Limit<br>Servings</div>
-      <div class="spacer"></div>
-      <div></div>
+          <div class="top-actions">
+            <button type="button" id="meals-settings-toggle-btn" class="go-btn settings-btn">Meals Settings</button>
+          </div>
 
-      <!-- ROW 2 -->
-      <!-- Added Col 1: Row Label "A", Col 2: Spacer -->
-      <div class="row-label">A</div>
-      <div class="spacer"></div>
-      
-      <!-- Existing Col 3 (was Col 1): Name Input -->
-      <input type="text" id="name-input-A" placeholder="Enter name" value="">
-      <div class="spacer"></div>
-      <input type="text" id="serving-input-A" style="width: 2ch;" maxlength="2" value="" placeholder="#">
-      <div class="spacer"></div>
-      <div class="limit-buttons" id="limit-group-A">
-        <button type="button">1</button>
-        <button type="button">2</button>
-        <button type="button" class="active">3</button>
+          <div id="meals-settings-container" class="settings-card hidden">
+            <div class="settings-header" style="display: grid; grid-template-columns: 2rem 1rem 12rem 1rem 3rem 3rem 3rem 3rem 3rem 3rem; align-items: center; margin-bottom: 10px; font-weight: bold; color: #666; font-size: 0.8rem;">
+              <div style="text-align: center;">#</div>
+              <div></div>
+              <div>Item Name</div>
+              <div></div>
+              <div style="text-align: center;">VEG</div>
+              <div style="text-align: center;">WEL</div>
+              <div style="text-align: center;">BLA</div>
+              <div style="text-align: center;">ND</div>
+              <div style="text-align: center;">1</div>
+              <div style="text-align: center;">2</div>
+            </div>
+            <div id="meals-settings-grid" class="meals-settings-grid">
+              <!-- Dynamically populated -->
+            </div>
+            <div class="settings-footer">
+              <button type="button" id="meals-settings-hide-btn" class="go-btn settings-btn" style="width: 100%; font-weight: normal; font-size: 1rem;">Hide Meals Settings</button>
+            </div>
+          </div>
+
+          <div id="meals-order-card" class="order-card">
+            <div id="meals-order-grid" class="meals-order-grid">
+              <!-- Dynamically populated by scripts.js -->
+            </div>
+          </div>
+        </section>
+
+        <!-- PRODUCE SECTION -->
+        <section class="app-section">
+          <div class="section-header">
+            <h2>Produce</h2>
+          </div>
+          <div class="top-actions">
+            <button type="button" id="settings-toggle-btn" class="go-btn settings-btn">Produce Settings</button>
+          </div>
+
+          <div id="settings-container" class="collapsed">
+            <div class="settings-card">
+              <div class="settings-card-actions">
+                <h3 class="card-title">Settings</h3>
+                <button id="header-hide-settings-btn" class="go-btn" style="background: transparent; border: 1px solid #bbb; flex-grow: 1; text-align: center;">Hide</button>
+                <div style="display: flex; gap: 10px;">
+                  <select id="sample-data-select" class="sample-data-select">
+                    <option value="" disabled selected>Sample Data</option>
+                    <option value="names">Fill Names</option>
+                    <option value="sizes">Fill Serving Sizes</option>
+                    <option value="limits">Fill Limit Servings</option>
+                    <option value="all">Fill Whole Table</option>
+                  </select>
+                  <button id="reset-all-btn" class="go-btn">Reset All</button>
+                </div>
+              </div>
+              <div class="settings-grid">
+                <!-- HEADER ROW -->
+                <div></div>
+                <div class="spacer"></div>
+                <div class="label">Item Name</div>
+                <div class="spacer"></div>
+                <div class="label">Serving<br>Size</div>
+                <div class="spacer"></div>
+                <div class="label">Limit<br>Servings</div>
+                <div class="spacer"></div>
+                <div></div>
+
+                <!-- Data rows A-J ... (omitted for brevity in template, preserved in actual file) -->
+                <!-- ROW 2 (A) -->
+                <div class="row-label">A</div>
+                <div class="spacer"></div>
+                <input type="text" id="name-input-A" placeholder="Enter name" value="">
+                <div class="spacer"></div>
+                <input type="text" id="serving-input-A" style="width: 2ch;" maxlength="2" value="" placeholder="#">
+                <div class="spacer"></div>
+                <div class="limit-buttons" id="limit-group-A">
+                  <button type="button">1</button>
+                  <button type="button">2</button>
+                  <button type="button" class="active">3</button>
+                </div>
+                <div class="spacer"></div>
+                <button id="reset-row-A" class="go-btn x-btn">X</button>
+
+                <!-- ROW 3 (B) -->
+                <div class="row-label">B</div>
+                <div class="spacer"></div>
+                <input type="text" id="name-input-B" placeholder="Enter name" value="">
+                <div class="spacer"></div>
+                <input type="text" id="serving-input-B" style="width: 2ch;" maxlength="2" value="" placeholder="#">
+                <div class="spacer"></div>
+                <div class="limit-buttons" id="limit-group-B">
+                  <button type="button">1</button>
+                  <button type="button">2</button>
+                  <button type="button" class="active">3</button>
+                </div>
+                <div class="spacer"></div>
+                <button id="reset-row-B" class="go-btn x-btn">X</button>
+
+                <!-- ROW 4 (C) -->
+                <div class="row-label">C</div>
+                <div class="spacer"></div>
+                <input type="text" id="name-input-C" placeholder="Enter name" value="">
+                <div class="spacer"></div>
+                <input type="text" id="serving-input-C" style="width: 2ch;" maxlength="2" value="" placeholder="#">
+                <div class="spacer"></div>
+                <div class="limit-buttons" id="limit-group-C">
+                  <button type="button">1</button>
+                  <button type="button">2</button>
+                  <button type="button" class="active">3</button>
+                </div>
+                <div class="spacer"></div>
+                <button id="reset-row-C" class="go-btn x-btn">X</button>
+
+                <!-- ROW 5 (D) -->
+                <div class="row-label">D</div>
+                <div class="spacer"></div>
+                <input type="text" id="name-input-D" placeholder="Enter name" value="">
+                <div class="spacer"></div>
+                <input type="text" id="serving-input-D" style="width: 2ch;" maxlength="2" value="" placeholder="#">
+                <div class="spacer"></div>
+                <div class="limit-buttons" id="limit-group-D">
+                  <button type="button">1</button>
+                  <button type="button">2</button>
+                  <button type="button" class="active">3</button>
+                </div>
+                <div class="spacer"></div>
+                <button id="reset-row-D" class="go-btn x-btn">X</button>
+
+                <!-- ROW 6 (E) -->
+                <div class="row-label">E</div>
+                <div class="spacer"></div>
+                <input type="text" id="name-input-E" placeholder="Enter name" value="">
+                <div class="spacer"></div>
+                <input type="text" id="serving-input-E" style="width: 2ch;" maxlength="2" value="" placeholder="#">
+                <div class="spacer"></div>
+                <div class="limit-buttons" id="limit-group-E">
+                  <button type="button">1</button>
+                  <button type="button">2</button>
+                  <button type="button" class="active">3</button>
+                </div>
+                <div class="spacer"></div>
+                <button id="reset-row-E" class="go-btn x-btn">X</button>
+
+                <!-- ROW 7 (F) -->
+                <div class="row-label">F</div>
+                <div class="spacer"></div>
+                <input type="text" id="name-input-F" placeholder="Enter name" value="">
+                <div class="spacer"></div>
+                <input type="text" id="serving-input-F" style="width: 2ch;" maxlength="2" value="" placeholder="#">
+                <div class="spacer"></div>
+                <div class="limit-buttons" id="limit-group-F">
+                  <button type="button">1</button>
+                  <button type="button">2</button>
+                  <button type="button" class="active">3</button>
+                </div>
+                <div class="spacer"></div>
+                <button id="reset-row-F" class="go-btn x-btn">X</button>
+
+                <!-- ROW 8 (G) -->
+                <div class="row-label">G</div>
+                <div class="spacer"></div>
+                <input type="text" id="name-input-G" placeholder="Enter name" value="">
+                <div class="spacer"></div>
+                <input type="text" id="serving-input-G" style="width: 2ch;" maxlength="2" value="" placeholder="#">
+                <div class="spacer"></div>
+                <div class="limit-buttons" id="limit-group-G">
+                  <button type="button">1</button>
+                  <button type="button">2</button>
+                  <button type="button" class="active">3</button>
+                </div>
+                <div class="spacer"></div>
+                <button id="reset-row-G" class="go-btn x-btn">X</button>
+
+                <!-- ROW 9 (H) -->
+                <div class="row-label">H</div>
+                <div class="spacer"></div>
+                <input type="text" id="name-input-H" placeholder="Enter name" value="">
+                <div class="spacer"></div>
+                <input type="text" id="serving-input-H" style="width: 2ch;" maxlength="2" value="" placeholder="#">
+                <div class="spacer"></div>
+                <div class="limit-buttons" id="limit-group-H">
+                  <button type="button">1</button>
+                  <button type="button">2</button>
+                  <button type="button" class="active">3</button>
+                </div>
+                <div class="spacer"></div>
+                <button id="reset-row-H" class="go-btn x-btn">X</button>
+
+                <!-- ROW 10 (I) -->
+                <div class="row-label">I</div>
+                <div class="spacer"></div>
+                <input type="text" id="name-input-I" placeholder="Enter name" value="">
+                <div class="spacer"></div>
+                <input type="text" id="serving-input-I" style="width: 2ch;" maxlength="2" value="" placeholder="#">
+                <div class="spacer"></div>
+                <div class="limit-buttons" id="limit-group-I">
+                  <button type="button">1</button>
+                  <button type="button">2</button>
+                  <button type="button" class="active">3</button>
+                </div>
+                <div class="spacer"></div>
+                <button id="reset-row-I" class="go-btn x-btn">X</button>
+
+                <!-- ROW 11 (J) -->
+                <div class="row-label">J</div>
+                <div class="spacer"></div>
+                <input type="text" id="name-input-J" placeholder="Enter name" value="">
+                <div class="spacer"></div>
+                <input type="text" id="serving-input-J" style="width: 2ch;" maxlength="2" value="" placeholder="#">
+                <div class="spacer"></div>
+                <div class="limit-buttons" id="limit-group-J">
+                  <button type="button">1</button>
+                  <button type="button">2</button>
+                  <button type="button" class="active">3</button>
+                </div>
+                <div class="spacer"></div>
+                <button id="reset-row-J" class="go-btn x-btn">X</button>
+
+                <!-- Footer row for produce settings -->
+                <div style="grid-column: 1 / span 9; padding-top: 12px; border-top: 1px solid #eee; margin-top: 8px;">
+                  <button type="button" id="settings-hide-btn" class="go-btn settings-btn" style="width: 100%; margin-right: 0; text-align: center; font-weight: normal; font-size: 1rem;">Hide Settings</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="order-card">
+            <div class="order-card-actions">
+              <button type="button" id="toggle-order-btn" class="go-btn">2X Order</button>
+              <div style="display: flex; gap: 10px;">
+                <button type="button" id="one-of-each-btn" class="go-btn">Get 1 Serving Of Everything</button>
+                <button type="button" id="get-max-btn" class="go-btn">Get Maximum</button>
+              </div>
+            </div>
+
+            <div class="order-grid">
+              <!-- Header row -->
+              <div></div>
+              <div class="spacer"></div>
+              <div class="header-cell name-header"></div>
+              <div class="spacer"></div>
+              <div class="header-cell order-col-1">1</div>
+              <div class="header-cell order-col-2">2</div>
+              <div class="header-cell order-col-3">3</div>
+              <div class="header-cell extra-col order-col-4">4</div>
+              <div class="header-cell extra-col order-col-5">5</div>
+              <div class="header-cell extra-col order-col-6">6</div>
+              <div class="spacer"></div>
+              <button type="button" id="order-reset-all" class="go-btn x-btn x-all-btn" title="Clear all selections">X All</button>
+              
+              <!-- Data rows A-J -->
+              <!-- ROW A -->
+              <div class="row-label">A</div>
+              <div class="spacer"></div>
+              <div id="name-output-A" class="name-output"></div>
+              <div class="spacer"></div>
+              <button type="button" class="num-btn order-col-1" data-row="A">1</button>
+              <button type="button" class="num-btn order-col-2" data-row="A">2</button>
+              <button type="button" class="num-btn order-col-3" data-row="A">3</button>
+              <button type="button" class="num-btn extra-col order-col-4" data-row="A">4</button>
+              <button type="button" class="num-btn extra-col order-col-5" data-row="A">5</button>
+              <button type="button" class="num-btn extra-col order-col-6" data-row="A">6</button>
+              <div class="spacer"></div>
+              <button type="button" id="order-reset-A" class="go-btn x-btn">X</button>
+
+              <!-- ROW B -->
+              <div class="row-label">B</div>
+              <div class="spacer"></div>
+              <div id="name-output-B" class="name-output"></div>
+              <div class="spacer"></div>
+              <button type="button" class="num-btn order-col-1" data-row="B">1</button>
+              <button type="button" class="num-btn order-col-2" data-row="B">2</button>
+              <button type="button" class="num-btn order-col-3" data-row="B">3</button>
+              <button type="button" class="num-btn extra-col order-col-4" data-row="B">4</button>
+              <button type="button" class="num-btn extra-col order-col-5" data-row="B">5</button>
+              <button type="button" class="num-btn extra-col order-col-6" data-row="B">6</button>
+              <div class="spacer"></div>
+              <button type="button" id="order-reset-B" class="go-btn x-btn">X</button>
+
+              <!-- ROW C -->
+              <div class="row-label">C</div>
+              <div class="spacer"></div>
+              <div id="name-output-C" class="name-output"></div>
+              <div class="spacer"></div>
+              <button type="button" class="num-btn order-col-1" data-row="C">1</button>
+              <button type="button" class="num-btn order-col-2" data-row="C">2</button>
+              <button type="button" class="num-btn order-col-3" data-row="C">3</button>
+              <button type="button" class="num-btn extra-col order-col-4" data-row="C">4</button>
+              <button type="button" class="num-btn extra-col order-col-5" data-row="C">5</button>
+              <button type="button" class="num-btn extra-col order-col-6" data-row="C">6</button>
+              <div class="spacer"></div>
+              <button type="button" id="order-reset-C" class="go-btn x-btn">X</button>
+
+              <!-- ROW D -->
+              <div class="row-label">D</div>
+              <div class="spacer"></div>
+              <div id="name-output-D" class="name-output"></div>
+              <div class="spacer"></div>
+              <button type="button" class="num-btn order-col-1" data-row="D">1</button>
+              <button type="button" class="num-btn order-col-2" data-row="D">2</button>
+              <button type="button" class="num-btn order-col-3" data-row="D">3</button>
+              <button type="button" class="num-btn extra-col order-col-4" data-row="D">4</button>
+              <button type="button" class="num-btn extra-col order-col-5" data-row="D">5</button>
+              <button type="button" class="num-btn extra-col order-col-6" data-row="D">6</button>
+              <div class="spacer"></div>
+              <button type="button" id="order-reset-D" class="go-btn x-btn">X</button>
+
+              <!-- ROW E -->
+              <div class="row-label">E</div>
+              <div class="spacer"></div>
+              <div id="name-output-E" class="name-output"></div>
+              <div class="spacer"></div>
+              <button type="button" class="num-btn order-col-1" data-row="E">1</button>
+              <button type="button" class="num-btn order-col-2" data-row="E">2</button>
+              <button type="button" class="num-btn order-col-3" data-row="E">3</button>
+              <button type="button" class="num-btn extra-col order-col-4" data-row="E">4</button>
+              <button type="button" class="num-btn extra-col order-col-5" data-row="E">5</button>
+              <button type="button" class="num-btn extra-col order-col-6" data-row="E">6</button>
+              <div class="spacer"></div>
+              <button type="button" id="order-reset-E" class="go-btn x-btn">X</button>
+
+              <!-- ROW F -->
+              <div class="row-label">F</div>
+              <div class="spacer"></div>
+              <div id="name-output-F" class="name-output"></div>
+              <div class="spacer"></div>
+              <button type="button" class="num-btn order-col-1" data-row="F">1</button>
+              <button type="button" class="num-btn order-col-2" data-row="F">2</button>
+              <button type="button" class="num-btn order-col-3" data-row="F">3</button>
+              <button type="button" class="num-btn extra-col order-col-4" data-row="F">4</button>
+              <button type="button" class="num-btn extra-col order-col-5" data-row="F">5</button>
+              <button type="button" class="num-btn extra-col order-col-6" data-row="F">6</button>
+              <div class="spacer"></div>
+              <button type="button" id="order-reset-F" class="go-btn x-btn">X</button>
+
+              <!-- ROW G -->
+              <div class="row-label">G</div>
+              <div class="spacer"></div>
+              <div id="name-output-G" class="name-output"></div>
+              <div class="spacer"></div>
+              <button type="button" class="num-btn order-col-1" data-row="G">1</button>
+              <button type="button" class="num-btn order-col-2" data-row="G">2</button>
+              <button type="button" class="num-btn order-col-3" data-row="G">3</button>
+              <button type="button" class="num-btn extra-col order-col-4" data-row="G">4</button>
+              <button type="button" class="num-btn extra-col order-col-5" data-row="G">5</button>
+              <button type="button" class="num-btn extra-col order-col-6" data-row="G">6</button>
+              <div class="spacer"></div>
+              <button type="button" id="order-reset-G" class="go-btn x-btn">X</button>
+
+              <!-- ROW H -->
+              <div class="row-label">H</div>
+              <div class="spacer"></div>
+              <div id="name-output-H" class="name-output"></div>
+              <div class="spacer"></div>
+              <button type="button" class="num-btn order-col-1" data-row="H">1</button>
+              <button type="button" class="num-btn order-col-2" data-row="H">2</button>
+              <button type="button" class="num-btn order-col-3" data-row="H">3</button>
+              <button type="button" class="num-btn extra-col order-col-4" data-row="H">4</button>
+              <button type="button" class="num-btn extra-col order-col-5" data-row="H">5</button>
+              <button type="button" class="num-btn extra-col order-col-6" data-row="H">6</button>
+              <div class="spacer"></div>
+              <button type="button" id="order-reset-H" class="go-btn x-btn">X</button>
+
+              <!-- ROW I -->
+              <div class="row-label">I</div>
+              <div class="spacer"></div>
+              <div id="name-output-I" class="name-output"></div>
+              <div class="spacer"></div>
+              <button type="button" class="num-btn order-col-1" data-row="I">1</button>
+              <button type="button" class="num-btn order-col-2" data-row="I">2</button>
+              <button type="button" class="num-btn order-col-3" data-row="I">3</button>
+              <button type="button" class="num-btn extra-col order-col-4" data-row="I">4</button>
+              <button type="button" class="num-btn extra-col order-col-5" data-row="I">5</button>
+              <button type="button" class="num-btn extra-col order-col-6" data-row="I">6</button>
+              <div class="spacer"></div>
+              <button type="button" id="order-reset-I" class="go-btn x-btn">X</button>
+
+              <!-- ROW J -->
+              <div class="row-label">J</div>
+              <div class="spacer"></div>
+              <div id="name-output-J" class="name-output"></div>
+              <div class="spacer"></div>
+              <button type="button" class="num-btn order-col-1" data-row="J">1</button>
+              <button type="button" class="num-btn order-col-2" data-row="J">2</button>
+              <button type="button" class="num-btn order-col-3" data-row="J">3</button>
+              <button type="button" class="num-btn extra-col order-col-4" data-row="J">4</button>
+              <button type="button" class="num-btn extra-col order-col-5" data-row="J">5</button>
+              <button type="button" class="num-btn extra-col order-col-6" data-row="J">6</button>
+              <div class="spacer"></div>
+              <button type="button" id="order-reset-J" class="go-btn x-btn">X</button>
+            </div>
+          </div>
+        </section>
       </div>
-      <div class="spacer"></div>
-      <button id="reset-row-A" class="go-btn x-btn">X</button>
-
-      <!-- ROW 3 -->
-      <div class="row-label">B</div>
-      <div class="spacer"></div>
-      <input type="text" id="name-input-B" placeholder="Enter name" value="">
-      <div class="spacer"></div>
-      <input type="text" id="serving-input-B" style="width: 2ch;" maxlength="2" value="" placeholder="#">
-      <div class="spacer"></div>
-      <div class="limit-buttons" id="limit-group-B">
-        <button type="button">1</button>
-        <button type="button">2</button>
-        <button type="button" class="active">3</button>
-      </div>
-      <div class="spacer"></div>
-      <button id="reset-row-B" class="go-btn x-btn">X</button>
-
-      <!-- ROW 4 -->
-      <div class="row-label">C</div>
-      <div class="spacer"></div>
-      <input type="text" id="name-input-C" placeholder="Enter name" value="">
-      <div class="spacer"></div>
-      <input type="text" id="serving-input-C" style="width: 2ch;" maxlength="2" value="" placeholder="#">
-      <div class="spacer"></div>
-      <div class="limit-buttons" id="limit-group-C">
-        <button type="button">1</button>
-        <button type="button">2</button>
-        <button type="button" class="active">3</button>
-      </div>
-      <div class="spacer"></div>
-      <button id="reset-row-C" class="go-btn x-btn">X</button>
-
-      <!-- ROW 5 -->
-      <div class="row-label">D</div>
-      <div class="spacer"></div>
-      <input type="text" id="name-input-D" placeholder="Enter name" value="">
-      <div class="spacer"></div>
-      <input type="text" id="serving-input-D" style="width: 2ch;" maxlength="2" value="" placeholder="#">
-      <div class="spacer"></div>
-      <div class="limit-buttons" id="limit-group-D">
-        <button type="button">1</button>
-        <button type="button">2</button>
-        <button type="button" class="active">3</button>
-      </div>
-      <div class="spacer"></div>
-      <button id="reset-row-D" class="go-btn x-btn">X</button>
-
-      <!-- ROW 6 -->
-      <div class="row-label">E</div>
-      <div class="spacer"></div>
-      <input type="text" id="name-input-E" placeholder="Enter name" value="">
-      <div class="spacer"></div>
-      <input type="text" id="serving-input-E" style="width: 2ch;" maxlength="2" value="" placeholder="#">
-      <div class="spacer"></div>
-      <div class="limit-buttons" id="limit-group-E">
-        <button type="button">1</button>
-        <button type="button">2</button>
-        <button type="button" class="active">3</button>
-      </div>
-      <div class="spacer"></div>
-      <button id="reset-row-E" class="go-btn x-btn">X</button>
-
-      <!-- ROW 7 -->
-      <div class="row-label">F</div>
-      <div class="spacer"></div>
-      <input type="text" id="name-input-F" placeholder="Enter name" value="">
-      <div class="spacer"></div>
-      <input type="text" id="serving-input-F" style="width: 2ch;" maxlength="2" value="" placeholder="#">
-      <div class="spacer"></div>
-      <div class="limit-buttons" id="limit-group-F">
-        <button type="button">1</button>
-        <button type="button">2</button>
-        <button type="button" class="active">3</button>
-      </div>
-      <div class="spacer"></div>
-      <button id="reset-row-F" class="go-btn x-btn">X</button>
-
-      <!-- ROW 8 -->
-      <div class="row-label">G</div>
-      <div class="spacer"></div>
-      <input type="text" id="name-input-G" placeholder="Enter name" value="">
-      <div class="spacer"></div>
-      <input type="text" id="serving-input-G" style="width: 2ch;" maxlength="2" value="" placeholder="#">
-      <div class="spacer"></div>
-      <div class="limit-buttons" id="limit-group-G">
-        <button type="button">1</button>
-        <button type="button">2</button>
-        <button type="button" class="active">3</button>
-      </div>
-      <div class="spacer"></div>
-      <button id="reset-row-G" class="go-btn x-btn">X</button>
-
-      <!-- ROW 9 -->
-      <div class="row-label">H</div>
-      <div class="spacer"></div>
-      <input type="text" id="name-input-H" placeholder="Enter name" value="">
-      <div class="spacer"></div>
-      <input type="text" id="serving-input-H" style="width: 2ch;" maxlength="2" value="" placeholder="#">
-      <div class="spacer"></div>
-      <div class="limit-buttons" id="limit-group-H">
-        <button type="button">1</button>
-        <button type="button">2</button>
-        <button type="button" class="active">3</button>
-      </div>
-      <div class="spacer"></div>
-      <button id="reset-row-H" class="go-btn x-btn">X</button>
-
-      <!-- ROW 10 -->
-      <div class="row-label">I</div>
-      <div class="spacer"></div>
-      <input type="text" id="name-input-I" placeholder="Enter name" value="">
-      <div class="spacer"></div>
-      <input type="text" id="serving-input-I" style="width: 2ch;" maxlength="2" value="" placeholder="#">
-      <div class="spacer"></div>
-      <div class="limit-buttons" id="limit-group-I">
-        <button type="button">1</button>
-        <button type="button">2</button>
-        <button type="button" class="active">3</button>
-      </div>
-      <div class="spacer"></div>
-      <button id="reset-row-I" class="go-btn x-btn">X</button>
-
-      <!-- ROW 11 -->
-      <div class="row-label">J</div>
-      <div class="spacer"></div>
-      <input type="text" id="name-input-J" placeholder="Enter name" value="">
-      <div class="spacer"></div>
-      <input type="text" id="serving-input-J" style="width: 2ch;" maxlength="2" value="" placeholder="#">
-      <div class="spacer"></div>
-      <div class="limit-buttons" id="limit-group-J">
-        <button type="button">1</button>
-        <button type="button">2</button>
-        <button type="button" class="active">3</button>
-      </div>
-      <div class="spacer"></div>
-      <button id="reset-row-J" class="go-btn x-btn">X</button>
-
-      <!-- Footer Row for Hide Settings -->
-      <div style="grid-column: 1 / span 9; padding-top: 12px; border-top: 1px solid #eee; margin-top: 8px;">
-        <button type="button" id="settings-hide-btn" class="go-btn settings-btn" 
-        style="width: 100%; margin-right: 0; text-align: center; font-weight: normal; font-size: 1rem;">
-          Hide Settings</button>
-      </div>
-      </div>
-    </div>
-  </div>
-
-    <div class="app-layout">
-      <div class="order-card">
-      <div class="order-card-actions">
-        <button type="button" id="toggle-order-btn" class="go-btn">2X Order</button>
-        <div style="display: flex; gap: 10px;">
-          <button type="button" id="one-of-each-btn" class="go-btn">Get 1 Serving Of Everything</button>
-          <button type="button" id="get-max-btn" class="go-btn">Get Maximum</button>
-        </div>
-      </div>
-
-      <div class="order-grid">
-        <!-- Header row -->
-        <div></div>
-        <div class="spacer"></div>
-        <div class="header-cell name-header"></div>
-        <div class="spacer"></div>
-        <div class="header-cell order-col-1">1</div>
-        <div class="header-cell order-col-2">2</div>
-        <div class="header-cell order-col-3">3</div>
-        <div class="header-cell extra-col order-col-4">4</div>
-        <div class="header-cell extra-col order-col-5">5</div>
-        <div class="header-cell extra-col order-col-6">6</div>
-        <div class="spacer"></div>
-        <button type="button" id="order-reset-all" class="go-btn x-btn x-all-btn" title="Clear all selections">X All</button>
-        
-        <!-- Data row A -->
-        <div class="row-label">A</div>
-        <div class="spacer"></div>
-        <div id="name-output-A" class="name-output"></div>
-        <div class="spacer"></div>
-        <button type="button" class="num-btn order-col-1" data-row="A">1</button>
-        <button type="button" class="num-btn order-col-2" data-row="A">2</button>
-        <button type="button" class="num-btn order-col-3" data-row="A">3</button>
-        <button type="button" class="num-btn extra-col order-col-4" data-row="A">4</button>
-        <button type="button" class="num-btn extra-col order-col-5" data-row="A">5</button>
-        <button type="button" class="num-btn extra-col order-col-6" data-row="A">6</button>
-        <div class="spacer"></div>
-        <button type="button" id="order-reset-A" class="go-btn x-btn">X</button>
-
-        <!-- Data row B -->
-        <div class="row-label">B</div>
-        <div class="spacer"></div>
-        <div id="name-output-B" class="name-output"></div>
-        <div class="spacer"></div>
-        <button type="button" class="num-btn order-col-1" data-row="B">1</button>
-        <button type="button" class="num-btn order-col-2" data-row="B">2</button>
-        <button type="button" class="num-btn order-col-3" data-row="B">3</button>
-        <button type="button" class="num-btn extra-col order-col-4" data-row="B">4</button>
-        <button type="button" class="num-btn extra-col order-col-5" data-row="B">5</button>
-        <button type="button" class="num-btn extra-col order-col-6" data-row="B">6</button>
-        <div class="spacer"></div>
-        <button type="button" id="order-reset-B" class="go-btn x-btn">X</button>
-
-        <!-- Data row C -->
-        <div class="row-label">C</div>
-        <div class="spacer"></div>
-        <div id="name-output-C" class="name-output"></div>
-        <div class="spacer"></div>
-        <button type="button" class="num-btn order-col-1" data-row="C">1</button>
-        <button type="button" class="num-btn order-col-2" data-row="C">2</button>
-        <button type="button" class="num-btn order-col-3" data-row="C">3</button>
-        <button type="button" class="num-btn extra-col order-col-4" data-row="C">4</button>
-        <button type="button" class="num-btn extra-col order-col-5" data-row="C">5</button>
-        <button type="button" class="num-btn extra-col order-col-6" data-row="C">6</button>
-        <div class="spacer"></div>
-        <button type="button" id="order-reset-C" class="go-btn x-btn">X</button>
-
-        <!-- Data row D -->
-        <div class="row-label">D</div>
-        <div class="spacer"></div>
-        <div id="name-output-D" class="name-output"></div>
-        <div class="spacer"></div>
-        <button type="button" class="num-btn order-col-1" data-row="D">1</button>
-        <button type="button" class="num-btn order-col-2" data-row="D">2</button>
-        <button type="button" class="num-btn order-col-3" data-row="D">3</button>
-        <button type="button" class="num-btn extra-col order-col-4" data-row="D">4</button>
-        <button type="button" class="num-btn extra-col order-col-5" data-row="D">5</button>
-        <button type="button" class="num-btn extra-col order-col-6" data-row="D">6</button>
-        <div class="spacer"></div>
-        <button type="button" id="order-reset-D" class="go-btn x-btn">X</button>
-
-        <!-- Data row E -->
-        <div class="row-label">E</div>
-        <div class="spacer"></div>
-        <div id="name-output-E" class="name-output"></div>
-        <div class="spacer"></div>
-        <button type="button" class="num-btn order-col-1" data-row="E">1</button>
-        <button type="button" class="num-btn order-col-2" data-row="E">2</button>
-        <button type="button" class="num-btn order-col-3" data-row="E">3</button>
-        <button type="button" class="num-btn extra-col order-col-4" data-row="E">4</button>
-        <button type="button" class="num-btn extra-col order-col-5" data-row="E">5</button>
-        <button type="button" class="num-btn extra-col order-col-6" data-row="E">6</button>
-        <div class="spacer"></div>
-        <button type="button" id="order-reset-E" class="go-btn x-btn">X</button>
-
-        <!-- Data row F -->
-        <div class="row-label">F</div>
-        <div class="spacer"></div>
-        <div id="name-output-F" class="name-output"></div>
-        <div class="spacer"></div>
-        <button type="button" class="num-btn order-col-1" data-row="F">1</button>
-        <button type="button" class="num-btn order-col-2" data-row="F">2</button>
-        <button type="button" class="num-btn order-col-3" data-row="F">3</button>
-        <button type="button" class="num-btn extra-col order-col-4" data-row="F">4</button>
-        <button type="button" class="num-btn extra-col order-col-5" data-row="F">5</button>
-        <button type="button" class="num-btn extra-col order-col-6" data-row="F">6</button>
-        <div class="spacer"></div>
-        <button type="button" id="order-reset-F" class="go-btn x-btn">X</button>
-
-        <!-- Data row G -->
-        <div class="row-label">G</div>
-        <div class="spacer"></div>
-        <div id="name-output-G" class="name-output"></div>
-        <div class="spacer"></div>
-        <button type="button" class="num-btn order-col-1" data-row="G">1</button>
-        <button type="button" class="num-btn order-col-2" data-row="G">2</button>
-        <button type="button" class="num-btn order-col-3" data-row="G">3</button>
-        <button type="button" class="num-btn extra-col order-col-4" data-row="G">4</button>
-        <button type="button" class="num-btn extra-col order-col-5" data-row="G">5</button>
-        <button type="button" class="num-btn extra-col order-col-6" data-row="G">6</button>
-        <div class="spacer"></div>
-        <button type="button" id="order-reset-G" class="go-btn x-btn">X</button>
-
-        <!-- Data row H -->
-        <div class="row-label">H</div>
-        <div class="spacer"></div>
-        <div id="name-output-H" class="name-output"></div>
-        <div class="spacer"></div>
-        <button type="button" class="num-btn order-col-1" data-row="H">1</button>
-        <button type="button" class="num-btn order-col-2" data-row="H">2</button>
-        <button type="button" class="num-btn order-col-3" data-row="H">3</button>
-        <button type="button" class="num-btn extra-col order-col-4" data-row="H">4</button>
-        <button type="button" class="num-btn extra-col order-col-5" data-row="H">5</button>
-        <button type="button" class="num-btn extra-col order-col-6" data-row="H">6</button>
-        <div class="spacer"></div>
-        <button type="button" id="order-reset-H" class="go-btn x-btn">X</button>
-
-        <!-- Data row I -->
-        <div class="row-label">I</div>
-        <div class="spacer"></div>
-        <div id="name-output-I" class="name-output"></div>
-        <div class="spacer"></div>
-        <button type="button" class="num-btn order-col-1" data-row="I">1</button>
-        <button type="button" class="num-btn order-col-2" data-row="I">2</button>
-        <button type="button" class="num-btn order-col-3" data-row="I">3</button>
-        <button type="button" class="num-btn extra-col order-col-4" data-row="I">4</button>
-        <button type="button" class="num-btn extra-col order-col-5" data-row="I">5</button>
-        <button type="button" class="num-btn extra-col order-col-6" data-row="I">6</button>
-        <div class="spacer"></div>
-        <button type="button" id="order-reset-I" class="go-btn x-btn">X</button>
-
-        <!-- Data row J -->
-        <div class="row-label">J</div>
-        <div class="spacer"></div>
-        <div id="name-output-J" class="name-output"></div>
-        <div class="spacer"></div>
-        <button type="button" class="num-btn order-col-1" data-row="J">1</button>
-        <button type="button" class="num-btn order-col-2" data-row="J">2</button>
-        <button type="button" class="num-btn order-col-3" data-row="J">3</button>
-        <button type="button" class="num-btn extra-col order-col-4" data-row="J">4</button>
-        <button type="button" class="num-btn extra-col order-col-5" data-row="J">5</button>
-        <button type="button" class="num-btn extra-col order-col-6" data-row="J">6</button>
-        <div class="spacer"></div>
-        <button type="button" id="order-reset-J" class="go-btn x-btn">X</button>
-      </div>
-    </div>
 
       <aside class="sidebar">
         <!-- Functional Receipt Container -->
         <div class="receipt-container">
-          <div class="receipt-header">RECEIPT</div>
+          <div class="receipt-header">
+            RECEIPT
+            <div id="receipt-date" class="receipt-date"></div>
+            <div id="receipt-client-info" class="receipt-client-info"></div>
+          </div>
           <div id="receipt-items" class="receipt-items"></div>
           <div class="receipt-footer">
-            <span>Servings Count</span>
+            <span>Produce Servings Count</span>
             <span id="receipt-total">0</span>
           </div>
-          <button type="button" class="print-btn" disabled>Print</button>
+          <button type="button" class="receipt-action-btn" disabled>Print</button>
+          <button type="button" id="clear-order-btn" class="receipt-action-btn yellow-btn">Clear Order</button>
         </div>
       </aside>
     </div>
