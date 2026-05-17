@@ -7,8 +7,93 @@ body {
 }
 
 h1 {
-  margin: 0 0 1.25rem 0;
-  font-size: 1.5rem;
+  text-align: left;
+  font-family: sans-serif;
+  color: #333;
+  margin-top: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+h2 {
+  font-family: sans-serif;
+  color: #444;
+  margin: 0;
+}
+
+.client-info-card {
+  width: 38.5rem;
+  box-sizing: border-box;
+  margin: 0 0 2rem 0;
+  padding: 1.5rem;
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 0.5rem;
+  box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.05);
+}
+
+.client-info-row {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 1rem;
+}
+
+.client-info-row:last-child {
+  margin-bottom: 0;
+}
+
+.date-display {
+  font-family: sans-serif;
+  font-size: 1.1rem;
+  color: #666;
+  font-weight: 500;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.client-info-row > .input-group:nth-child(1) {
+  flex: 3;
+}
+
+.client-info-row > .input-group:nth-child(2) {
+  flex: 1;
+}
+
+.input-group label {
+  font-family: sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #555;
+}
+
+.input-group input {
+  padding: 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  outline: none;
+}
+
+.input-group input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0,123,255,0.1);
+}
+
+.app-section {
+  max-width: fit-content;
+  margin: 0 0 3rem 0;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  width: 38.5rem;
 }
 
 /* Container for buttons above the tables */
@@ -16,6 +101,119 @@ h1 {
   display: flex;
   justify-content: flex-start;
   margin-bottom: 20px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+#meals-settings-container {
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+}
+
+.settings-header {
+  display: grid;
+  grid-template-columns: 17.5rem 1.25rem 10rem 1.25rem auto;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.meals-settings-grid {
+  display: grid;
+  /* Item Label, Spacer, Name Input, Spacer, VEG, WEL, BLA, ND, 1, 2 */
+  grid-template-columns: 2rem 1rem 12rem 1rem 3rem 3rem 3rem 3rem 3rem 3rem;
+  align-items: center;
+  row-gap: 0.75rem;
+}
+
+.option-toggle {
+  width: 1.25rem;
+  height: 1.25rem;
+  cursor: pointer;
+  margin: 0 auto;
+}
+
+.meals-order-grid {
+  display: grid;
+  grid-template-rows: repeat(10, auto);
+  grid-template-columns: repeat(2, 1fr);
+  grid-auto-flow: column;
+  column-gap: 15px;
+  row-gap: 12px;
+}
+
+.meal-item-btn {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  padding: 0;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background-color: #fff;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.2s;
+  text-align: left;
+  white-space: normal;
+  min-height: 3rem;
+}
+
+.meal-item-btn:hover {
+  background-color: #f8f9fa;
+  border-color: #bbb;
+}
+
+.meal-item-btn:active {
+  transform: scale(0.98);
+  background-color: #f1f3f5;
+}
+
+.meal-item-btn.active {
+  border-color: #007bff;
+  box-shadow: 0 0 0 1px #007bff;
+  background-color: #f0f7ff;
+}
+
+.option-stripes {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.stripe {
+  width: 14px;
+  display: none; /* Hidden by default */
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 0.6rem;
+  font-weight: bold;
+}
+
+.stripe.visible {
+  display: flex;
+}
+
+.stripe-1 { background-color: #00c853; } /* VEG - Vibrant Green */
+.stripe-2 { background-color: #E20074; } /* WEL - Magenta */
+.stripe-3 { background-color: #FFD600; } /* BLA - Rich Yellow */
+.stripe-4 { background-color: #f44336; } /* ND - Red */
+.stripe-5 { background-color: #9c27b0; } /* 1 - Purple */
+
+.meal-label {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #333;
+  line-height: 1.2;
+}
+
+.settings-footer {
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
 }
 
 #settings-container {
@@ -179,7 +377,7 @@ button.active {
   color: #000;
   margin-right: 0.625rem;
   font-size: 1.125rem;
-  font-weight: bold;
+  font-weight: normal;
   padding-left: 1.5rem;
   padding-right: 1.5rem;
 }
@@ -264,17 +462,35 @@ button.active {
   box-shadow: inset 0 0 0 1px #007bff;
 }
 
-/* Layout for side-by-side Order Card and Receipt */
-.app-layout {
+/* Layout for global side-by-side */
+.app-container {
   display: flex;
   align-items: flex-start;
   gap: 2rem;
+  max-width: fit-content;
+  margin: 0;
+}
+
+.main-content {
+  flex: 0 0 auto;
 }
 
 .sidebar {
   position: sticky;
   top: 1.25rem;
   flex: 0 0 auto;
+  /* Align with the top of the meal order card (skipping section header and top actions) */
+  margin-top: 6.75rem; 
+}
+
+.app-section {
+  width: fit-content;
+  margin: 0 0 3rem 0;
+}
+
+/* Specific heights and adjustments */
+.hidden {
+  display: none !important;
 }
 
 /* The secondary table for orders */
@@ -335,6 +551,19 @@ button.active {
   margin-bottom: 0.9375rem;
   font-weight: bold;
   letter-spacing: 0.125rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.receipt-date,
+.receipt-client-info {
+  font-size: 1.25rem;
+  font-weight: normal;
+  letter-spacing: normal;
+  margin-top: 0.25rem;
+  color: #555;
+  text-transform: none;
 }
 
 .receipt-item {
@@ -358,7 +587,7 @@ button.active {
   font-size: 1rem;
 }
 
-.print-btn {
+.receipt-action-btn {
   width: 100%;
   margin-top: 1rem;
   padding: 0.5rem 0;
@@ -369,12 +598,38 @@ button.active {
   text-align: center;
   font-family: inherit;
   font-size: 0.875rem;
-  cursor: not-allowed;
-  transition: opacity 0.2s;
+  cursor: default;
 }
 
-.print-btn:hover {
-  cursor: not-allowed;
+.receipt-action-btn:disabled {
+  opacity: 0.6;
+}
+
+.receipt-action-btn.active-btn {
+  color: #0369a1;
+  border-color: #7dd3fc;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.receipt-action-btn.active-btn:hover {
+  background-color: #e0f2fe;
+  border-color: #38bdf8;
+}
+
+.receipt-action-btn.yellow-btn {
+  color: #854d0e;
+  background-color: #fffde7;
+  border-color: #fef08a;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.receipt-action-btn.yellow-btn:hover {
+  background-color: #fff9c4;
+  border-color: #fde047;
 }
 
 
