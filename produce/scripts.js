@@ -1,4 +1,39 @@
 
+// Update date immediately
+(function updateDate() {
+  const dateEl = document.getElementById('date-el');
+  const receiptDateEl = document.getElementById('receipt-date');
+  if (dateEl) {
+    const now = new Date();
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    const dateStr = now.toLocaleDateString(undefined, options);
+    dateEl.textContent = dateStr;
+    if (receiptDateEl) {
+      receiptDateEl.textContent = dateStr;
+    }
+  }
+})();
+
+// Client info sync logic
+(function initClientInfoSync() {
+  const nameInput = document.getElementById('clientNameInputEl');
+  const numberInput = document.getElementById('clientNumberInputEl');
+  const receiptInfoEl = document.getElementById('receipt-client-info');
+
+  function updateReceipt() {
+    if (!receiptInfoEl) return;
+    const name = nameInput.value.trim() || nameInput.placeholder;
+    const num = numberInput.value.trim() || numberInput.placeholder;
+    receiptInfoEl.textContent = `${name} - ${num}`;
+  }
+
+  if (nameInput && numberInput) {
+    nameInput.addEventListener('input', updateReceipt);
+    numberInput.addEventListener('input', updateReceipt);
+    updateReceipt();
+  }
+})();
+
 /**
  * Function to handle button toggling.
  * It takes a list of buttons and ensures only one can be "active" at a time.
@@ -24,6 +59,121 @@ function setupToggleButtons(buttonList, onToggle) {
 }
 
 const rowIds = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
+const mealRowIds = Array.from({length: 20}, (_, i) => `M${i + 1}`);
+
+// 0. Populate Meals Settings & Order Grids
+(function initMeals() {
+  const settingsGrid = document.getElementById('meals-settings-grid');
+  const orderGrid = document.getElementById('meals-order-grid');
+  if (!settingsGrid || !orderGrid) return;
+
+  mealRowIds.forEach((mId, index) => {
+    const num = index + 1;
+    
+    // --- POPULATE SETTINGS ---
+    const label = document.createElement('div');
+    label.className = 'row-label';
+    label.textContent = num;
+    settingsGrid.appendChild(label);
+
+    const spacer1 = document.createElement('div');
+    spacer1.className = 'spacer';
+    settingsGrid.appendChild(spacer1);
+
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.id = `meal-name-input-${mId}`;
+    input.placeholder = `Meal ${num}`;
+    input.value = `Meal ${num}`;
+    settingsGrid.appendChild(input);
+
+    const spacer2 = document.createElement('div');
+    spacer2.className = 'spacer';
+    settingsGrid.appendChild(spacer2);
+
+    // Option Toggles (Checkboxes)
+    [1, 2, 3, 4, 5, 6].forEach(optId => {
+      const toggle = document.createElement('input');
+      toggle.type = 'checkbox';
+      toggle.className = 'option-toggle';
+      toggle.id = `toggle-${mId}-${optId}`;
+      toggle.dataset.mealId = mId;
+      toggle.dataset.optId = optId;
+      
+      // Default checked states
+      if (optId === 6) {
+        toggle.checked = true; // "2" column always on
+      } else if (optId === 5) {
+        toggle.checked = false; // "1" column always off
+      } else if (optId === 4) {
+        toggle.checked = false; // "ND" default off
+      } else if (num >= 1 && num <= 6) {
+        toggle.checked = (optId === 1); // VEG: on, WEL: off, BLA: off
+      } else if (num >= 7 && num <= 14) {
+        toggle.checked = (optId === 2); // VEG: off, WEL: on, BLA: off
+      } else if (num >= 15 && num <= 20) {
+        toggle.checked = (optId === 3); // VEG: off, WEL: off, BLA: on
+      }
+
+      toggle.addEventListener('change', () => {
+        // Exclusivity logic for options 5 ("1") and 6 ("2")
+        if (optId === 5 && toggle.checked) {
+          const other = document.getElementById(`toggle-${mId}-6`);
+          if (other) {
+            other.checked = false;
+            // Option 6 has no stripe, so no need to update its visibility
+          }
+        } else if (optId === 6 && toggle.checked) {
+          const other = document.getElementById(`toggle-${mId}-5`);
+          if (other) {
+            other.checked = false;
+            // Option 5 HAS a stripe, update its visibility
+            const stripe5 = document.querySelector(`[data-row="${mId}"] .stripe-5`);
+            if (stripe5) stripe5.classList.remove('visible');
+          }
+        }
+
+        const stripe = document.querySelector(`[data-row="${mId}"] .stripe-${optId}`);
+        if (stripe) {
+          stripe.classList.toggle('visible', toggle.checked);
+        }
+
+        // Update receipt name if it's already on the receipt
+        if (optId <= 3 && receiptItems[mId]) {
+          receiptItems[mId].name = getFormattedMealName(mId);
+          renderReceipt();
+        }
+      });
+
+      settingsGrid.appendChild(toggle);
+    });
+
+    // --- POPULATE ORDER GRID ---
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'meal-item-btn';
+    btn.dataset.row = mId;
+    
+    // Check initial states for stripes
+    const s1 = document.getElementById(`toggle-${mId}-1`).checked ? 'visible' : '';
+    const s2 = document.getElementById(`toggle-${mId}-2`).checked ? 'visible' : '';
+    const s3 = document.getElementById(`toggle-${mId}-3`).checked ? 'visible' : '';
+    const s4 = document.getElementById(`toggle-${mId}-4`).checked ? 'visible' : '';
+    const s5 = document.getElementById(`toggle-${mId}-5`).checked ? 'visible' : '';
+
+    btn.innerHTML = `
+      <div class="option-stripes">
+        <div class="stripe stripe-1 ${s1}">V</div>
+        <div class="stripe stripe-2 ${s2}">W</div>
+        <div class="stripe stripe-3 ${s3}">B</div>
+        <div class="stripe stripe-4 ${s4}">ND</div>
+        <div class="stripe stripe-5 ${s5}">1</div>
+      </div>
+      <span class="meal-label" id="meal-label-${mId}">Meal ${num}</span>
+    `;
+    orderGrid.appendChild(btn);
+  });
+})();
 
 const SAMPLE_DATA = {
   names: {
@@ -102,6 +252,21 @@ document.querySelectorAll('.limit-buttons').forEach(group => {
 // State to track receipt data
 let receiptItems = {}; // { rowId: { name: string, value: number, colIndex: number } }
 
+function getFormattedMealName(mId) {
+  const isVeg = document.getElementById(`toggle-${mId}-1`)?.checked;
+  const isWel = document.getElementById(`toggle-${mId}-2`)?.checked;
+  const isBla = document.getElementById(`toggle-${mId}-3`)?.checked;
+  let prefix = '';
+  if (isVeg) prefix = 'V ';
+  else if (isWel) prefix = 'W ';
+  else if (isBla) prefix = 'B ';
+  
+  const nameInput = document.getElementById(`meal-name-input-${mId}`);
+  // Always use the placeholder (e.g., "Meal 1") for the receipt, ignoring custom user input
+  const baseName = nameInput ? (nameInput.placeholder || `Meal ${mId.slice(1)}`) : `Meal ${mId.slice(1)}`;
+  return `${prefix}${baseName}`;
+}
+
 function renderReceipt() {
   const container = document.getElementById('receipt-items');
   const totalEl = document.getElementById('receipt-total');
@@ -110,27 +275,41 @@ function renderReceipt() {
   container.innerHTML = '';
   let totalColIndex = 0;
 
-  // Sort keys alphabetically A, B, ...
-  Object.keys(receiptItems).sort().forEach(rowId => {
+  // Sort keys: Meals (M1-M20) then Produce (A-J)
+  Object.keys(receiptItems).sort((a, b) => {
+    const isMealA = a.startsWith('M');
+    const isMealB = b.startsWith('M');
+    if (isMealA && !isMealB) return -1;
+    if (!isMealA && isMealB) return 1;
+    if (isMealA && isMealB) {
+      return parseInt(a.slice(1)) - parseInt(b.slice(1));
+    }
+    return a.localeCompare(b);
+  }).forEach(rowId => {
     const item = receiptItems[rowId];
     if (item.value > 0) {
       const row = document.createElement('div');
       row.className = 'receipt-item';
       row.innerHTML = `<span>${item.name}</span><span>${item.value}</span>`;
       container.appendChild(row);
-      totalColIndex += item.colIndex;
+      
+      // Decouple meals: only count produce for servings count
+      if (!rowId.startsWith('M')) {
+        totalColIndex += item.colIndex;
+      }
     }
   });
 
   totalEl.textContent = totalColIndex;
 }
 
-const orderRowButtons = document.querySelectorAll('.num-btn');
+const orderRowButtons = document.querySelectorAll('.num-btn, .meal-item-btn');
 
 orderRowButtons.forEach(btn => {
   btn.addEventListener('click', () => {
     const rowId = btn.getAttribute('data-row'); 
-    const nameInput = document.getElementById(`name-input-${rowId}`);
+    const isMeal = rowId.startsWith('M');
+    const nameInput = document.getElementById(isMeal ? `meal-name-input-${rowId}` : `name-input-${rowId}`);
     const nameValue = nameInput ? nameInput.value.trim() : '';
 
     if (!nameValue) {
@@ -141,26 +320,74 @@ orderRowButtons.forEach(btn => {
     const isAlreadyActive = btn.classList.contains('active');
     
     // Toggle logic for THIS row's buttons only
-    const siblingButtons = document.querySelectorAll(`.num-btn[data-row="${rowId}"]`);
+    const siblingButtons = isMeal ? [] : document.querySelectorAll(`.num-btn[data-row="${rowId}"]`);
     siblingButtons.forEach(b => b.classList.remove('active'));
     
-    if (!isAlreadyActive) {
-      btn.classList.add('active');
-      // Extract column index from class (e.g., order-col-3 -> 3)
-      let colIndex = 0;
-      const colClass = Array.from(btn.classList).find(c => c.startsWith('order-col-'));
-      if (colClass) {
-        colIndex = parseInt(colClass.replace('order-col-', ''));
+    if (isMeal) {
+      const toggle1 = document.getElementById(`toggle-${rowId}-5`);
+      const limit = toggle1 && toggle1.checked ? 1 : 2;
+      const displayName = getFormattedMealName(rowId);
+      
+      if (!isAlreadyActive) {
+        btn.classList.add('active');
+        receiptItems[rowId] = { name: displayName, value: 1, colIndex: 1 };
+      } else {
+        const currentCount = receiptItems[rowId] ? receiptItems[rowId].value : 0;
+        if (currentCount < limit) {
+          receiptItems[rowId].value = currentCount + 1;
+          receiptItems[rowId].colIndex = currentCount + 1;
+          receiptItems[rowId].name = displayName;
+        } else {
+          btn.classList.remove('active');
+          delete receiptItems[rowId];
+        }
       }
-      receiptItems[rowId] = { name: nameValue, value: parseInt(btn.textContent), colIndex: colIndex };
     } else {
-      delete receiptItems[rowId];
+      if (!isAlreadyActive) {
+        btn.classList.add('active');
+        // Extract column index from class (e.g., order-col-3 -> 3)
+        let colIndex = 0;
+        const colClass = Array.from(btn.classList).find(c => c.startsWith('order-col-'));
+        if (colClass) {
+          colIndex = parseInt(colClass.replace('order-col-', ''));
+        }
+        receiptItems[rowId] = { name: nameValue, value: parseInt(btn.textContent), colIndex: colIndex };
+      } else {
+        delete receiptItems[rowId];
+      }
     }
 
     renderReceipt();
   });
 });
 
+// Handle Meal Name sync
+mealRowIds.forEach(mId => {
+  const input = document.getElementById(`meal-name-input-${mId}`);
+  const label = document.getElementById(`meal-label-${mId}`);
+  if (input) {
+    // Initial sync
+    if (label) label.textContent = input.value;
+
+    input.addEventListener('input', () => {
+      const newVal = input.value.trim();
+      if (label) label.textContent = newVal || input.placeholder;
+
+      if (receiptItems[mId]) {
+        if (newVal === '') {
+          delete receiptItems[mId];
+          const btn = document.querySelector(`[data-row="${mId}"]`);
+          if (btn) btn.classList.remove('active');
+        } else {
+          receiptItems[mId].name = getFormattedMealName(mId);
+        }
+        renderReceipt();
+      }
+    });
+  }
+});
+
+// Remove duplicate synchronization block if present
 // 3. Name and Serving synchronization
 rowIds.forEach(rowId => {
   const nameInput = document.getElementById(`name-input-${rowId}`);
@@ -188,6 +415,7 @@ rowIds.forEach(rowId => {
       }
     });
   }
+
 
   // Serving sync (multiplier)
   function updateRowSelectorLabels() {
@@ -316,10 +544,18 @@ if ((settingsHideBtn || headerHideSettingsBtn) && settingsContainer) {
 const toggleOrderBtn = document.getElementById('toggle-order-btn');
 
 function resetFullOrder() {
-  const orderButtons = document.querySelectorAll('.num-btn');
+  const orderButtons = document.querySelectorAll('.num-btn, .meal-item-btn');
   orderButtons.forEach(btn => btn.classList.remove('active'));
   receiptItems = {};
   renderReceipt();
+}
+
+const clearOrderBtn = document.getElementById('clear-order-btn');
+if (clearOrderBtn) {
+  clearOrderBtn.addEventListener('click', () => {
+    resetFullOrder();
+    clearOrderBtn.blur();
+  });
 }
 
 if (toggleOrderBtn) {
@@ -466,3 +702,23 @@ if (sampleDataSelect) {
 }
 
 console.log("Scripts loaded and ready!");
+
+/* MEALS SETTINGS TOGGLE */
+const mealsSettingsToggleBtn = document.getElementById('meals-settings-toggle-btn');
+const mealsSettingsHideBtn = document.getElementById('meals-settings-hide-btn');
+const mealsSettingsContainer = document.getElementById('meals-settings-container');
+
+if (mealsSettingsToggleBtn && mealsSettingsContainer) {
+  mealsSettingsToggleBtn.addEventListener('click', () => {
+    mealsSettingsContainer.classList.toggle('hidden');
+    mealsSettingsToggleBtn.blur();
+  });
+}
+
+if (mealsSettingsHideBtn && mealsSettingsContainer) {
+  mealsSettingsHideBtn.addEventListener('click', () => {
+    mealsSettingsContainer.classList.add('hidden');
+    mealsSettingsHideBtn.blur();
+  });
+}
+
